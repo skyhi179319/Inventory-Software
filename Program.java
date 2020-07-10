@@ -7,6 +7,7 @@ import java.util.Scanner;
 import java.time.LocalDate;
 import java.util.Random;
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.event.MouseAdapter;
@@ -62,10 +63,76 @@ public class Program {
          e.printStackTrace();
       }
    }
+   private void TableWindow(){
+      // Frame
+      JFrame window = new JFrame();
+      window.setTitle("Table");
+      window.setVisible(true);
+      window.setBounds(150, 150, 664, 520);
+      java.net.URL imgURL = Program.class.getResource("\\Assets\\img\\icon.jpg");
+      ImageIcon Icon = new ImageIcon(imgURL);
+      window.setIconImage(Icon.getImage());
+      // Content
+      // Objects
+      JLabel Header = new JLabel();
+      JTable j;
+      // Table Panel
+      JPanel TableHeaderPanel = new JPanel();
+      window.getContentPane().add(TableHeaderPanel, BorderLayout.NORTH);
+      Header.setText("Welcome To The Inventory Table");
+      TableHeaderPanel.add(Header);
+      // User Panel
+      JPanel UserInfoPanel = new JPanel();
+      window.getContentPane().add(UserInfoPanel, BorderLayout.SOUTH);
+      UserInfoPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+      String LabelText = UserPathName.get(0);
+      JLabel UserLabel = new JLabel(LabelText);
+      UserInfoPanel.add(UserLabel);
+      // Table
+      JPanel TablePanel = new JPanel();
+      TablePanel.setSize(300,100);
+      window.getContentPane().add(TablePanel, FlowLayout.CENTER);
+      // Initializing the JTable
+      DefaultTableModel model = new DefaultTableModel();
+      j = new JTable(model);
+      model.addColumn("Barcode");
+      model.addColumn("Amount");
+      for (int i : MainInventory.keySet()) {
+         Object[] set = {i,MainInventory.get(i)};
+         model.addRow(set);
+      }
+      // adding it to JScrollPane
+      JScrollPane sp = new JScrollPane(j);
+      TablePanel.add(sp);
+      // Toolbar
+      JToolBar ToolBar = new JToolBar();
+      ToolBar.setSize(new Dimension(210, 0));
+      ToolBar.setOrientation(SwingConstants.VERTICAL);
+      ToolBar.setBackground(SystemColor.menu);
+      ToolBar.setFloatable(false);
+      window.getContentPane().add(ToolBar, BorderLayout.WEST);
+
+      JButton Refresh = new JButton("Refresh");
+      Refresh.setSize(new Dimension(200, 20));
+      Refresh.addMouseListener(new MouseAdapter() {
+         @Override
+         public void mouseClicked(MouseEvent e) {
+            //  Deletes All Rows And Refreshes The Content
+            int rowCount = model.getRowCount();
+            for (int i = rowCount - 1; i >= 0; i--) {
+               model.removeRow(i);
+            }
+            for (int i : MainInventory.keySet()) {
+               Object[] set = {i,MainInventory.get(i)};
+               model.addRow(set);
+            }
+         }
+      });
+      ToolBar.add(Refresh);
+   }
    public Program(){
       prepareGUI();
    }
-
    public static void main(String[] args){
       Program  Layouts = new Program();
       Layouts.InfoContainer();
@@ -150,6 +217,14 @@ public class Program {
          }
       });
       ButtonToolBar.add(ExportInventory);
+      JButton TableButton = new JButton("Table");
+      TableButton.addMouseListener(new MouseAdapter() {
+         @Override
+         public void mouseClicked(MouseEvent e) {
+            TableWindow();
+         }
+      });
+      ButtonToolBar.add(TableButton);
    }
    private void InventoryContainer(){
       JPanel InventoryCountPanel = new JPanel();
