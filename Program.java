@@ -18,6 +18,8 @@ import java.awt.SystemColor;
 import java.awt.Dimension;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.util.concurrent.atomic.AtomicInteger;
+
 public class Program {
    private JFrame frmInventory;
    private JTextField AddBarcodeTextField;
@@ -63,6 +65,7 @@ public class Program {
          e.printStackTrace();
       }
    }
+   // Internal Application
    private void TableWindow(){
       // Frame
       JFrame window = new JFrame();
@@ -95,8 +98,10 @@ public class Program {
       // Initializing the JTable
       DefaultTableModel model = new DefaultTableModel();
       j = new JTable(model);
+      // Add Columns
       model.addColumn("Barcode");
       model.addColumn("Amount");
+      // Add Data
       for (int i : MainInventory.keySet()) {
          Object[] set = {i,MainInventory.get(i)};
          model.addRow(set);
@@ -129,6 +134,41 @@ public class Program {
          }
       });
       ToolBar.add(Refresh);
+      JButton Count = new JButton("Count");
+      Count.setSize(new Dimension(200, 20));
+      Count.addMouseListener(new MouseAdapter() {
+         @Override
+         public void mouseClicked(MouseEvent e) {
+            JFrame dialog = new JFrame();
+            dialog.setTitle("Inventory Count");
+            dialog.setBounds(200,200,300,200);
+            dialog.setVisible(true);
+            dialog.setIconImage(Icon.getImage());
+            // Info Panel
+            JPanel Info = new JPanel();
+            dialog.getContentPane().add(Info, BorderLayout.CENTER);
+            int RowCount = model.getRowCount();
+            int Sum = 0;
+            // Count Data
+            for (int i = 0; i < model.getRowCount(); i++){
+               Object obj = model.getValueAt(i,1);
+               int ColSum = Integer.parseInt(obj.toString());
+               Sum += ColSum;
+            }
+            JLabel Count = new JLabel();
+            String CountText = "Barcodes: " + RowCount + " Items: " + Sum;
+            Count.setText(CountText);
+            Info.add(Count);
+            // User Info
+            JPanel DialogUserInfoPanel = new JPanel();
+            dialog.getContentPane().add(DialogUserInfoPanel, BorderLayout.SOUTH);
+            DialogUserInfoPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+            String DialogLabelText = UserPathName.get(0);
+            JLabel DialogUserLabel = new JLabel(DialogLabelText);
+            DialogUserInfoPanel.add(DialogUserLabel);
+         }
+      });
+      ToolBar.add(Count);
    }
    public Program(){
       prepareGUI();
