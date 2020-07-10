@@ -1,3 +1,4 @@
+import java.awt.*;
 import java.util.TreeMap;
 import java.util.ArrayList;
 import java.io.FileWriter;
@@ -8,14 +9,10 @@ import java.time.LocalDate;
 import java.util.Random;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
-import java.awt.BorderLayout;
-import java.awt.FlowLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.awt.SystemColor;
-import java.awt.Dimension;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -106,6 +103,12 @@ public class Program {
          Object[] set = {i,MainInventory.get(i)};
          model.addRow(set);
       }
+      Color blue = Color.blue;
+      Color yellow = Color.YELLOW;
+      Color red = Color.RED;
+      j.setGridColor(blue.darker());
+      j.setBackground(yellow.darker());
+      j.setForeground(red.darker());
       // adding it to JScrollPane
       JScrollPane sp = new JScrollPane(j);
       TablePanel.add(sp);
