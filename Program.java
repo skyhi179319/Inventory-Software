@@ -9,6 +9,7 @@ import java.time.LocalDate;
 import java.util.Random;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.KeyAdapter;
@@ -172,6 +173,52 @@ public class Program {
          }
       });
       ToolBar.add(Count);
+      JLabel SearchOptions = new JLabel("Search");
+      ToolBar.add(SearchOptions);
+      JButton SearchBarcode = new JButton("Barcode");
+      SearchBarcode.setSize(new Dimension(200, 20));
+      SearchBarcode.addMouseListener(new MouseAdapter() {
+         @Override
+         public void mouseClicked(MouseEvent e) {
+            JFrame Search = new JFrame();
+            Search.setTitle("Barcode Search");
+            Search.setBounds(200,200,300,100);
+            Search.setVisible(true);
+            Search.setIconImage(Icon.getImage());
+            // Info Panel
+            JPanel BarcodeSearchPanel = new JPanel();
+            Search.getContentPane().add(BarcodeSearchPanel, BorderLayout.NORTH);
+            JLabel BarcodeSearchLabel = new JLabel("Barcode:");
+            BarcodeSearchPanel.add(BarcodeSearchLabel);
+            JTextField BarcodeSearch = new JTextField();
+            BarcodeSearch.setColumns(10);
+            JPanel BarcodeResult = new JPanel();
+            Search.getContentPane().add(BarcodeResult,BorderLayout.CENTER);
+            JLabel BarcodeLabel = new JLabel();
+            BarcodeLabel.setText("Search For Barcode");
+            BarcodeResult.add(BarcodeLabel);
+            BarcodeSearch.addKeyListener(new KeyAdapter() {
+               @Override
+               public void keyPressed(KeyEvent e) {
+                  if(e.getKeyCode() == KeyEvent.VK_ENTER) {
+                     int barcodeRef = Integer.valueOf(BarcodeSearch.getText());
+                     int barcode = parseInt(MainInventory.get(barcodeRef));
+                     if(MainInventory.containsValue(barcode)){
+                        String MainText = "Barcode Found: " + barcodeRef + ". Scanned: " + barcode + "." ;
+                        BarcodeLabel.setText(MainText);
+                     }
+                     else{
+                        String MainText = "Barcode " + barcodeRef + " Not Found.";
+                        BarcodeLabel.setText(MainText);
+                     }
+                  }
+
+               }
+            });
+            BarcodeSearchPanel.add(BarcodeSearch);
+         }
+      });
+      ToolBar.add(SearchBarcode);
    }
    public Program(){
       prepareGUI();
