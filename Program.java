@@ -54,7 +54,7 @@ public class Program {
          for (int i : MainInventory.keySet()) {
             String text = "Barcode: " + i + " Amount: " + MainInventory.get(i);
             myWriter.write(text + "\r\n");
-            myWriter.write("-------------------------");
+            myWriter.write("-----------------------------");
             myWriter.write("\r\n");
          }
          myWriter.close();
