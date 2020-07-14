@@ -1,3 +1,5 @@
+import com.sun.tools.javac.Main;
+
 import java.awt.*;
 import java.util.TreeMap;
 import java.util.ArrayList;
@@ -9,14 +11,12 @@ import java.time.LocalDate;
 import java.util.Random;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableRowSorter;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import java.util.concurrent.atomic.AtomicInteger;
 
 public class Program {
    private JFrame frmInventory;
@@ -202,17 +202,17 @@ public class Program {
                public void keyPressed(KeyEvent e) {
                   if(e.getKeyCode() == KeyEvent.VK_ENTER) {
                      int barcodeRef = Integer.valueOf(BarcodeSearch.getText());
-                     int barcode = parseInt(MainInventory.get(barcodeRef));
+                     int barcode = Integer.valueOf(MainInventory.get(barcodeRef));
+                     Object key = MainInventory.get(barcode);
                      if(MainInventory.containsValue(barcode)){
                         String MainText = "Barcode Found: " + barcodeRef + ". Scanned: " + barcode + "." ;
                         BarcodeLabel.setText(MainText);
                      }
-                     else{
-                        String MainText = "Barcode " + barcodeRef + " Not Found.";
+                     if(key == null){
+                        String MainText = "Error";
                         BarcodeLabel.setText(MainText);
                      }
                   }
-
                }
             });
             BarcodeSearchPanel.add(BarcodeSearch);
@@ -285,10 +285,6 @@ public class Program {
 
       JButton ClearResults = new JButton("Clear");
       ClearResults.setSize(new Dimension(200, 0));
-      ClearResults.addActionListener(new ActionListener() {
-         public void actionPerformed(ActionEvent e) {
-         }
-      });
       ClearResults.addMouseListener(new MouseAdapter() {
          @Override
          public void mouseClicked(MouseEvent e) {
