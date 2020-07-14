@@ -208,7 +208,7 @@ public class Program {
                         String MainText = "Barcode Found: " + barcodeRef + ". Scanned: " + barcode + "." ;
                         BarcodeLabel.setText(MainText);
                      }
-                     if(key == null){
+                     else if(key == null){
                         String MainText = "Error";
                         BarcodeLabel.setText(MainText);
                      }
