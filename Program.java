@@ -1,5 +1,3 @@
-import com.sun.tools.javac.Main;
-
 import java.awt.*;
 import java.util.TreeMap;
 import java.util.ArrayList;
@@ -15,8 +13,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
+
 
 public class Program {
    private JFrame frmInventory;
@@ -104,11 +101,11 @@ public class Program {
          Object[] set = {i,MainInventory.get(i)};
          model.addRow(set);
       }
-      Color blue = Color.blue;
-      Color yellow = Color.YELLOW;
+      Color darkgoldenrod = new Color(184,134,11);
+      Color gold = new Color(255,215,0);
       Color red = Color.RED;
-      j.setGridColor(blue.darker());
-      j.setBackground(yellow.darker());
+      j.setGridColor(darkgoldenrod.darker());
+      j.setBackground(gold.brighter());
       j.setForeground(red.darker());
       // adding it to JScrollPane
       JScrollPane sp = new JScrollPane(j);
