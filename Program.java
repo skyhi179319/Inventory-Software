@@ -147,7 +147,7 @@ public class Program {
             dialog.setIconImage(Icon.getImage());
             // Info Panel
             JPanel Info = new JPanel();
-            dialog.getContentPane().add(Info, BorderLayout.CENTER);
+            dialog.getContentPane().add(Info, BorderLayout.NORTH);
             int RowCount = model.getRowCount();
             int Sum = 0;
             // Count Data
@@ -160,6 +160,11 @@ public class Program {
             String CountText = "Barcodes: " + RowCount + " Items: " + Sum;
             Count.setText(CountText);
             Info.add(Count);
+            if(Sum == 0){
+               java.net.URL ErrorImgURL = Program.class.getResource("\\Assets\\img\\Error.jpg");
+               ImageIcon ErrorIcon = new ImageIcon(ErrorImgURL);
+               dialog.setIconImage(ErrorIcon.getImage());
+            }
             // User Info
             JPanel DialogUserInfoPanel = new JPanel();
             dialog.getContentPane().add(DialogUserInfoPanel, BorderLayout.SOUTH);
