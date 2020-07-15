@@ -1,3 +1,5 @@
+import Assets.colors.Colors;
+import java.lang.*;
 import java.awt.*;
 import java.util.TreeMap;
 import java.util.ArrayList;
@@ -106,8 +108,8 @@ public class Program {
          Object[] set = {i,MainInventory.get(i)};
          model.addRow(set);
       }
-      Color darkgoldenrod = new Color(184,134,11);
-      Color gold = new Color(255,215,0);
+      Color darkgoldenrod = Colors.darkgoldenrod;
+      Color gold = Colors.gold;
       Color red = Color.RED;
       j.setGridColor(darkgoldenrod.darker());
       j.setBackground(gold.brighter());
