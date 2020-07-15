@@ -70,6 +70,11 @@ public class Program {
       java.net.URL imgURL = Program.class.getResource("\\Assets\\img\\icon.jpg");
       ImageIcon Icon = new ImageIcon(imgURL);
       window.setIconImage(Icon.getImage());
+      if(MainInventory.isEmpty()){
+         java.net.URL ErrorImgURL = Program.class.getResource("\\Assets\\img\\Warning.jpg");
+         ImageIcon ErrorIcon = new ImageIcon(ErrorImgURL);
+         window.setIconImage(ErrorIcon.getImage());
+      }
       // Content
       // Objects
       JLabel Header = new JLabel();
@@ -161,7 +166,7 @@ public class Program {
             Count.setText(CountText);
             Info.add(Count);
             if(Sum == 0){
-               java.net.URL ErrorImgURL = Program.class.getResource("\\Assets\\img\\Error.jpg");
+               java.net.URL ErrorImgURL = Program.class.getResource("\\Assets\\img\\Warning.jpg");
                ImageIcon ErrorIcon = new ImageIcon(ErrorImgURL);
                dialog.setIconImage(ErrorIcon.getImage());
             }
@@ -186,7 +191,9 @@ public class Program {
             Search.setTitle("Barcode Search");
             Search.setBounds(200,200,300,100);
             Search.setVisible(true);
-            Search.setIconImage(Icon.getImage());
+            java.net.URL ErrorImgURL = Program.class.getResource("\\Assets\\img\\Warning.jpg");
+            ImageIcon ErrorIcon = new ImageIcon(ErrorImgURL);
+            Search.setIconImage(ErrorIcon.getImage());
             // Info Panel
             JPanel BarcodeSearchPanel = new JPanel();
             Search.getContentPane().add(BarcodeSearchPanel, BorderLayout.NORTH);
