@@ -353,6 +353,7 @@ public class Program {
             }
             else{
                JLabel UserLabel = new JLabel("User Not Found");
+               UserLabel.setForeground(Colors.firebrick);
                UserPanel.add(UserLabel);
             }
          }
