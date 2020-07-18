@@ -85,6 +85,7 @@ public class Program {
       JPanel TableHeaderPanel = new JPanel();
       window.getContentPane().add(TableHeaderPanel, BorderLayout.NORTH);
       Header.setText("Welcome To The Inventory Table");
+      Header.setForeground(Colors.lightblue);
       TableHeaderPanel.add(Header);
       // User Panel
       JPanel UserInfoPanel = new JPanel();
@@ -92,6 +93,7 @@ public class Program {
       UserInfoPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
       String LabelText = UserPathName.get(0);
       JLabel UserLabel = new JLabel(LabelText);
+      UserLabel.setForeground(Colors.lightblue);
       UserInfoPanel.add(UserLabel);
       // Table
       JPanel TablePanel = new JPanel();
@@ -126,6 +128,7 @@ public class Program {
       window.getContentPane().add(ToolBar, BorderLayout.WEST);
 
       JButton Refresh = new JButton("Refresh");
+      Refresh.setForeground(Colors.lightblue);
       Refresh.setSize(new Dimension(200, 20));
       Refresh.addMouseListener(new MouseAdapter() {
          @Override
@@ -143,6 +146,7 @@ public class Program {
       });
       ToolBar.add(Refresh);
       JButton Count = new JButton("Count");
+      Count.setForeground(Colors.lightblue);
       Count.setSize(new Dimension(200, 20));
       Count.addMouseListener(new MouseAdapter() {
          @Override
@@ -164,6 +168,7 @@ public class Program {
                Sum += ColSum;
             }
             JLabel Count = new JLabel();
+            Count.setForeground(Colors.lightblue);
             String CountText = "Barcodes: " + RowCount + " Items: " + Sum;
             Count.setText(CountText);
             Info.add(Count);
@@ -178,11 +183,13 @@ public class Program {
             DialogUserInfoPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
             String DialogLabelText = UserPathName.get(0);
             JLabel DialogUserLabel = new JLabel(DialogLabelText);
+            DialogUserLabel.setForeground(Colors.lightblue);
             DialogUserInfoPanel.add(DialogUserLabel);
          }
       });
       ToolBar.add(Count);
       JLabel SearchOptions = new JLabel("Search");
+      SearchOptions.setForeground(Colors.lightblue);
       ToolBar.add(SearchOptions);
       JButton SearchBarcode = new JButton("Barcode");
       SearchBarcode.setSize(new Dimension(200, 20));
@@ -200,13 +207,16 @@ public class Program {
             JPanel BarcodeSearchPanel = new JPanel();
             Search.getContentPane().add(BarcodeSearchPanel, BorderLayout.NORTH);
             JLabel BarcodeSearchLabel = new JLabel("Barcode:");
+            BarcodeSearchLabel.setForeground(Colors.lightblue);
             BarcodeSearchPanel.add(BarcodeSearchLabel);
             JTextField BarcodeSearch = new JTextField();
             BarcodeSearch.setColumns(10);
+            BarcodeSearch.setForeground(Colors.lightblue);
             JPanel BarcodeResult = new JPanel();
             Search.getContentPane().add(BarcodeResult,BorderLayout.CENTER);
             JLabel BarcodeLabel = new JLabel();
             BarcodeLabel.setText("Search For Barcode");
+            BarcodeLabel.setForeground(Colors.lightblue);
             BarcodeResult.add(BarcodeLabel);
             BarcodeSearch.addKeyListener(new KeyAdapter() {
                @Override
@@ -256,11 +266,13 @@ public class Program {
       JPanel AddPanel = new JPanel();
       frmInventory.getContentPane().add(AddPanel, BorderLayout.NORTH);
       AddPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
-
+      InventoryCount.setForeground(Colors.lightblue);
       JLabel AddBarcodeLabel = new JLabel("Barcode:");
+      AddBarcodeLabel.setForeground(Colors.lightblue);
       AddPanel.add(AddBarcodeLabel);
 
       AddBarcodeTextField = new JTextField();
+      AddBarcodeTextField.setForeground(Colors.lightblue);
       AddBarcodeTextField.addKeyListener(new KeyAdapter() {
          @Override
          public void keyPressed(KeyEvent e) {
@@ -285,6 +297,7 @@ public class Program {
 
       JButton Barcode100 = new JButton("100");
       Barcode100.setSize(new Dimension(200, 20));
+      Barcode100.setForeground(Colors.lightblue);
       Barcode100.addMouseListener(new MouseAdapter() {
          @Override
          public void mouseClicked(MouseEvent e) {
@@ -295,18 +308,21 @@ public class Program {
       ButtonToolBar.add(Barcode100);
 
       JButton ClearResults = new JButton("Clear");
+      ClearResults.setForeground(Colors.lightblue);
       ClearResults.setSize(new Dimension(200, 0));
       ClearResults.addMouseListener(new MouseAdapter() {
          @Override
          public void mouseClicked(MouseEvent e) {
             MainInventory.clear();
             InventoryCount.setText("Nothing Scanned");
+            InventoryCount.setForeground(Colors.lightblue);
             AddBarcodeTextField.grabFocus();
          }
       });
       ButtonToolBar.add(ClearResults);
 
       JButton ExportInventory = new JButton("Export");
+      ExportInventory.setForeground(Colors.lightblue);
       ExportInventory.addMouseListener(new MouseAdapter() {
          @Override
          public void mouseClicked(MouseEvent e) {
@@ -315,6 +331,7 @@ public class Program {
       });
       ButtonToolBar.add(ExportInventory);
       JButton TableButton = new JButton("Table");
+      TableButton.setForeground(Colors.lightblue);
       TableButton.addMouseListener(new MouseAdapter() {
          @Override
          public void mouseClicked(MouseEvent e) {
@@ -348,6 +365,7 @@ public class Program {
                   UserPathName.add(read);
                   String LabelText = UserPathName.get(0);
                   JLabel UserLabel = new JLabel(LabelText);
+                  UserLabel.setForeground(Colors.lightblue);
                   UserPanel.add(UserLabel);
                }
             }
