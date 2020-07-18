@@ -192,6 +192,7 @@ public class Program {
       SearchOptions.setForeground(Colors.lightblue);
       ToolBar.add(SearchOptions);
       JButton SearchBarcode = new JButton("Barcode");
+      SearchBarcode.setForeground(Colors.lightblue);
       SearchBarcode.setSize(new Dimension(200, 20));
       SearchBarcode.addMouseListener(new MouseAdapter() {
          @Override
