@@ -1,3 +1,4 @@
+import Assets.colors.Colors;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -72,12 +73,14 @@ public class Setup {
     	JPanel FormPanel = new JPanel();
 		frmSetup.getContentPane().add(FormPanel, BorderLayout.NORTH);
 		Label NameLabel = new Label("Name");
+		NameLabel.setForeground(Colors.lightblue);
 		FormPanel.add(NameLabel);
 		NameTextField = new JTextField();
 		NameTextField.setColumns(10);
+		NameTextField.setForeground(Colors.lightblue);
 		FormPanel.add(NameTextField);
-		
 		Button AddButton = new Button("Add");
+		AddButton.setForeground(Colors.lightblue);
 		AddButton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {

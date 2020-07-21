@@ -1,3 +1,4 @@
+import Assets.colors.Colors;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -52,19 +53,22 @@ public class Users {
         JPanel UserFormPanel = new JPanel();
         frmUsers.getContentPane().add(UserFormPanel, BorderLayout.NORTH);
         Label NameLabel = new Label("Name");
+        NameLabel.setForeground(Colors.lightblue);
         UserFormPanel.add(NameLabel);
         NameTextField = new JTextField();
         NameTextField.setColumns(10);
+        NameTextField.setForeground(Colors.lightblue);
         UserFormPanel.add(NameTextField);
 
-        Button AddButton = new Button("Switch");
-        AddButton.addMouseListener(new MouseAdapter() {
+        Button SwitchButton = new Button("Switch");
+        SwitchButton.setForeground(Colors.lightblue);
+        SwitchButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 String name = NameTextField.getText();
                 SwitchUser(name);
             }
         });
-        UserFormPanel.add(AddButton);
+        UserFormPanel.add(SwitchButton);
     }
 }

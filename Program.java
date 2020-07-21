@@ -62,7 +62,7 @@ public class Program {
          e.printStackTrace();
       }
    }
-   // Internal Application
+   // Internal Applications
    private void TableWindow(){
       // Frame
       JFrame window = new JFrame();
@@ -93,7 +93,7 @@ public class Program {
       UserInfoPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
       String LabelText = UserPathName.get(0);
       JLabel UserLabel = new JLabel(LabelText);
-      UserLabel.setForeground(Colors.lightblue);
+      UserLabel.setForeground(Colors.darkgreen);
       UserInfoPanel.add(UserLabel);
       // Table
       JPanel TablePanel = new JPanel();
@@ -183,7 +183,7 @@ public class Program {
             DialogUserInfoPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
             String DialogLabelText = UserPathName.get(0);
             JLabel DialogUserLabel = new JLabel(DialogLabelText);
-            DialogUserLabel.setForeground(Colors.lightblue);
+            DialogUserLabel.setForeground(Colors.darkgreen);
             DialogUserInfoPanel.add(DialogUserLabel);
          }
       });
@@ -241,6 +241,70 @@ public class Program {
          }
       });
       ToolBar.add(SearchBarcode);
+   }
+   private void HelpWindow(){
+      // Frame
+      JFrame window = new JFrame();
+      window.setTitle("Help");
+      window.setVisible(true);
+      window.setBounds(175, 175, 664, 329);
+      java.net.URL imgURL = Program.class.getResource("\\Assets\\img\\icon.jpg");
+      ImageIcon Icon = new ImageIcon(imgURL);
+      window.setIconImage(Icon.getImage());
+      // User Panel
+      JPanel UserPanel = new JPanel();
+      window.getContentPane().add(UserPanel, BorderLayout.NORTH);
+      UserPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+      String LabelText = UserPathName.get(0);
+      JLabel UserLabel = new JLabel(LabelText);
+      UserLabel.setForeground(Colors.darkgreen);
+      UserPanel.add(UserLabel);
+      // Info Panel
+      JTabbedPane InfoPanel = new JTabbedPane();
+      window.getContentPane().add(InfoPanel,BorderLayout.CENTER);
+      // Info Panel - JPanels
+      JPanel AboutInfo = new JPanel();
+      JPanel ProgramInfo = new JPanel();
+      JPanel SetupInfo = new JPanel();
+      JPanel UsersInfo = new JPanel();
+      // Info Panel - Info
+      // Info Panel - Info - About
+      JLabel AboutInfoLabel = new JLabel();
+      String AboutInfoText = "<html>" + "This is a open-source pre-inventory software." + "<html>";
+      AboutInfoLabel.setText(AboutInfoText);
+      AboutInfoLabel.setForeground(Colors.lightblue);
+      AboutInfo.add(AboutInfoLabel);
+      // Info Panel - Info - Program
+      JLabel ProgramInfoLabel = new JLabel();
+      String ProgramInfoText = "<html>" + "This is the main program" + "<html>";
+      ProgramInfoLabel.setText(ProgramInfoText);
+      ProgramInfoLabel.setForeground(Colors.lightblue);
+      ProgramInfo.add(ProgramInfoLabel);
+      // Info Panel - Info - Setup
+      JLabel SetupInfoLabel = new JLabel();
+      String SetupInfoText = "<html>" + "This is where you set up all the users." + "<html>";
+      SetupInfoLabel.setText(SetupInfoText);
+      SetupInfoLabel.setForeground(Colors.lightblue);
+      SetupInfo.add(SetupInfoLabel);
+      // Info Panel - Info - Users
+      JLabel UsersInfoLabel = new JLabel();
+      String UsersInfoText = "<html>" + "This is where you switch users when there is multiple." + "<html>";
+      UsersInfoLabel.setText(UsersInfoText);
+      UsersInfoLabel.setForeground(Colors.lightblue);
+      UsersInfo.add(UsersInfoLabel);
+      // Info Panel - Tabs
+      InfoPanel.add("About",AboutInfo);
+      InfoPanel.add("Program",ProgramInfo);
+      InfoPanel.add("Setup",SetupInfo);
+      InfoPanel.add("Users", UsersInfo);
+      InfoPanel.setForegroundAt(0,Colors.lightblue);
+      InfoPanel.setForegroundAt(1,Colors.lightblue);
+      InfoPanel.setForegroundAt(2,Colors.lightblue);
+      InfoPanel.setForegroundAt(3,Colors.lightblue);
+      InfoPanel.setBackgroundAt(0,Colors.info);
+      InfoPanel.setBackgroundAt(1,Colors.info);
+      InfoPanel.setBackgroundAt(2,Colors.info);
+      InfoPanel.setBackgroundAt(3,Colors.info);
    }
    public Program(){
       prepareGUI();
@@ -307,7 +371,6 @@ public class Program {
          }
       });
       ButtonToolBar.add(Barcode100);
-
       JButton ClearResults = new JButton("Clear");
       ClearResults.setForeground(Colors.lightblue);
       ClearResults.setSize(new Dimension(200, 0));
@@ -340,6 +403,15 @@ public class Program {
          }
       });
       ButtonToolBar.add(TableButton);
+      JButton HelpButton = new JButton("Help");
+      HelpButton.setForeground(Colors.lightblue);
+      HelpButton.addMouseListener(new MouseAdapter() {
+         @Override
+         public void mouseClicked(MouseEvent e) {
+            HelpWindow();
+         }
+      });
+      ButtonToolBar.add(HelpButton);
    }
    private void InventoryContainer(){
       JPanel InventoryCountPanel = new JPanel();
@@ -366,7 +438,7 @@ public class Program {
                   UserPathName.add(read);
                   String LabelText = UserPathName.get(0);
                   JLabel UserLabel = new JLabel(LabelText);
-                  UserLabel.setForeground(Colors.lightblue);
+                  UserLabel.setForeground(Colors.darkgreen);
                   UserPanel.add(UserLabel);
                }
             }
