@@ -1,6 +1,7 @@
 import Assets.colors.Colors;
 import java.lang.*;
 import java.awt.*;
+import java.net.URL;
 import java.util.TreeMap;
 import java.util.ArrayList;
 import java.io.FileWriter;
@@ -63,6 +64,27 @@ public class Program {
       }
    }
    // Internal Applications
+   // Functions
+   public void SwitchUser(String Name) {
+      try {
+         String Name_Setup = "Users\\Main-Name.txt";
+         File UsernameFile = new File(Name_Setup);
+         UsernameFile.delete();
+         if(!UsernameFile.exists()) {
+            FileWriter Create = new FileWriter(Name_Setup);
+            Create.write(Name);
+            Create.close();
+         }
+         else {
+            System.out.println("Failed to create file!");
+         }
+      }
+      catch (IOException e) {
+         System.out.println("An error occurred.");
+         e.printStackTrace();
+      }
+   }
+   // Applications
    private void TableWindow(){
       // Frame
       JFrame window = new JFrame();
@@ -248,7 +270,7 @@ public class Program {
       window.setTitle("Help");
       window.setVisible(true);
       window.setBounds(175, 175, 664, 329);
-      java.net.URL imgURL = Program.class.getResource("\\Assets\\img\\icon.jpg");
+      URL imgURL = Program.class.getResource("\\Assets\\img\\icon.jpg");
       ImageIcon Icon = new ImageIcon(imgURL);
       window.setIconImage(Icon.getImage());
       // User Panel
