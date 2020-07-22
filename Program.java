@@ -64,26 +64,6 @@ public class Program {
       }
    }
    // Internal Applications
-   // Functions
-   public void SwitchUser(String Name) {
-      try {
-         String Name_Setup = "Users\\Main-Name.txt";
-         File UsernameFile = new File(Name_Setup);
-         UsernameFile.delete();
-         if(!UsernameFile.exists()) {
-            FileWriter Create = new FileWriter(Name_Setup);
-            Create.write(Name);
-            Create.close();
-         }
-         else {
-            System.out.println("Failed to create file!");
-         }
-      }
-      catch (IOException e) {
-         System.out.println("An error occurred.");
-         e.printStackTrace();
-      }
-   }
    // Applications
    private void TableWindow(){
       // Frame
