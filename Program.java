@@ -1,7 +1,12 @@
 import Assets.colors.Colors;
+import org.w3c.dom.css.RGBColor;
+
+import java.awt.event.*;
+import java.awt.image.ImageObserver;
 import java.lang.*;
 import java.awt.*;
 import java.net.URL;
+import java.text.AttributedCharacterIterator;
 import java.util.TreeMap;
 import java.util.ArrayList;
 import java.io.FileWriter;
@@ -12,10 +17,6 @@ import java.time.LocalDate;
 import java.util.Random;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 
 
 public class Program {
@@ -62,6 +63,9 @@ public class Program {
          System.out.println("An error occurred.");
          e.printStackTrace();
       }
+   }
+   private void close(JFrame frame){
+      frame.dispose();
    }
    // Internal Applications
    // Applications
@@ -236,6 +240,7 @@ public class Program {
                         String MainText = "Error";
                         BarcodeLabel.setText(MainText);
                      }
+                     BarcodeSearch.setText("");
                   }
                }
             });
@@ -414,6 +419,14 @@ public class Program {
          }
       });
       ButtonToolBar.add(HelpButton);
+      JButton Exit = new JButton("Exit");
+      Exit.setForeground(Colors.lightblue);
+      Exit.addMouseListener(new MouseAdapter() {
+         @Override
+         public void mouseClicked(MouseEvent e) {
+            close(frmInventory);
+         }
+      });
    }
    private void InventoryContainer(){
       JPanel InventoryCountPanel = new JPanel();
