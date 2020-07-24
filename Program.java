@@ -1,12 +1,8 @@
 import Assets.colors.Colors;
-import org.w3c.dom.css.RGBColor;
-
 import java.awt.event.*;
-import java.awt.image.ImageObserver;
 import java.lang.*;
 import java.awt.*;
 import java.net.URL;
-import java.text.AttributedCharacterIterator;
 import java.util.TreeMap;
 import java.util.ArrayList;
 import java.io.FileWriter;
