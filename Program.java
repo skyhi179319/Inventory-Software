@@ -423,6 +423,7 @@ public class Program {
             close(frmInventory);
          }
       });
+      ButtonToolBar.add(Exit);
    }
    private void InventoryContainer(){
       JPanel InventoryCountPanel = new JPanel();
