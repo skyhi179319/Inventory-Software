@@ -3,14 +3,11 @@ import java.awt.event.*;
 import java.lang.*;
 import java.awt.*;
 import java.net.URL;
-import java.util.TreeMap;
-import java.util.ArrayList;
+import java.util.*;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.File;
-import java.util.Scanner;
 import java.time.LocalDate;
-import java.util.Random;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 
@@ -420,7 +417,42 @@ public class Program {
       Exit.addMouseListener(new MouseAdapter() {
          @Override
          public void mouseClicked(MouseEvent e) {
-            close(frmInventory);
+            JDialog closing = new JDialog();
+            closing.setTitle("Closing");
+            closing.setBounds(150,150,300,250);
+            closing.setVisible(true);
+            JPanel closingMessage = new JPanel();
+            JPanel closingButtons = new JPanel();
+            closing.getContentPane().add(closingMessage, BorderLayout.NORTH);
+            closing.getContentPane().add(closingButtons, BorderLayout.CENTER);
+            JLabel message = new JLabel("Closing");
+            JButton yes = new JButton("Yes");
+            yes.setForeground(Colors.lightblue);
+            JButton no = new JButton("No");
+            no.setForeground(Colors.lightblue);
+            message.setForeground(Colors.lightblue);
+            closingMessage.add(message);
+            yes.addMouseListener(new MouseAdapter() {
+               @Override
+               public void mouseClicked(MouseEvent e) {
+                  close(frmInventory);
+                  closing.dispose();
+               }
+            });
+            closingButtons.add(yes);
+            no.addMouseListener(new MouseAdapter() {
+               @Override
+               public void mouseClicked(MouseEvent e) {
+                  closing.dispose();
+                  closing.addWindowListener(new WindowAdapter() {
+                     @Override
+                     public void windowClosed(WindowEvent e) {
+                        System.out.println("Window Closed Properly");
+                     }
+                  });
+               }
+            });
+            closingButtons.add(no);
          }
       });
       ButtonToolBar.add(Exit);
