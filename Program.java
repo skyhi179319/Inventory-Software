@@ -5,6 +5,7 @@ import java.lang.*;
 import java.awt.*;
 import java.net.URL;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.time.LocalDate;
 import javax.swing.*;
@@ -17,7 +18,7 @@ public class Program {
    private JLabel InventoryCount = new JLabel("Nothing Scanned");
    private String LogFile = "Main-Log.txt";
    TreeMap<Integer,Integer> MainInventory = new TreeMap<Integer,Integer>();
-   HashMap<LocalTime,String> Loginfo = new HashMap<LocalTime,String>();
+   TreeMap<LocalTime,String> LogInfo = new TreeMap<LocalTime,String>();
    ArrayList<String> UserPathName = new ArrayList<String>();
    private int parseInt(Integer integer) {
       // TODO Auto-generated method stub
@@ -62,8 +63,9 @@ public class Program {
       frame.dispose();
    }
    private void Log(String text){
-      LocalTime time = LocalTime.now();
-      Loginfo.put(time,text);
+      LocalTime time = LocalTime.parse(LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss")));
+      LogInfo.put(time,text);
+      System.out.println(time);
    }
    private void CompleteLog(String filename){
       try {
@@ -82,8 +84,8 @@ public class Program {
          File check_file = new File(file);
          FileWriter myWriter = new FileWriter(file);
          if(check_file.exists()){
-            for (LocalTime i : Loginfo.keySet()) {
-               String InfoText = Loginfo.get(i) + " - " + i;
+            for (LocalTime i : LogInfo.keySet()) {
+               String InfoText = LogInfo.get(i) + " - " + i;
                myWriter.write(InfoText + "\r\n");
             }
             myWriter.close();
