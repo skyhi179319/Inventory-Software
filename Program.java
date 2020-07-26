@@ -1,12 +1,11 @@
 import Assets.colors.Colors;
 import java.awt.event.*;
+import java.io.*;
 import java.lang.*;
 import java.awt.*;
 import java.net.URL;
+import java.time.LocalTime;
 import java.util.*;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.File;
 import java.time.LocalDate;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -16,7 +15,9 @@ public class Program {
    private JFrame frmInventory;
    private JTextField AddBarcodeTextField;
    private JLabel InventoryCount = new JLabel("Nothing Scanned");
+   private String LogFile = "Main-Log.txt";
    TreeMap<Integer,Integer> MainInventory = new TreeMap<Integer,Integer>();
+   HashMap<String,LocalTime> info = new HashMap<String, LocalTime>();
    ArrayList<String> UserPathName = new ArrayList<String>();
    private int parseInt(Integer integer) {
       // TODO Auto-generated method stub
@@ -60,6 +61,45 @@ public class Program {
    private void close(JFrame frame){
       frame.dispose();
    }
+   private void Log(String text){
+      LocalTime time = LocalTime.now();
+      info.put(text,time);
+   }
+   private void CompleteLog(String filename){
+      try {
+         LocalDate date = LocalDate.now();
+         String Log_File_Dir = "Logs\\";
+         File File_Dir = new File(Log_File_Dir);
+         if(File_Dir.exists()){
+            System.out.println("Logs Directory Found");
+         }
+         else{
+            File_Dir.mkdir();
+         }
+         String file = Log_File_Dir + date + "-" + filename;
+         File check_file = new File(file);
+         FileWriter myWriter = new FileWriter(file);
+         if(check_file.exists()){
+            for (String i : info.keySet()) {
+               String InfoText = i + " - " + info.get(i);
+               myWriter.write(InfoText + "\r\n");
+            }
+            myWriter.close();
+         }
+         if(!check_file.exists()){
+            check_file.createNewFile();
+            for (int i : MainInventory.keySet()) {
+               String InfoText = i + " - " + MainInventory.get(i);
+               myWriter.write(InfoText + "\r\n");
+            }
+            myWriter.close();
+         }
+
+      } catch (IOException e) {
+         System.out.println("An error occurred.");
+         e.printStackTrace();
+      }
+   }
    // Internal Applications
    // Applications
    private void TableWindow(){
@@ -71,6 +111,18 @@ public class Program {
       java.net.URL imgURL = Program.class.getResource("\\Assets\\img\\icon.jpg");
       ImageIcon Icon = new ImageIcon(imgURL);
       window.setIconImage(Icon.getImage());
+      window.addWindowListener(new WindowAdapter() {
+         @Override
+         public void windowOpened(WindowEvent e) {
+            Log("Opened Table Window");
+         }
+      });
+      window.addWindowListener(new WindowAdapter() {
+         @Override
+         public void windowClosing(WindowEvent e) {
+            Log("Closing Table Window");
+         }
+      });
       if(MainInventory.isEmpty()){
          java.net.URL ErrorImgURL = Program.class.getResource("\\Assets\\img\\Warning.jpg");
          ImageIcon ErrorIcon = new ImageIcon(ErrorImgURL);
@@ -118,6 +170,7 @@ public class Program {
       // adding it to JScrollPane
       JScrollPane sp = new JScrollPane(j);
       TablePanel.add(sp);
+      Log("Built Table");
       // Toolbar
       JToolBar ToolBar = new JToolBar();
       ToolBar.setSize(new Dimension(210, 0));
@@ -141,6 +194,7 @@ public class Program {
                Object[] set = {i,MainInventory.get(i)};
                model.addRow(set);
             }
+            Log("Refreshed Table");
          }
       });
       ToolBar.add(Refresh);
@@ -155,6 +209,18 @@ public class Program {
             dialog.setBounds(200,200,300,200);
             dialog.setVisible(true);
             dialog.setIconImage(Icon.getImage());
+            dialog.addWindowListener(new WindowAdapter() {
+               @Override
+               public void windowOpened(WindowEvent e) {
+                  Log("Opened Inventory Count");
+               }
+            });
+            dialog.addWindowListener(new WindowAdapter() {
+               @Override
+               public void windowClosing(WindowEvent e) {
+                  Log("Closing Inventory Count");
+               }
+            });
             // Info Panel
             JPanel Info = new JPanel();
             dialog.getContentPane().add(Info, BorderLayout.NORTH);
@@ -170,6 +236,7 @@ public class Program {
             Count.setForeground(Colors.lightblue);
             String CountText = "Barcodes: " + RowCount + " Items: " + Sum;
             Count.setText(CountText);
+            Log("Counted Inventory");
             Info.add(Count);
             if(Sum == 0){
                java.net.URL ErrorImgURL = Program.class.getResource("\\Assets\\img\\Warning.jpg");
@@ -203,6 +270,20 @@ public class Program {
             java.net.URL ErrorImgURL = Program.class.getResource("\\Assets\\img\\Warning.jpg");
             ImageIcon ErrorIcon = new ImageIcon(ErrorImgURL);
             Search.setIconImage(ErrorIcon.getImage());
+            Search.addWindowListener(new WindowAdapter() {
+               @Override
+               public void windowOpened(WindowEvent e) {
+                  Log("Opened Search Window");
+                  Log("Opened Beta Feature");
+               }
+            });
+            Search.addWindowListener(new WindowAdapter() {
+               @Override
+               public void windowClosing(WindowEvent e) {
+                  Log("Closing Search Window");
+                  Log("Closing Beta Feature");
+               }
+            });
             // Info Panel
             JPanel BarcodeSearchPanel = new JPanel();
             Search.getContentPane().add(BarcodeSearchPanel, BorderLayout.NORTH);
@@ -251,6 +332,18 @@ public class Program {
       URL imgURL = Program.class.getResource("\\Assets\\img\\icon.jpg");
       ImageIcon Icon = new ImageIcon(imgURL);
       window.setIconImage(Icon.getImage());
+      window.addWindowListener(new WindowAdapter() {
+         @Override
+         public void windowOpened(WindowEvent e) {
+            Log("Opened Help Window");
+         }
+      });
+      window.addWindowListener(new WindowAdapter() {
+         @Override
+         public void windowClosing(WindowEvent e) {
+            Log("Closing Help Window");
+         }
+      });
       // User Panel
       JPanel UserPanel = new JPanel();
       window.getContentPane().add(UserPanel, BorderLayout.NORTH);
@@ -326,6 +419,19 @@ public class Program {
       java.net.URL imgURL = Program.class.getResource("\\Assets\\img\\icon.jpg");
       ImageIcon Icon = new ImageIcon(imgURL);
       frmInventory.setIconImage(Icon.getImage());
+      frmInventory.addWindowListener(new WindowAdapter() {
+         @Override
+         public void windowOpened(WindowEvent e) {
+            Log("Opened Program");
+         }
+      });
+      frmInventory.addWindowListener(new WindowAdapter() {
+         @Override
+         public void windowClosing(WindowEvent e) {
+            Log("Closing Program");
+            CompleteLog(LogFile);
+         }
+      });
    }
    private void InfoContainer(){
       JPanel AddPanel = new JPanel();
@@ -346,6 +452,7 @@ public class Program {
                AddToInventory(barcode,1);
                PrintInventory();
                AddBarcodeTextField.setText("");
+               Log("Added Barcode - Cache - " + barcode);
             }
          }
       });
@@ -359,7 +466,6 @@ public class Program {
       ButtonToolBar.setBackground(SystemColor.menu);
       ButtonToolBar.setFloatable(false);
       frmInventory.getContentPane().add(ButtonToolBar, BorderLayout.WEST);
-
       JButton Barcode100 = new JButton("100");
       Barcode100.setSize(new Dimension(200, 20));
       Barcode100.setForeground(Colors.lightblue);
@@ -367,6 +473,7 @@ public class Program {
          @Override
          public void mouseClicked(MouseEvent e) {
             AddToInventory(100,1);
+            Log("Added Barcode - Cache - 100");
             PrintInventory();
          }
       });
@@ -381,6 +488,7 @@ public class Program {
             InventoryCount.setText("Nothing Scanned");
             InventoryCount.setForeground(Colors.lightblue);
             AddBarcodeTextField.grabFocus();
+            Log("Cleared All Barcodes");
          }
       });
       ButtonToolBar.add(ClearResults);
@@ -391,6 +499,7 @@ public class Program {
          @Override
          public void mouseClicked(MouseEvent e) {
             ExportInventory("InventoryExport.txt");
+            Log("Exported Inventory");
          }
       });
       ButtonToolBar.add(ExportInventory);
@@ -400,6 +509,7 @@ public class Program {
          @Override
          public void mouseClicked(MouseEvent e) {
             TableWindow();
+            Log("Attempted To Opened Table Window");
          }
       });
       ButtonToolBar.add(TableButton);
@@ -409,6 +519,7 @@ public class Program {
          @Override
          public void mouseClicked(MouseEvent e) {
             HelpWindow();
+            Log("Attempted To Opened Help Window");
          }
       });
       ButtonToolBar.add(HelpButton);
@@ -417,9 +528,12 @@ public class Program {
       Exit.addMouseListener(new MouseAdapter() {
          @Override
          public void mouseClicked(MouseEvent e) {
+            java.net.URL imgURL = Program.class.getResource("\\Assets\\img\\icon.jpg");
+            ImageIcon Icon = new ImageIcon(imgURL);
             JDialog closing = new JDialog();
             closing.setTitle("Closing");
             closing.setBounds(150,150,300,250);
+            closing.setIconImage(Icon.getImage());
             closing.setVisible(true);
             JPanel closingMessage = new JPanel();
             JPanel closingButtons = new JPanel();
@@ -435,6 +549,8 @@ public class Program {
             yes.addMouseListener(new MouseAdapter() {
                @Override
                public void mouseClicked(MouseEvent e) {
+                  Log("Attempted To Close Program");
+                  CompleteLog(LogFile);
                   close(frmInventory);
                   closing.dispose();
                }
@@ -484,12 +600,14 @@ public class Program {
                   JLabel UserLabel = new JLabel(LabelText);
                   UserLabel.setForeground(Colors.darkgreen);
                   UserPanel.add(UserLabel);
+                  Log("User Found");
                }
             }
             else{
                JLabel UserLabel = new JLabel("User Not Found");
                UserLabel.setForeground(Colors.firebrick);
                UserPanel.add(UserLabel);
+               Log("User Not Found");
             }
          }
          sc.close();
