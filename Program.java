@@ -17,7 +17,7 @@ public class Program {
    private JLabel InventoryCount = new JLabel("Nothing Scanned");
    private String LogFile = "Main-Log.txt";
    TreeMap<Integer,Integer> MainInventory = new TreeMap<Integer,Integer>();
-   HashMap<String,LocalTime> info = new HashMap<String, LocalTime>();
+   HashMap<LocalTime,String> Loginfo = new HashMap<LocalTime,String>();
    ArrayList<String> UserPathName = new ArrayList<String>();
    private int parseInt(Integer integer) {
       // TODO Auto-generated method stub
@@ -63,7 +63,7 @@ public class Program {
    }
    private void Log(String text){
       LocalTime time = LocalTime.now();
-      info.put(text,time);
+      Loginfo.put(time,text);
    }
    private void CompleteLog(String filename){
       try {
@@ -76,20 +76,14 @@ public class Program {
          else{
             File_Dir.mkdir();
          }
-         String file = Log_File_Dir + date + "-" + filename;
+         Random rand = new Random();
+         int version = rand.nextInt(1001);
+         String file = Log_File_Dir + date + "-" + version + "-" + filename;
          File check_file = new File(file);
          FileWriter myWriter = new FileWriter(file);
          if(check_file.exists()){
-            for (String i : info.keySet()) {
-               String InfoText = i + " - " + info.get(i);
-               myWriter.write(InfoText + "\r\n");
-            }
-            myWriter.close();
-         }
-         if(!check_file.exists()){
-            check_file.createNewFile();
-            for (int i : MainInventory.keySet()) {
-               String InfoText = i + " - " + MainInventory.get(i);
+            for (LocalTime i : Loginfo.keySet()) {
+               String InfoText = Loginfo.get(i) + " - " + i;
                myWriter.write(InfoText + "\r\n");
             }
             myWriter.close();
@@ -550,8 +544,14 @@ public class Program {
                @Override
                public void mouseClicked(MouseEvent e) {
                   Log("Attempted To Close Program");
-                  CompleteLog(LogFile);
                   close(frmInventory);
+                  frmInventory.addWindowListener(new WindowAdapter() {
+                     @Override
+                     public void windowClosed(WindowEvent e) {
+                        Log("Closing Program");
+                        CompleteLog(LogFile);
+                     }
+                  });
                   closing.dispose();
                }
             });
