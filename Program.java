@@ -413,12 +413,7 @@ public class Program {
       java.net.URL imgURL = Program.class.getResource("\\Assets\\img\\icon.jpg");
       ImageIcon Icon = new ImageIcon(imgURL);
       frmInventory.setIconImage(Icon.getImage());
-      frmInventory.addWindowListener(new WindowAdapter() {
-         @Override
-         public void windowOpened(WindowEvent e) {
-            Log("Opened Program");
-         }
-      });
+      Log("Opened Program");
       frmInventory.addWindowListener(new WindowAdapter() {
          @Override
          public void windowClosing(WindowEvent e) {
