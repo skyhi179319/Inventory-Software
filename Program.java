@@ -74,13 +74,19 @@ public class Program {
          File File_Dir = new File(Log_File_Dir);
          if(File_Dir.exists()){
             System.out.println("Logs Directory Found");
+            String DateFolder = Log_File_Dir + date + "\\";
+            File Date_Folder = new File(DateFolder);
+            if(!Date_Folder.exists()){
+               Date_Folder.mkdir();
+            }
          }
          else{
             File_Dir.mkdir();
          }
          Random rand = new Random();
          int version = rand.nextInt(1001);
-         String file = Log_File_Dir + date + "-" + version + "-" + filename;
+         String FolderDir = Log_File_Dir + date + "\\";
+         String file = FolderDir + date + "-" + version + "-" + filename;
          File check_file = new File(file);
          FileWriter myWriter = new FileWriter(file);
          if(check_file.exists()){
@@ -263,21 +269,19 @@ public class Program {
             Search.setTitle("Barcode Search");
             Search.setBounds(200,200,300,100);
             Search.setVisible(true);
-            java.net.URL ErrorImgURL = Program.class.getResource("\\Assets\\img\\Warning.jpg");
-            ImageIcon ErrorIcon = new ImageIcon(ErrorImgURL);
-            Search.setIconImage(ErrorIcon.getImage());
+            java.net.URL IconURL = Program.class.getResource("\\Assets\\img\\icon.jpg");
+            ImageIcon Icon = new ImageIcon(IconURL);
+            Search.setIconImage(Icon.getImage());
             Search.addWindowListener(new WindowAdapter() {
                @Override
                public void windowOpened(WindowEvent e) {
                   Log("Opened Search Window");
-                  Log("Opened Beta Feature");
                }
             });
             Search.addWindowListener(new WindowAdapter() {
                @Override
                public void windowClosing(WindowEvent e) {
                   Log("Closing Search Window");
-                  Log("Closing Beta Feature");
                }
             });
             // Info Panel
@@ -301,13 +305,8 @@ public class Program {
                   if(e.getKeyCode() == KeyEvent.VK_ENTER) {
                      int barcodeRef = Integer.valueOf(BarcodeSearch.getText());
                      int barcode = Integer.valueOf(MainInventory.get(barcodeRef));
-                     Object key = MainInventory.get(barcode);
                      if(MainInventory.containsValue(barcode)){
                         String MainText = "Barcode Found: " + barcodeRef + ". Scanned: " + barcode + "." ;
-                        BarcodeLabel.setText(MainText);
-                     }
-                     else if(key == null){
-                        String MainText = "Error";
                         BarcodeLabel.setText(MainText);
                      }
                      BarcodeSearch.setText("");
