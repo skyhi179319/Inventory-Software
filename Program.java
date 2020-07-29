@@ -17,9 +17,11 @@ public class Program {
    private JTextField AddBarcodeTextField;
    private JLabel InventoryCount = new JLabel("Nothing Scanned");
    private String LogFile = "Main-Log.txt";
+   private boolean AdminAccess = false;
    TreeMap<Integer,Integer> MainInventory = new TreeMap<Integer,Integer>();
    TreeMap<LocalTime,String> LogInfo = new TreeMap<LocalTime,String>();
    ArrayList<String> UserPathName = new ArrayList<String>();
+
    private int parseInt(Integer integer) {
       // TODO Auto-generated method stub
       return integer;
@@ -102,6 +104,104 @@ public class Program {
          e.printStackTrace();
       }
    }
+   private void VerifyCode(String function, String code){
+
+      if(function.equals("New") && code.equals("")){
+           JFrame NewCode = new JFrame();
+           NewCode.setTitle("New Code");
+           NewCode.setBounds(150, 150, 664, 150);
+           NewCode.setVisible(true);
+           java.net.URL imgURL = Program.class.getResource("\\Assets\\img\\icon.jpg");
+           ImageIcon Icon = new ImageIcon(imgURL);
+           NewCode.setIconImage(Icon.getImage());
+           JPanel Panel = new JPanel();
+           NewCode.getContentPane().add(Panel, BorderLayout.CENTER);
+           int NewCodeInt = new Random().nextInt(100);
+           JLabel CodeLabel = new JLabel(Integer.toString(NewCodeInt));
+           CodeLabel.setForeground(Colors.lightblue);
+           Panel.add(CodeLabel);
+           String File_Dir = "Users\\Admin";
+           try {
+               File File_Dir_File = new File(File_Dir);
+               if(File_Dir_File.exists()){
+                   System.out.println("Logs Directory Found");
+               }
+               else{
+                   File_Dir_File.mkdir();
+               }
+               String file = File_Dir + "\\Code.txt";
+               FileWriter myWriter = new FileWriter(file);
+               myWriter.write(CodeLabel.getText());
+               myWriter.close();
+
+           } catch (IOException f) {
+               System.out.println("An error occurred.");
+               f.printStackTrace();
+           }
+       }
+      if(function.equals("Verify")) {
+         try{
+            int codeToString = Integer.valueOf(code);
+            String File_Dir = "Users\\Admin";
+            String file = File_Dir + "\\Code.txt";
+            BufferedReader reader = new BufferedReader(new FileReader(file));
+            int Verified_Code = Integer.valueOf(reader.readLine());
+            if(codeToString == Verified_Code){
+               AdminAccess = true;
+            }
+            else{
+               VerifyCode("Retry","");
+            }
+            reader.close();
+         }
+         catch (IOException f){
+            System.out.println("An error occurred.");
+            f.printStackTrace();
+         }
+      }
+      if(function.equals("Retry") && code.equals("")){
+         JFrame Alert = new JFrame();
+         Alert.setTitle("Wrong Code");
+         Alert.setBounds(150, 150, 664, 100);
+         Alert.setVisible(true);
+         java.net.URL imgURL = Program.class.getResource("\\Assets\\img\\icon.jpg");
+         ImageIcon Icon = new ImageIcon(imgURL);
+         Alert.setIconImage(Icon.getImage());
+         JPanel Panel = new JPanel();
+         Alert.getContentPane().add(Panel, BorderLayout.CENTER);
+         JLabel label = new JLabel();
+         label.setForeground(Colors.lightblue);
+         label.setText("Wrong Code. Please Re-enter The Code");
+         Panel.add(label);
+      }
+   }
+   private void VerifyCodeGUI(){
+      JFrame GUIFrame = new JFrame();
+      GUIFrame.setTitle("Verify");
+      GUIFrame.setBounds(150, 150, 664, 150);
+      GUIFrame.setVisible(true);
+      java.net.URL imgURL = Program.class.getResource("\\Assets\\img\\icon.jpg");
+      ImageIcon Icon = new ImageIcon(imgURL);
+      GUIFrame.setIconImage(Icon.getImage());
+      JPanel Form = new JPanel();
+      GUIFrame.getContentPane().add(Form, BorderLayout.CENTER);
+      JLabel CodeLabel = new JLabel("Code:");
+      CodeLabel.setForeground(Colors.lightblue);
+      Form.add(CodeLabel);
+      JTextField Code = new JTextField();
+      Code.setColumns(10);
+      Code.setForeground(Colors.lightblue);
+      Form.add(Code);
+      JButton Verify = new JButton("Verify");
+      Verify.addMouseListener(new MouseAdapter() {
+         @Override
+         public void mouseClicked(MouseEvent e) {
+            VerifyCode("Verify",Code.getText());
+            GUIFrame.dispose();
+         }
+      });
+      Form.add(Verify);
+   }
    // Internal Applications
    // Applications
    private void TableWindow(){
@@ -171,7 +271,24 @@ public class Program {
       j.setForeground(red.darker());
       // adding it to JScrollPane
       JScrollPane sp = new JScrollPane(j);
+      JButton DeleteButton = new JButton("Delete Row");
+      DeleteButton.setForeground(Colors.lightblue);
+      DeleteButton.addMouseListener(new MouseAdapter() {
+         @Override
+         public void mouseClicked(MouseEvent e) {
+            if(AdminAccess == true){
+               if(j.getSelectedRow() != -1) {
+                  // remove selected row from the model
+                  model.removeRow(j.getSelectedRow());
+               }
+            }
+            if(AdminAccess == false){
+               VerifyCodeGUI();
+            }
+         }
+      });
       TablePanel.add(sp);
+      TablePanel.add(DeleteButton);
       Log("Built Table");
       // Toolbar
       JToolBar ToolBar = new JToolBar();
@@ -415,6 +532,7 @@ public class Program {
       ImageIcon Icon = new ImageIcon(imgURL);
       frmInventory.setIconImage(Icon.getImage());
       Log("Opened Program");
+      VerifyCode("New","");
       frmInventory.addWindowListener(new WindowAdapter() {
          @Override
          public void windowClosing(WindowEvent e) {
@@ -513,6 +631,15 @@ public class Program {
          }
       });
       ButtonToolBar.add(HelpButton);
+      JButton VerifyButton = new JButton("Verify");
+      VerifyButton.setForeground(Colors.lightblue);
+      VerifyButton.addMouseListener(new MouseAdapter() {
+         @Override
+         public void mouseClicked(MouseEvent e) {
+            VerifyCodeGUI();
+         }
+      });
+      ButtonToolBar.add(VerifyButton);
       JButton Exit = new JButton("Exit");
       Exit.setForeground(Colors.lightblue);
       Exit.addMouseListener(new MouseAdapter() {
