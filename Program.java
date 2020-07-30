@@ -18,6 +18,8 @@ public class Program {
    private JLabel InventoryCount = new JLabel("Nothing Scanned");
    private String LogFile = "Main-Log.txt";
    private boolean AdminAccess = false;
+   private boolean AdminFullAccess = false;
+   private boolean KeepAdminAccessOn = false;
    TreeMap<Integer,Integer> MainInventory = new TreeMap<Integer,Integer>();
    TreeMap<LocalTime,String> LogInfo = new TreeMap<LocalTime,String>();
    ArrayList<String> UserPathName = new ArrayList<String>();
@@ -105,39 +107,39 @@ public class Program {
       }
    }
    private void VerifyCode(String function, String code){
-
       if(function.equals("New") && code.equals("")){
-           JFrame NewCode = new JFrame();
-           NewCode.setTitle("New Code");
-           NewCode.setBounds(150, 150, 664, 150);
-           NewCode.setVisible(true);
-           java.net.URL imgURL = Program.class.getResource("\\Assets\\img\\icon.jpg");
-           ImageIcon Icon = new ImageIcon(imgURL);
-           NewCode.setIconImage(Icon.getImage());
-           JPanel Panel = new JPanel();
-           NewCode.getContentPane().add(Panel, BorderLayout.CENTER);
-           int NewCodeInt = new Random().nextInt(100);
-           JLabel CodeLabel = new JLabel(Integer.toString(NewCodeInt));
-           CodeLabel.setForeground(Colors.lightblue);
-           Panel.add(CodeLabel);
-           String File_Dir = "Users\\Admin";
-           try {
-               File File_Dir_File = new File(File_Dir);
-               if(File_Dir_File.exists()){
-                   System.out.println("Logs Directory Found");
-               }
-               else{
-                   File_Dir_File.mkdir();
-               }
-               String file = File_Dir + "\\Code.txt";
-               FileWriter myWriter = new FileWriter(file);
-               myWriter.write(CodeLabel.getText());
-               myWriter.close();
+         Log("Created A New Code");
+         JFrame NewCode = new JFrame();
+         NewCode.setTitle("New Code");
+         NewCode.setBounds(150, 150, 664, 150);
+         NewCode.setVisible(true);
+         java.net.URL imgURL = Program.class.getResource("\\Assets\\img\\icon.jpg");
+         ImageIcon Icon = new ImageIcon(imgURL);
+         NewCode.setIconImage(Icon.getImage());
+         JPanel Panel = new JPanel();
+         NewCode.getContentPane().add(Panel, BorderLayout.CENTER);
+         int NewCodeInt = new Random().nextInt(100);
+         JLabel CodeLabel = new JLabel(Integer.toString(NewCodeInt));
+         CodeLabel.setForeground(Colors.lightblue);
+         Panel.add(CodeLabel);
+         String File_Dir = "Users\\Admin";
+         try {
+            File File_Dir_File = new File(File_Dir);
+            if(File_Dir_File.exists()){
+                System.out.println("Logs Directory Found");
+            }
+            else{
+                File_Dir_File.mkdir();
+            }
+            String file = File_Dir + "\\Code.txt";
+            FileWriter myWriter = new FileWriter(file);
+            myWriter.write(CodeLabel.getText());
+            myWriter.close();
 
-           } catch (IOException f) {
-               System.out.println("An error occurred.");
-               f.printStackTrace();
-           }
+        } catch (IOException f) {
+            System.out.println("An error occurred.");
+            f.printStackTrace();
+        }
        }
       if(function.equals("Verify")) {
          try{
@@ -148,9 +150,11 @@ public class Program {
             int Verified_Code = Integer.valueOf(reader.readLine());
             if(codeToString == Verified_Code){
                AdminAccess = true;
+               Log("Admin Logged In");
             }
             else{
                VerifyCode("Retry","");
+               Log("User Attempted To Login As Admin");
             }
             reader.close();
          }
@@ -173,6 +177,9 @@ public class Program {
          label.setForeground(Colors.lightblue);
          label.setText("Wrong Code. Please Re-enter The Code");
          Panel.add(label);
+      }
+      if(function.equals("Verified") && KeepAdminAccessOn == false){
+         AdminAccess = false;
       }
    }
    private void VerifyCodeGUI(){
@@ -201,6 +208,177 @@ public class Program {
          }
       });
       Form.add(Verify);
+   }
+   private void VerifyUser(String function, String username, String password){
+      if(function.equals("New") && username == "" && password == ""){
+         JFrame NewAdmin = new JFrame();
+         NewAdmin.setTitle("New Admin");
+         NewAdmin.setBounds(150, 150, 664, 150);
+         NewAdmin.setVisible(true);
+         java.net.URL imgURL = Program.class.getResource("\\Assets\\img\\icon.jpg");
+         ImageIcon Icon = new ImageIcon(imgURL);
+         NewAdmin.setIconImage(Icon.getImage());
+         JPanel Panel = new JPanel();
+         NewAdmin.getContentPane().add(Panel, BorderLayout.CENTER);
+         JLabel UsernameLabel = new JLabel("Username:");
+         UsernameLabel.setForeground(Colors.lightblue);
+         JTextField UsernameText = new JTextField();
+         UsernameText.setForeground(Colors.lightblue);
+         UsernameText.setColumns(10);
+         JLabel PasswordLabel = new JLabel("Password:");
+         PasswordLabel.setForeground(Colors.lightblue);
+         JTextField PasswordText = new JTextField();
+         PasswordText.setForeground(Colors.lightblue);
+         PasswordText.setColumns(10);
+         Panel.add(UsernameLabel);
+         Panel.add(UsernameText);
+         Panel.add(PasswordLabel);
+         Panel.add(PasswordText);
+         JButton AddAdmin = new JButton("Add");
+         AddAdmin.setForeground(Colors.lightblue);
+         String File_Dir = "Users\\Admin";
+         String UsernameFile = File_Dir + "\\Username.txt";
+         String PasswordFile = File_Dir + "\\Password.txt";
+         File UsernameFileCreate = new File(UsernameFile);
+         File PasswordFileCreate = new File(PasswordFile);
+         AddAdmin.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+               try {
+                  File File_Dir_File = new File(File_Dir);
+                  if(File_Dir_File.exists()){
+                     System.out.println("Admin Directory Found");
+                  }
+                  else{
+                     File_Dir_File.mkdir();
+                  }
+                  if(!UsernameFileCreate.exists()){
+                     UsernameFileCreate.createNewFile();
+                     FileWriter UsernameFileWriter = new FileWriter(UsernameFile);
+                     UsernameFileWriter.write(UsernameText.getText());
+                     UsernameFileWriter.close();
+                  }
+                  if(!PasswordFileCreate.exists()){
+                     PasswordFileCreate.createNewFile();
+                     FileWriter PasswordFileWriter = new FileWriter(PasswordFile);
+                     PasswordFileWriter.write(PasswordText.getText());
+                     PasswordFileWriter.close();
+                  }
+                  else{
+                     NewAdmin.dispose();
+                  }
+               } catch (IOException f) {
+                  System.out.println("An error occurred.");
+                  f.printStackTrace();
+               }
+            }
+         });
+         Panel.add(AddAdmin);
+         if(UsernameFileCreate.exists() && PasswordFileCreate.exists()){
+            NewAdmin.dispose();
+         }
+      }
+      if(function.equals("Verify")){
+         String File_Dir = "Users\\Admin";
+         String UsernameFile = File_Dir + "\\Username.txt";
+         String PasswordFile = File_Dir + "\\Password.txt";
+         // Verifying User
+         try{
+            BufferedReader Username = new BufferedReader(new FileReader(UsernameFile));
+            BufferedReader Password = new BufferedReader(new FileReader(PasswordFile));
+            String CheckUsername = Username.readLine();
+            String CheckPassword = Password.readLine();
+            if(username.equals(CheckUsername) && password.equals(CheckPassword) && AdminFullAccess == false){
+               Log("Admin Logged In And Has Access");
+               AdminFullAccess = true;
+            }
+            else{
+               VerifyUser("Retry","","");
+               Log("User Attempted To Login As Admin");
+            }
+            Username.close();
+            Password.close();
+         }
+         catch (IOException e){
+            System.out.println("An error occurred.");
+            e.printStackTrace();
+         }
+      }
+      if(function.equals("Retry")){
+         JFrame LoginAlert = new JFrame();
+         LoginAlert.setTitle("Wrong Code");
+         LoginAlert.setBounds(150, 150, 664, 100);
+         LoginAlert.setVisible(true);
+         java.net.URL imgURL = Program.class.getResource("\\Assets\\img\\icon.jpg");
+         ImageIcon Icon = new ImageIcon(imgURL);
+         LoginAlert.setIconImage(Icon.getImage());
+         JPanel Panel = new JPanel();
+         LoginAlert.getContentPane().add(Panel, BorderLayout.CENTER);
+         JLabel label = new JLabel();
+         label.setForeground(Colors.lightblue);
+         label.setText("Wrong Login Information.");
+         Panel.add(label);
+      }
+   }
+   private void VerifyUserGUI(){
+      JFrame LoginGUIFrame = new JFrame();
+      LoginGUIFrame.setTitle("Login");
+      LoginGUIFrame.setBounds(150, 150, 664, 150);
+      LoginGUIFrame.setVisible(true);
+      java.net.URL imgURL = Program.class.getResource("\\Assets\\img\\icon.jpg");
+      ImageIcon Icon = new ImageIcon(imgURL);
+      LoginGUIFrame.setIconImage(Icon.getImage());
+      JPanel Form = new JPanel();
+      LoginGUIFrame.getContentPane().add(Form, BorderLayout.CENTER);
+      JLabel UsernameLabel = new JLabel("Username:");
+      JLabel PasswordLabel = new JLabel("Password:");
+      JTextField Username = new JTextField();
+      JTextField Password = new JTextField();
+      JButton Login = new JButton("Login");
+      UsernameLabel.setForeground(Colors.lightblue);
+      PasswordLabel.setForeground(Colors.lightblue);
+      Username.setColumns(10);
+      Username.setForeground(Colors.lightblue);
+      Password.setColumns(10);
+      Password.setForeground(Colors.lightblue);
+      Login.setForeground(Colors.lightblue);
+      Form.add(UsernameLabel);
+      Form.add(Username);
+      Form.add(PasswordLabel);
+      Form.add(Password);
+      Login.addMouseListener(new MouseAdapter() {
+         @Override
+         public void mouseClicked(MouseEvent e) {
+            VerifyUser("Verify",Username.getText(),Password.getText());
+            if(AdminFullAccess == true){
+               JFrame AdminArea = new JFrame();
+               AdminArea.setTitle("Admin");
+               AdminArea.setBounds(150, 150, 664, 150);
+               AdminArea.setVisible(true);
+               java.net.URL imgURL = Program.class.getResource("\\Assets\\img\\icon.jpg");
+               ImageIcon Icon = new ImageIcon(imgURL);
+               AdminArea.setIconImage(Icon.getImage());
+               JPanel ButtonArea = new JPanel();
+               AdminArea.getContentPane().add(ButtonArea, BorderLayout.CENTER);
+               JButton AdminAccessSwitch = new JButton("Admin Access");
+               AdminAccessSwitch.setForeground(Colors.lightblue);
+               AdminAccessSwitch.addMouseListener(new MouseAdapter() {
+                  @Override
+                  public void mouseClicked(MouseEvent e) {
+                     if(AdminAccess == true){
+                        AdminAccess = false;
+                     }
+                     if(AdminAccess == false){
+                        AdminAccess = true;
+                     }
+                  }
+               });
+               ButtonArea.add(AdminAccessSwitch);
+            }
+            LoginGUIFrame.dispose();
+         }
+      });
+      Form.add(Login);
    }
    // Internal Applications
    // Applications
@@ -271,24 +449,7 @@ public class Program {
       j.setForeground(red.darker());
       // adding it to JScrollPane
       JScrollPane sp = new JScrollPane(j);
-      JButton DeleteButton = new JButton("Delete Row");
-      DeleteButton.setForeground(Colors.lightblue);
-      DeleteButton.addMouseListener(new MouseAdapter() {
-         @Override
-         public void mouseClicked(MouseEvent e) {
-            if(AdminAccess == true){
-               if(j.getSelectedRow() != -1) {
-                  // remove selected row from the model
-                  model.removeRow(j.getSelectedRow());
-               }
-            }
-            if(AdminAccess == false){
-               VerifyCodeGUI();
-            }
-         }
-      });
       TablePanel.add(sp);
-      TablePanel.add(DeleteButton);
       Log("Built Table");
       // Toolbar
       JToolBar ToolBar = new JToolBar();
@@ -434,6 +595,30 @@ public class Program {
          }
       });
       ToolBar.add(SearchBarcode);
+      JLabel AdminLabel = new JLabel("Admin");
+      AdminLabel.setForeground(Colors.lightblue);
+      JLabel AdminDeleteLabel = new JLabel("Delete");
+      AdminDeleteLabel.setForeground(Colors.lightblue);
+      ToolBar.add(AdminLabel);
+      ToolBar.add(AdminDeleteLabel);
+      JButton DeleteButton = new JButton("Row");
+      DeleteButton.setForeground(Colors.lightblue);
+      DeleteButton.addMouseListener(new MouseAdapter() {
+         @Override
+         public void mouseClicked(MouseEvent e) {
+            if(AdminAccess == true){
+               if(j.getSelectedRow() != -1) {
+                  // remove selected row from the model
+                  model.removeRow(j.getSelectedRow());
+                  VerifyCode("Verified","");
+               }
+            }
+            if(AdminAccess == false){
+               VerifyCodeGUI();
+            }
+         }
+      });
+      ToolBar.add(DeleteButton);
    }
    private void HelpWindow(){
       // Frame
@@ -533,6 +718,7 @@ public class Program {
       frmInventory.setIconImage(Icon.getImage());
       Log("Opened Program");
       VerifyCode("New","");
+      VerifyUser("New","","");
       frmInventory.addWindowListener(new WindowAdapter() {
          @Override
          public void windowClosing(WindowEvent e) {
@@ -640,6 +826,15 @@ public class Program {
          }
       });
       ButtonToolBar.add(VerifyButton);
+      JButton AdminButton = new JButton("Admin");
+      AdminButton.setForeground(Colors.lightblue);
+      AdminButton.addMouseListener(new MouseAdapter() {
+         @Override
+         public void mouseClicked(MouseEvent e) {
+            VerifyUserGUI();
+         }
+      });
+      ButtonToolBar.add(AdminButton);
       JButton Exit = new JButton("Exit");
       Exit.setForeground(Colors.lightblue);
       Exit.addMouseListener(new MouseAdapter() {
