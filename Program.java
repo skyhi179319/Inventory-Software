@@ -181,6 +181,9 @@ public class Program {
       if(function.equals("Verified") && KeepAdminAccessOn == false){
          AdminAccess = false;
       }
+      if(function.equals("Verified") && KeepAdminAccessOn == true){
+         AdminAccess = true;
+      }
    }
    private void VerifyCodeGUI(){
       JFrame GUIFrame = new JFrame();
@@ -320,6 +323,60 @@ public class Program {
          Panel.add(label);
       }
    }
+   private void AdminPortalArea(){
+      JFrame AdminArea = new JFrame();
+      AdminArea.setTitle("Admin");
+      AdminArea.setBounds(150, 150, 664, 150);
+      AdminArea.setVisible(true);
+      java.net.URL imgURL = Program.class.getResource("\\Assets\\img\\icon.jpg");
+      ImageIcon Icon = new ImageIcon(imgURL);
+      AdminArea.setIconImage(Icon.getImage());
+      JPanel ButtonArea = new JPanel();
+      JPanel ActionInfo = new JPanel();
+      AdminArea.getContentPane().add(ButtonArea, BorderLayout.CENTER);
+      AdminArea.getContentPane().add(ActionInfo, BorderLayout.SOUTH);
+      JLabel Action = new JLabel();
+      Action.setForeground(Colors.lightblue);
+      ActionInfo.add(Action);
+      JButton AdminAccessSwitch = new JButton("Admin Access");
+      AdminAccessSwitch.setForeground(Colors.lightblue);
+      AdminAccessSwitch.addMouseListener(new MouseAdapter() {
+         @Override
+         public void mouseClicked(MouseEvent e) {
+            JFrame OnOff = new JFrame();
+            OnOff.setTitle("Access Point");
+            OnOff.setBounds(175,175,150,100);
+            OnOff.setVisible(true);
+            JPanel AccessButtons = new JPanel();
+            OnOff.getContentPane().add(AccessButtons, BorderLayout.CENTER);
+            JButton on = new JButton("On");
+            JButton off = new JButton("Off");
+            on.addMouseListener(new MouseAdapter() {
+               @Override
+               public void mouseClicked(MouseEvent e) {
+                  if(AdminAccess == false){
+                     AdminAccess = true;
+                     KeepAdminAccessOn = true;
+                     Action.setText("Admin Access On");
+                  }
+               }
+            });
+            off.addMouseListener(new MouseAdapter() {
+               @Override
+               public void mouseClicked(MouseEvent e) {
+                  if(AdminAccess == true){
+                     AdminAccess = false;
+                     KeepAdminAccessOn = false;
+                     Action.setText("Admin Access Off");
+                  }
+               }
+            });
+            AccessButtons.add(on);
+            AccessButtons.add(off);
+         }
+      });
+      ButtonArea.add(AdminAccessSwitch);
+   }
    private void VerifyUserGUI(){
       JFrame LoginGUIFrame = new JFrame();
       LoginGUIFrame.setTitle("Login");
@@ -351,29 +408,7 @@ public class Program {
          public void mouseClicked(MouseEvent e) {
             VerifyUser("Verify",Username.getText(),Password.getText());
             if(AdminFullAccess == true){
-               JFrame AdminArea = new JFrame();
-               AdminArea.setTitle("Admin");
-               AdminArea.setBounds(150, 150, 664, 150);
-               AdminArea.setVisible(true);
-               java.net.URL imgURL = Program.class.getResource("\\Assets\\img\\icon.jpg");
-               ImageIcon Icon = new ImageIcon(imgURL);
-               AdminArea.setIconImage(Icon.getImage());
-               JPanel ButtonArea = new JPanel();
-               AdminArea.getContentPane().add(ButtonArea, BorderLayout.CENTER);
-               JButton AdminAccessSwitch = new JButton("Admin Access");
-               AdminAccessSwitch.setForeground(Colors.lightblue);
-               AdminAccessSwitch.addMouseListener(new MouseAdapter() {
-                  @Override
-                  public void mouseClicked(MouseEvent e) {
-                     if(AdminAccess == true){
-                        AdminAccess = false;
-                     }
-                     if(AdminAccess == false){
-                        AdminAccess = true;
-                     }
-                  }
-               });
-               ButtonArea.add(AdminAccessSwitch);
+               AdminPortalArea();
             }
             LoginGUIFrame.dispose();
          }
