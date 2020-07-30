@@ -203,6 +203,7 @@ public class Program {
       Code.setForeground(Colors.lightblue);
       Form.add(Code);
       JButton Verify = new JButton("Verify");
+      Verify.setForeground(Colors.lightblue);
       Verify.addMouseListener(new MouseAdapter() {
          @Override
          public void mouseClicked(MouseEvent e) {
@@ -347,10 +348,15 @@ public class Program {
             OnOff.setTitle("Access Point");
             OnOff.setBounds(175,175,150,100);
             OnOff.setVisible(true);
+            java.net.URL imgURL = Program.class.getResource("\\Assets\\img\\icon.jpg");
+            ImageIcon Icon = new ImageIcon(imgURL);
+            OnOff.setIconImage(Icon.getImage());
             JPanel AccessButtons = new JPanel();
             OnOff.getContentPane().add(AccessButtons, BorderLayout.CENTER);
             JButton on = new JButton("On");
+            on.setForeground(Colors.lightblue);
             JButton off = new JButton("Off");
+            off.setForeground(Colors.lightblue);
             on.addMouseListener(new MouseAdapter() {
                @Override
                public void mouseClicked(MouseEvent e) {
