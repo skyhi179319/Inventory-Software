@@ -17,8 +17,11 @@ public class Program {
    private JTextField AddBarcodeTextField;
    private JLabel InventoryCount = new JLabel("Nothing Scanned");
    private String LogFile = "Main-Log.txt";
+   // Allows Sub-Admin to use code
    private boolean AdminAccess = false;
+   // Allows Full Admin to be logged in and out
    private boolean AdminFullAccess = false;
+   // Turns On/off AdminAccess
    private boolean KeepAdminAccessOn = false;
    TreeMap<Integer,Integer> MainInventory = new TreeMap<Integer,Integer>();
    TreeMap<LocalTime,String> LogInfo = new TreeMap<LocalTime,String>();
@@ -382,44 +385,61 @@ public class Program {
          }
       });
       ButtonArea.add(AdminAccessSwitch);
-   }
-   private void VerifyUserGUI(){
-      JFrame LoginGUIFrame = new JFrame();
-      LoginGUIFrame.setTitle("Login");
-      LoginGUIFrame.setBounds(150, 150, 664, 150);
-      LoginGUIFrame.setVisible(true);
-      java.net.URL imgURL = Program.class.getResource("\\Assets\\img\\icon.jpg");
-      ImageIcon Icon = new ImageIcon(imgURL);
-      LoginGUIFrame.setIconImage(Icon.getImage());
-      JPanel Form = new JPanel();
-      LoginGUIFrame.getContentPane().add(Form, BorderLayout.CENTER);
-      JLabel UsernameLabel = new JLabel("Username:");
-      JLabel PasswordLabel = new JLabel("Password:");
-      JTextField Username = new JTextField();
-      JTextField Password = new JTextField();
-      JButton Login = new JButton("Login");
-      UsernameLabel.setForeground(Colors.lightblue);
-      PasswordLabel.setForeground(Colors.lightblue);
-      Username.setColumns(10);
-      Username.setForeground(Colors.lightblue);
-      Password.setColumns(10);
-      Password.setForeground(Colors.lightblue);
-      Login.setForeground(Colors.lightblue);
-      Form.add(UsernameLabel);
-      Form.add(Username);
-      Form.add(PasswordLabel);
-      Form.add(Password);
-      Login.addMouseListener(new MouseAdapter() {
+      JButton Logout = new JButton("Logout");
+      Logout.setForeground(Colors.lightblue);
+      Logout.addMouseListener(new MouseAdapter() {
          @Override
          public void mouseClicked(MouseEvent e) {
-            VerifyUser("Verify",Username.getText(),Password.getText());
-            if(AdminFullAccess == true){
-               AdminPortalArea();
-            }
-            LoginGUIFrame.dispose();
+            // Logs out user fully
+            AdminFullAccess = false;
+            AdminArea.dispose();
          }
       });
-      Form.add(Login);
+      ButtonArea.add(Logout);
+   }
+   private void VerifyUserGUI(){
+      // if statements allows admin to be kept logged in
+      if(AdminFullAccess == false){
+         JFrame LoginGUIFrame = new JFrame();
+         LoginGUIFrame.setTitle("Login");
+         LoginGUIFrame.setBounds(150, 150, 664, 150);
+         LoginGUIFrame.setVisible(true);
+         java.net.URL imgURL = Program.class.getResource("\\Assets\\img\\icon.jpg");
+         ImageIcon Icon = new ImageIcon(imgURL);
+         LoginGUIFrame.setIconImage(Icon.getImage());
+         JPanel Form = new JPanel();
+         LoginGUIFrame.getContentPane().add(Form, BorderLayout.CENTER);
+         JLabel UsernameLabel = new JLabel("Username:");
+         JLabel PasswordLabel = new JLabel("Password:");
+         JTextField Username = new JTextField();
+         JTextField Password = new JTextField();
+         JButton Login = new JButton("Login");
+         UsernameLabel.setForeground(Colors.lightblue);
+         PasswordLabel.setForeground(Colors.lightblue);
+         Username.setColumns(10);
+         Username.setForeground(Colors.lightblue);
+         Password.setColumns(10);
+         Password.setForeground(Colors.lightblue);
+         Login.setForeground(Colors.lightblue);
+         Form.add(UsernameLabel);
+         Form.add(Username);
+         Form.add(PasswordLabel);
+         Form.add(Password);
+         Login.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+               VerifyUser("Verify",Username.getText(),Password.getText());
+               if(AdminFullAccess == true){
+                  AdminPortalArea();
+               }
+               LoginGUIFrame.dispose();
+            }
+         });
+         Form.add(Login);
+      }
+      if(AdminFullAccess == true){
+         AdminPortalArea();
+      }
    }
    // Internal Applications
    // Applications
@@ -647,6 +667,7 @@ public class Program {
       DeleteButton.addMouseListener(new MouseAdapter() {
          @Override
          public void mouseClicked(MouseEvent e) {
+            // Verifying Code or Allows Function to work
             if(AdminAccess == true){
                if(j.getSelectedRow() != -1) {
                   // remove selected row from the model
@@ -976,5 +997,4 @@ public class Program {
          e.printStackTrace();
       }
    }
-
 }
