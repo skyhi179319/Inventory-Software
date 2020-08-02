@@ -144,6 +144,33 @@ public class Program {
             f.printStackTrace();
         }
        }
+      if(function.equals("New Self Code") && !code.equals("")){
+         try {
+            String File_Dir = "Users\\Admin";
+            String file = File_Dir + "\\Code.txt";
+            FileWriter myWriter = new FileWriter(file);
+            myWriter.write(code);
+            myWriter.close();
+
+         } catch (IOException f) {
+            System.out.println("An error occurred.");
+            f.printStackTrace();
+         }
+      }
+      if(function.equals("New Random Code")){
+         try {
+            String File_Dir = "Users\\Admin";
+            String file = File_Dir + "\\Code.txt";
+            int NewCodeInt = new Random().nextInt(100);
+            FileWriter myWriter = new FileWriter(file);
+            myWriter.write(String.valueOf(NewCodeInt));
+            myWriter.close();
+
+         } catch (IOException f) {
+            System.out.println("An error occurred.");
+            f.printStackTrace();
+         }
+      }
       if(function.equals("Verify")) {
          try{
             int codeToString = Integer.valueOf(code);
@@ -349,7 +376,7 @@ public class Program {
          public void mouseClicked(MouseEvent e) {
             JFrame OnOff = new JFrame();
             OnOff.setTitle("Access Point");
-            OnOff.setBounds(175,175,150,100);
+            OnOff.setBounds(175,175,300,100);
             OnOff.setVisible(true);
             java.net.URL imgURL = Program.class.getResource("\\Assets\\img\\icon.jpg");
             ImageIcon Icon = new ImageIcon(imgURL);
@@ -385,6 +412,214 @@ public class Program {
          }
       });
       ButtonArea.add(AdminAccessSwitch);
+      JButton ChangeCode = new JButton("Change Code");
+      ChangeCode.setForeground(Colors.lightblue);
+      ChangeCode.addMouseListener(new MouseAdapter() {
+         @Override
+         public void mouseClicked(MouseEvent e) {
+            JFrame CodeWindow = new JFrame();
+            CodeWindow.setTitle("Change Code");
+            CodeWindow.setBounds(150, 150, 664, 150);
+            CodeWindow.setVisible(true);
+            java.net.URL imgURL = Program.class.getResource("\\Assets\\img\\icon.jpg");
+            ImageIcon Icon = new ImageIcon(imgURL);
+            CodeWindow.setIconImage(Icon.getImage());
+            JPanel CodeButtonsArea = new JPanel();
+            JPanel CurrentCodeArea = new JPanel();
+            CodeWindow.getContentPane().add(CodeButtonsArea, BorderLayout.CENTER);
+            CodeWindow.getContentPane().add(CurrentCodeArea, BorderLayout.SOUTH);
+            JLabel CurrentCode = new JLabel();
+            CurrentCode.setForeground(Colors.lightblue);
+            try{
+               String File_Dir = "Users\\Admin";
+               String file = File_Dir + "\\Code.txt";
+               BufferedReader reader = new BufferedReader(new FileReader(file));
+               int Code = Integer.valueOf(reader.readLine());
+               CurrentCode.setText(String.valueOf(Code));
+               reader.close();
+            }
+            catch (IOException f){
+               System.out.println("An error occurred.");
+               f.printStackTrace();
+            }
+            CurrentCodeArea.add(CurrentCode);
+            JButton SelfCode = new JButton("Enter Code");
+            JButton RandomCode = new JButton("Random Code");
+            SelfCode.setForeground(Colors.lightblue);
+            RandomCode.setForeground(Colors.lightblue);
+            SelfCode.addMouseListener(new MouseAdapter() {
+               @Override
+               public void mouseClicked(MouseEvent e) {
+                  // new window
+                  JFrame self = new JFrame();
+                  self.setTitle("New Code");
+                  self.setBounds(150, 150, 664, 150);
+                  self.setVisible(true);
+                  java.net.URL imgURL = Program.class.getResource("\\Assets\\img\\icon.jpg");
+                  ImageIcon Icon = new ImageIcon(imgURL);
+                  self.setIconImage(Icon.getImage());
+                  JPanel panel = new JPanel();
+                  self.getContentPane().add(panel, BorderLayout.CENTER);
+                  TextField code = new TextField();
+                  code.setColumns(10);
+                  code.setForeground(Colors.lightblue);
+                  JButton Submit = new JButton("Submit");
+                  Submit.setForeground(Colors.lightblue);
+                  Submit.addMouseListener(new MouseAdapter() {
+                     @Override
+                     public void mouseClicked(MouseEvent e) {
+                      VerifyCode("New Self Code",code.getText());
+                        try{
+                           String File_Dir = "Users\\Admin";
+                           String file = File_Dir + "\\Code.txt";
+                           BufferedReader reader = new BufferedReader(new FileReader(file));
+                           int Code = Integer.valueOf(reader.readLine());
+                           CurrentCode.setText(String.valueOf(Code));
+                           reader.close();
+                        }
+                        catch (IOException f){
+                           System.out.println("An error occurred.");
+                           f.printStackTrace();
+                        }
+                        self.dispose();
+                     }
+                  });
+                  panel.add(code);
+                  panel.add(Submit);
+               }
+            });
+            RandomCode.addMouseListener(new MouseAdapter() {
+               @Override
+               public void mouseClicked(MouseEvent e) {
+                  VerifyCode("New Random Code","");
+                  try{
+                     String File_Dir = "Users\\Admin";
+                     String file = File_Dir + "\\Code.txt";
+                     BufferedReader reader = new BufferedReader(new FileReader(file));
+                     int Code = Integer.valueOf(reader.readLine());
+                     CurrentCode.setText(String.valueOf(Code));
+                     reader.close();
+                  }
+                  catch (IOException f){
+                     System.out.println("An error occurred.");
+                     f.printStackTrace();
+                  }
+               }
+            });
+            CodeButtonsArea.add(SelfCode);
+            CodeButtonsArea.add(RandomCode);
+         }
+      });
+      ButtonArea.add(ChangeCode);
+      JButton ChangeLoginButton = new JButton("Change Login");
+      ChangeLoginButton.setForeground(Colors.lightblue);
+      ChangeLoginButton.addMouseListener(new MouseAdapter() {
+         @Override
+         public void mouseClicked(MouseEvent e) {
+            JFrame CurrentLogin = new JFrame();
+            CurrentLogin.setTitle("Current Login");
+            CurrentLogin.setBounds(150, 150, 664, 150);
+            CurrentLogin.setVisible(true);
+            java.net.URL imgURL = Program.class.getResource("\\Assets\\img\\icon.jpg");
+            ImageIcon Icon = new ImageIcon(imgURL);
+            CurrentLogin.setIconImage(Icon.getImage());
+            JPanel CurrentForm = new JPanel();
+            CurrentLogin.getContentPane().add(CurrentForm, BorderLayout.CENTER);
+            JLabel UsernameText = new JLabel("Username:");
+            JLabel PasswordText = new JLabel("Password:");
+            JTextField Username = new JTextField();
+            JTextField Password = new JTextField();
+            JButton TryChange = new JButton("Change");
+            UsernameText.setForeground(Colors.lightblue);
+            PasswordText.setForeground(Colors.lightblue);
+            Username.setColumns(10);
+            Username.setForeground(Colors.lightblue);
+            Password.setColumns(10);
+            Password.setForeground(Colors.lightblue);
+            TryChange.setForeground(Colors.lightblue);
+            TryChange.addMouseListener(new MouseAdapter() {
+               @Override
+               public void mouseClicked(MouseEvent e) {
+                  try{
+                     String File_Dir = "Users\\Admin";
+                     String UsernameFile = File_Dir + "\\Username.txt";
+                     String PasswordFile = File_Dir + "\\Password.txt";
+                     BufferedReader UsernameReader = new BufferedReader(new FileReader(UsernameFile));
+                     BufferedReader PasswordReader = new BufferedReader(new FileReader(PasswordFile));
+                     String CheckUsername = UsernameReader.readLine();
+                     String CheckPassword = PasswordReader.readLine();
+                     String ErrorUsername =  Username.getText();
+                     String ErrorPassword =  Password.getText();
+                     if(ErrorUsername.equals(CheckUsername) && ErrorPassword.equals(CheckPassword)){
+                        Log("Admin Is Changing Login Credentials");
+                        CurrentLogin.dispose();
+                        JFrame newLogin = new JFrame();
+                        newLogin.setTitle("New Login");
+                        newLogin.setBounds(150, 150, 664, 150);
+                        newLogin.setVisible(true);
+                        java.net.URL imgURL = Program.class.getResource("\\Assets\\img\\icon.jpg");
+                        ImageIcon Icon = new ImageIcon(imgURL);
+                        newLogin.setIconImage(Icon.getImage());
+                        JPanel NewForm = new JPanel();
+                        newLogin.getContentPane().add(NewForm, BorderLayout.CENTER);
+                        JLabel NewUsernameText = new JLabel("Username:");
+                        JLabel NewPasswordText = new JLabel("Password:");
+                        JTextField NewUsername = new JTextField();
+                        JTextField NewPassword = new JTextField();
+                        JButton Change = new JButton("Login");
+                        Change.setForeground(Colors.lightblue);
+                        NewUsernameText.setForeground(Colors.lightblue);
+                        NewPasswordText.setForeground(Colors.lightblue);
+                        NewUsername.setColumns(10);
+                        NewUsername.setForeground(Colors.lightblue);
+                        NewPassword.setColumns(10);
+                        NewPassword.setForeground(Colors.lightblue);
+                        NewForm.add(NewUsernameText);
+                        NewForm.add(NewUsername);
+                        NewForm.add(NewPasswordText);
+                        NewForm.add(NewPassword);
+                        Change.addMouseListener(new MouseAdapter() {
+                           @Override
+                           public void mouseClicked(MouseEvent e) {
+                              File UsernameFileCreate = new File(UsernameFile);
+                              File PasswordFileCreate = new File(PasswordFile);
+                              try {
+                                 FileWriter UsernameFileWriter = new FileWriter(UsernameFileCreate);
+                                 UsernameFileWriter.write(NewUsername.getText());
+                                 UsernameFileWriter.close();
+                                 FileWriter PasswordFileWriter = new FileWriter(PasswordFileCreate);
+                                 PasswordFileWriter.write(NewPassword.getText());
+                                 PasswordFileWriter.close();
+                              }
+                              catch (IOException f) {
+                                 System.out.println("An error occurred.");
+                                 f.printStackTrace();
+                              }
+                              AdminFullAccess = false;
+                              newLogin.dispose();
+                              AdminArea.dispose();
+                              Log("Admin Has Changed Login Credentials");
+                           }
+                        });
+                        NewForm.add(Change);
+                     }
+                     UsernameReader.close();
+                     PasswordReader.close();
+                  }
+                  catch (IOException f){
+                     System.out.println("An error occurred.");
+                     f.printStackTrace();
+                  }
+               }
+            });
+            CurrentForm.add(UsernameText);
+            CurrentForm.add(Username);
+            CurrentForm.add(PasswordText);
+            CurrentForm.add(Password);
+            CurrentForm.add(TryChange);
+         }
+      });
+      ButtonArea.add(ChangeLoginButton);
       JButton Logout = new JButton("Logout");
       Logout.setForeground(Colors.lightblue);
       Logout.addMouseListener(new MouseAdapter() {
