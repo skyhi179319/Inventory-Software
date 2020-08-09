@@ -17,11 +17,20 @@ public class Program {
    private JTextField AddBarcodeTextField;
    private JLabel InventoryCount = new JLabel("Nothing Scanned");
    private String LogFile = "Main-Log.txt";
-   // Allows Sub-Admin to use code
+   /*
+        Allows Sub-Admin to use code
+        Lines 191,221,224,402-403,412-413,915,922
+    */
    private boolean AdminAccess = false;
-   // Allows Full Admin to be logged in and out
+   /*
+        Allows Full Admin to be logged in and out
+        Lines 334,336,607,638,646,676,684
+    */
    private boolean AdminFullAccess = false;
-   // Turns On/off AdminAccess
+   /*
+        Turns On/off AdminAccess
+        Lines 220,223,404,414
+    */
    private boolean KeepAdminAccessOn = false;
    TreeMap<Integer,Integer> MainInventory = new TreeMap<Integer,Integer>();
    TreeMap<LocalTime,String> LogInfo = new TreeMap<LocalTime,String>();
