@@ -9,8 +9,6 @@ import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.time.LocalDate;
 import javax.swing.*;
-import javax.swing.event.TableModelEvent;
-import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
 
 
@@ -21,7 +19,7 @@ public class Program {
    private String LogFile = "Main-Log.txt";
    /*
         Allows Sub-Admin to use code
-        Lines 191,221,224,402-403,412-413,921,927,938,341
+        Lines 191,221,224,402-403,412-413,919,925,936,939
     */
    private boolean AdminAccess = false;
    /*
