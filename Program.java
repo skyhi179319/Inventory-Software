@@ -9,6 +9,8 @@ import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.time.LocalDate;
 import javax.swing.*;
+import javax.swing.event.TableModelEvent;
+import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
 
 
@@ -19,7 +21,7 @@ public class Program {
    private String LogFile = "Main-Log.txt";
    /*
         Allows Sub-Admin to use code
-        Lines 191,221,224,402-403,412-413,915,922
+        Lines 191,221,224,402-403,412-413,921,928
     */
    private boolean AdminAccess = false;
    /*
@@ -138,7 +140,7 @@ public class Program {
          try {
             File File_Dir_File = new File(File_Dir);
             if(File_Dir_File.exists()){
-                System.out.println("Logs Directory Found");
+                System.out.println("Code Directory Found");
             }
             else{
                 File_Dir_File.mkdir();
@@ -737,7 +739,11 @@ public class Program {
       window.getContentPane().add(TablePanel, FlowLayout.CENTER);
       // Initializing the JTable
       DefaultTableModel model = new DefaultTableModel();
-      j = new JTable(model);
+      j = new JTable(model){
+         public boolean editCellAt(int row, int column, java.util.EventObject e) {
+            return false;
+         }
+      };
       // Add Columns
       model.addColumn("Barcode");
       model.addColumn("Amount");
@@ -925,6 +931,14 @@ public class Program {
          }
       });
       ToolBar.add(DeleteButton);
+      j.addMouseListener(new MouseAdapter() {
+         @Override
+         public void mouseClicked(MouseEvent e) {
+            if(e.getClickCount() == 2){
+               model.removeRow(j.getSelectedRow());
+            }
+         }
+      });
    }
    private void HelpWindow(){
       // Frame
