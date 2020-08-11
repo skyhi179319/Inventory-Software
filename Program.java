@@ -21,7 +21,7 @@ public class Program {
    private String LogFile = "Main-Log.txt";
    /*
         Allows Sub-Admin to use code
-        Lines 191,221,224,402-403,412-413,921,928
+        Lines 191,221,224,402-403,412-413,921,927,938,341
     */
    private boolean AdminAccess = false;
    /*
@@ -922,12 +922,12 @@ public class Program {
                if(j.getSelectedRow() != -1) {
                   // remove selected row from the model
                   model.removeRow(j.getSelectedRow());
-                  VerifyCode("Verified","");
                }
             }
             if(AdminAccess == false){
                VerifyCodeGUI();
             }
+            VerifyCode("Verified","");
          }
       });
       ToolBar.add(DeleteButton);
@@ -935,8 +935,14 @@ public class Program {
          @Override
          public void mouseClicked(MouseEvent e) {
             if(e.getClickCount() == 2){
-               model.removeRow(j.getSelectedRow());
+               if(AdminAccess == true){
+                  model.removeRow(j.getSelectedRow());
+               }
+               if(AdminAccess == false){
+                  VerifyCodeGUI();
+               }
             }
+            VerifyCode("Verified","");
          }
       });
    }
