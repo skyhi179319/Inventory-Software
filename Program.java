@@ -9,6 +9,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.time.LocalDate;
 import javax.swing.*;
+import javax.swing.plaf.ScrollBarUI;
 import javax.swing.table.DefaultTableModel;
 
 
@@ -19,17 +20,17 @@ public class Program {
    private String LogFile = "Main-Log.txt";
    /*
         Allows Sub-Admin to use code
-        Lines 191,221,224,402-403,412-413,919,925,936,939
+        Lines 192,222,225,405-406,415-416,923,929,940,943,954,960,1150,1191
     */
    private boolean AdminAccess = false;
    /*
         Allows Full Admin to be logged in and out
-        Lines 334,336,607,638,646,676,684
+        Lines 335,337,610,641,649,679,687,1150,1233
     */
    private boolean AdminFullAccess = false;
    /*
         Turns On/off AdminAccess
-        Lines 220,223,404,414
+        Lines 221,224,407,417
     */
    private boolean KeepAdminAccessOn = false;
    TreeMap<Integer,Integer> MainInventory = new TreeMap<Integer,Integer>();
@@ -396,6 +397,8 @@ public class Program {
             on.setForeground(Colors.lightblue);
             JButton off = new JButton("Off");
             off.setForeground(Colors.lightblue);
+            JButton LimitedAccessButton = new JButton("Limited");
+            LimitedAccessButton.setForeground(Colors.lightblue);
             on.addMouseListener(new MouseAdapter() {
                @Override
                public void mouseClicked(MouseEvent e) {
@@ -758,6 +761,7 @@ public class Program {
       j.setForeground(red.darker());
       // adding it to JScrollPane
       JScrollPane sp = new JScrollPane(j);
+      sp.getVerticalScrollBar().setBackground(Colors.lightblue);
       TablePanel.add(sp);
       Log("Built Table");
       // Toolbar
@@ -935,6 +939,23 @@ public class Program {
             if(e.getClickCount() == 2){
                if(AdminAccess == true){
                   model.removeRow(j.getSelectedRow());
+               }
+               if(AdminAccess == false){
+                  VerifyCodeGUI();
+               }
+            }
+            VerifyCode("Verified","");
+         }
+      });
+      j.addKeyListener(new KeyAdapter() {
+         @Override
+         public void keyPressed(KeyEvent e) {
+            if(e.getKeyCode() == KeyEvent.VK_DELETE){
+               if(AdminAccess == true){
+                  int[] row = j.getSelectedRows();
+                  for (int i = row.length - 1; i >= 0; i--) {
+                     model.removeRow(row[i]);
+                  }
                }
                if(AdminAccess == false){
                   VerifyCodeGUI();
@@ -1126,8 +1147,114 @@ public class Program {
       TableButton.addMouseListener(new MouseAdapter() {
          @Override
          public void mouseClicked(MouseEvent e) {
-            TableWindow();
-            Log("Attempted To Opened Table Window");
+            if(AdminAccess || AdminFullAccess == false){
+               JFrame prompt = new JFrame();
+               prompt.setTitle("Pre-Verify");
+               prompt.setBounds(100, 100, 300, 100);
+               prompt.setVisible(true);
+               java.net.URL imgURL = Program.class.getResource("\\Assets\\img\\icon.jpg");
+               ImageIcon Icon = new ImageIcon(imgURL);
+               prompt.setIconImage(Icon.getImage());
+               JPanel ButtonArea = new JPanel();
+               prompt.getContentPane().add(ButtonArea, BorderLayout.CENTER);
+               JButton code = new JButton("Code");
+               JButton password = new JButton("Password");
+               JButton skip = new JButton("Skip");
+               code.setForeground(Colors.lightblue);
+               password.setForeground(Colors.lightblue);
+               skip.setForeground(Colors.lightblue);
+               code.addMouseListener(new MouseAdapter() {
+                  @Override
+                  public void mouseClicked(MouseEvent e) {
+                     JFrame verify = new JFrame();
+                     verify.setTitle("Verify");
+                     verify.setBounds(100, 100, 300, 100);
+                     verify.setVisible(true);
+                     java.net.URL imgURL = Program.class.getResource("\\Assets\\img\\icon.jpg");
+                     ImageIcon Icon = new ImageIcon(imgURL);
+                     verify.setIconImage(Icon.getImage());
+                     JPanel LoginArea = new JPanel();
+                     verify.getContentPane().add(LoginArea, BorderLayout.CENTER);
+                     JLabel CodeLabel = new JLabel("Code:");
+                     CodeLabel.setForeground(Colors.lightblue);
+                     JTextField Code = new JTextField();
+                     Code.setColumns(10);
+                     Code.setForeground(Colors.lightblue);
+                     LoginArea.add(CodeLabel);
+                     LoginArea.add(Code);
+                     JButton LoginButton = new JButton("Login");
+                     LoginButton.setForeground(Colors.lightblue);
+                     LoginButton.addMouseListener(new MouseAdapter() {
+                        @Override
+                        public void mouseClicked(MouseEvent e) {
+                           VerifyCode("Verify",Code.getText());
+                           if(AdminAccess == true){
+                              prompt.dispose();
+                              verify.dispose();
+                              TableWindow();
+                           }
+                        }
+                     });
+                     LoginArea.add(LoginButton);
+                  }
+               });
+               password.addMouseListener(new MouseAdapter() {
+                  @Override
+                  public void mouseClicked(MouseEvent e) {
+                     JFrame verify = new JFrame();
+                     verify.setTitle("Verify");
+                     verify.setBounds(100, 100, 450, 100);
+                     verify.setVisible(true);
+                     java.net.URL imgURL = Program.class.getResource("\\Assets\\img\\icon.jpg");
+                     ImageIcon Icon = new ImageIcon(imgURL);
+                     verify.setIconImage(Icon.getImage());
+                     JPanel LoginArea = new JPanel();
+                     verify.getContentPane().add(LoginArea, BorderLayout.CENTER);
+                     JLabel UsernameLabel = new JLabel("Username:");
+                     UsernameLabel.setForeground(Colors.lightblue);
+                     JTextField UsernameText = new JTextField();
+                     UsernameText.setColumns(10);
+                     UsernameText.setForeground(Colors.lightblue);
+                     LoginArea.add(UsernameLabel);
+                     LoginArea.add(UsernameText);
+                     JLabel PasswordLabel = new JLabel("Password:");
+                     PasswordLabel.setForeground(Colors.lightblue);
+                     JTextField PasswordText = new JTextField();
+                     PasswordText.setColumns(10);
+                     PasswordText.setForeground(Colors.lightblue);
+                     LoginArea.add(PasswordLabel);
+                     LoginArea.add(PasswordText);
+                     JButton LoginButton = new JButton("Login");
+                     LoginButton.setForeground(Colors.lightblue);
+                     LoginButton.addMouseListener(new MouseAdapter() {
+                        @Override
+                        public void mouseClicked(MouseEvent e) {
+                           VerifyUser("Verify",UsernameText.getText(),PasswordText.getText());
+                           if(AdminFullAccess == true){
+                              prompt.dispose();
+                              verify.dispose();
+                              TableWindow();
+                           }
+                        }
+                     });
+                     LoginArea.add(LoginButton);
+                  }
+               });
+               skip.addMouseListener(new MouseAdapter() {
+                  @Override
+                  public void mouseClicked(MouseEvent e) {
+                     prompt.dispose();
+                     TableWindow();
+                  }
+               });
+               ButtonArea.add(code);
+               ButtonArea.add(password);
+               ButtonArea.add(skip);
+            }
+            else{
+               TableWindow();
+               Log("Attempted To Opened Table Window");
+            }
          }
       });
       ButtonToolBar.add(TableButton);
@@ -1218,7 +1345,6 @@ public class Program {
    private void InventoryContainer(){
       JPanel InventoryCountPanel = new JPanel();
       frmInventory.getContentPane().add(InventoryCountPanel, BorderLayout.CENTER);
-
       InventoryCountPanel.add(InventoryCount);
    }
    private void UserInfo(){
