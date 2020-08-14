@@ -11,7 +11,7 @@ import java.awt.event.MouseEvent;
 public class Users {
     private JFrame frmUsers;
     private JTextField NameTextField;
-    public void SwitchUser(String Name) {
+    private void SwitchUser(String Name) {
         try {
             String Name_Setup = "Users\\Main-Name.txt";
             File UsernameFile = new File(Name_Setup);
