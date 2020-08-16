@@ -9,7 +9,6 @@ import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.time.LocalDate;
 import javax.swing.*;
-import javax.swing.plaf.ScrollBarUI;
 import javax.swing.table.DefaultTableModel;
 
 
@@ -20,19 +19,25 @@ public class Program {
    private String LogFile = "Main-Log.txt";
    /*
         Allows Sub-Admin to use code
-        Lines 192,222,225,405-406,415-416,923,929,940,943,954,960,1150,1191
+        Lines 197,227,230,410-411,420-421,960,966,977,980,991,997,1187,1226
     */
    private boolean AdminAccess = false;
    /*
         Allows Full Admin to be logged in and out
-        Lines 335,337,610,641,649,679,687,1150,1233
+        Lines 340,342,648,679,687,717,725,1187,1266
     */
    private boolean AdminFullAccess = false;
    /*
         Turns On/off AdminAccess
-        Lines 221,224,407,417
+        Lines 226,229,412,422
     */
    private boolean KeepAdminAccessOn = false;
+   /*
+         Turns On/Off Table Login
+         Lines 446,452,1187
+    */
+   private boolean TableLogin = false;
+
    TreeMap<Integer,Integer> MainInventory = new TreeMap<Integer,Integer>();
    TreeMap<LocalTime,String> LogInfo = new TreeMap<LocalTime,String>();
    ArrayList<String> UserPathName = new ArrayList<String>();
@@ -397,8 +402,8 @@ public class Program {
             on.setForeground(Colors.lightblue);
             JButton off = new JButton("Off");
             off.setForeground(Colors.lightblue);
-            JButton LimitedAccessButton = new JButton("Limited");
-            LimitedAccessButton.setForeground(Colors.lightblue);
+            JButton TableLoginButton = new JButton("Table Login");
+            TableLoginButton.setForeground(Colors.lightblue);
             on.addMouseListener(new MouseAdapter() {
                @Override
                public void mouseClicked(MouseEvent e) {
@@ -419,8 +424,41 @@ public class Program {
                   }
                }
             });
+            TableLoginButton.addMouseListener(new MouseAdapter() {
+               @Override
+               public void mouseClicked(MouseEvent e) {
+                  JFrame TableOnOff = new JFrame();
+                  TableOnOff.setTitle("Access Point");
+                  TableOnOff.setBounds(175,175,300,100);
+                  TableOnOff.setVisible(true);
+                  java.net.URL imgURL = Program.class.getResource("\\Assets\\img\\icon.jpg");
+                  ImageIcon Icon = new ImageIcon(imgURL);
+                  TableOnOff.setIconImage(Icon.getImage());
+                  JPanel TableButtons = new JPanel();
+                  TableOnOff.getContentPane().add(TableButtons, BorderLayout.CENTER);
+                  JButton ButtonOn = new JButton("On");
+                  ButtonOn.setForeground(Colors.lightblue);
+                  JButton ButtonOff = new JButton("Off");
+                  ButtonOff.setForeground(Colors.lightblue);
+                  ButtonOn.addMouseListener(new MouseAdapter() {
+                     @Override
+                     public void mouseClicked(MouseEvent e) {
+                        TableLogin = true;
+                     }
+                  });
+                  ButtonOff.addMouseListener(new MouseAdapter() {
+                     @Override
+                     public void mouseClicked(MouseEvent e) {
+                        TableLogin = false;
+                     }
+                  });
+                  TableButtons.add(ButtonOn);
+                  TableButtons.add(ButtonOff);
+               }
+            });
             AccessButtons.add(on);
             AccessButtons.add(off);
+            AccessButtons.add(TableLoginButton);
          }
       });
       ButtonArea.add(AdminAccessSwitch);
@@ -771,7 +809,6 @@ public class Program {
       ToolBar.setBackground(SystemColor.menu);
       ToolBar.setFloatable(false);
       window.getContentPane().add(ToolBar, BorderLayout.WEST);
-
       JButton Refresh = new JButton("Refresh");
       Refresh.setForeground(Colors.lightblue);
       Refresh.setSize(new Dimension(200, 20));
@@ -1147,7 +1184,7 @@ public class Program {
       TableButton.addMouseListener(new MouseAdapter() {
          @Override
          public void mouseClicked(MouseEvent e) {
-            if(AdminAccess || AdminFullAccess == false){
+            if(AdminAccess || AdminFullAccess == false && TableLogin == false){
                JFrame prompt = new JFrame();
                prompt.setTitle("Pre-Verify");
                prompt.setBounds(100, 100, 300, 100);
@@ -1170,8 +1207,6 @@ public class Program {
                      verify.setTitle("Verify");
                      verify.setBounds(100, 100, 300, 100);
                      verify.setVisible(true);
-                     java.net.URL imgURL = Program.class.getResource("\\Assets\\img\\icon.jpg");
-                     ImageIcon Icon = new ImageIcon(imgURL);
                      verify.setIconImage(Icon.getImage());
                      JPanel LoginArea = new JPanel();
                      verify.getContentPane().add(LoginArea, BorderLayout.CENTER);
@@ -1205,8 +1240,6 @@ public class Program {
                      verify.setTitle("Verify");
                      verify.setBounds(100, 100, 450, 100);
                      verify.setVisible(true);
-                     java.net.URL imgURL = Program.class.getResource("\\Assets\\img\\icon.jpg");
-                     ImageIcon Icon = new ImageIcon(imgURL);
                      verify.setIconImage(Icon.getImage());
                      JPanel LoginArea = new JPanel();
                      verify.getContentPane().add(LoginArea, BorderLayout.CENTER);
@@ -1243,8 +1276,33 @@ public class Program {
                skip.addMouseListener(new MouseAdapter() {
                   @Override
                   public void mouseClicked(MouseEvent e) {
-                     prompt.dispose();
-                     TableWindow();
+                     JFrame Confirm = new JFrame();
+                     Confirm.setTitle("Confirm");
+                     Confirm.setBounds(100, 100, 450, 100);
+                     Confirm.setVisible(true);
+                     Confirm.setIconImage(Icon.getImage());
+                     JPanel ConfirmPanel = new JPanel();
+                     Confirm.getContentPane().add(ConfirmPanel, BorderLayout.CENTER);
+                     JButton ConfirmYes = new JButton("Yes");
+                     ConfirmYes.setForeground(Colors.lightblue);
+                     JButton ConfirmNo = new JButton("No");
+                     ConfirmNo.setForeground(Colors.lightblue);
+                     ConfirmYes.addMouseListener(new MouseAdapter() {
+                        @Override
+                        public void mouseClicked(MouseEvent e) {
+                           prompt.dispose();
+                           Confirm.dispose();
+                           TableWindow();
+                        }
+                     });
+                     ConfirmNo.addMouseListener(new MouseAdapter() {
+                        @Override
+                        public void mouseClicked(MouseEvent e) {
+                           Confirm.dispose();
+                        }
+                     });
+                     ConfirmPanel.add(ConfirmYes);
+                     ConfirmPanel.add(ConfirmNo);
                   }
                });
                ButtonArea.add(code);
