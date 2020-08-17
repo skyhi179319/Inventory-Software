@@ -9,32 +9,151 @@ import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.time.LocalDate;
 import javax.swing.*;
+import javax.swing.plaf.ComponentUI;
+import javax.swing.plaf.basic.BasicTabbedPaneUI;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.text.View;
 
 
 public class Program {
+   public static class TabDesign extends BasicTabbedPaneUI {
+
+      private Color selectColor;
+      private Color deSelectColor;
+      private int inclTab = 4;
+      private int FolderWidth = 18;
+      private Polygon shape;
+      public static ComponentUI createUI(JComponent c) {
+         return new TabDesign();
+      }
+      // installing the defualts
+      @Override
+      protected void installDefaults() {
+         super.installDefaults();
+         // default Colors
+         selectColor = new Color(Colors.gold.getRGB());
+         deSelectColor = new Color(Colors.info.getRGB());
+         tabAreaInsets.right = FolderWidth;
+      }
+      // drawing the tabs
+      @Override
+      protected void paintTabArea(Graphics g, int tabPlacement, int selectedIndex) {
+         if (runCount > 1) {
+            int lines[] = new int[runCount];
+            for (int i = 0; i < runCount; i++) {
+               lines[i] = rects[tabRuns[i]].y + (tabPlacement == TOP ? maxTabHeight : 0);
+            }
+            Arrays.sort(lines);
+            if (tabPlacement == TOP) {
+               int row = runCount;
+               for (int i = 0; i < lines.length - 1; i++, row--) {
+                  Polygon carp = new Polygon();
+                  carp.addPoint(0, lines[i]);
+                  carp.addPoint(tabPane.getWidth() - 2 * row - 2, lines[i]);
+                  carp.addPoint(tabPane.getWidth() - 2 * row, lines[i] + 3);
+                  if (i < lines.length - 2) {
+                     carp.addPoint(tabPane.getWidth() - 2 * row, lines[i + 1]);
+                     carp.addPoint(0, lines[i + 1]);
+                  } else {
+                     carp.addPoint(tabPane.getWidth() - 2 * row, lines[i] + rects[selectedIndex].height);
+                     carp.addPoint(0, lines[i] + rects[selectedIndex].height);
+                  }
+                  carp.addPoint(0, lines[i]);
+                  g.fillPolygon(carp);
+                  g.drawPolygon(carp);
+               }
+            } else {
+               int row = 0;
+               for (int i = 0; i < lines.length - 1; i++, row++) {
+                  Polygon carp = new Polygon();
+                  carp.addPoint(0, lines[i]);
+                  carp.addPoint(tabPane.getWidth() - 2 * row - 1, lines[i]);
+                  carp.addPoint(tabPane.getWidth() - 2 * row - 1, lines[i + 1] - 3);
+                  carp.addPoint(tabPane.getWidth() - 2 * row - 3, lines[i + 1]);
+                  carp.addPoint(0, lines[i + 1]);
+                  carp.addPoint(0, lines[i]);
+                  g.fillPolygon(carp);
+                  g.drawPolygon(carp);
+               }
+            }
+         }
+         super.paintTabArea(g, tabPlacement, selectedIndex);
+      }
+      // paint tab background
+      @Override
+      protected void paintTabBackground(Graphics g, int tabPlacement, int tabIndex, int x, int y, int w, int h, boolean isSelected) {
+         Graphics2D g2D = (Graphics2D) g;
+         g2D.setBackground(Color.white);
+         int xp[] = null;
+         int yp[] = null;
+         switch (tabPlacement) {
+            case LEFT:
+               xp = new int[]{x, x, x + w, x + w, x};
+               yp = new int[]{y, y + h - 3, y + h - 3, y, y};
+               break;
+            case RIGHT:
+               xp = new int[]{x, x, x + w - 2, x + w - 2, x};
+               yp = new int[]{y, y + h - 3, y + h - 3, y, y};
+               break;
+            case BOTTOM:
+               xp = new int[]{x, x, x + 3, x + w - inclTab - 6, x + w - inclTab - 2, x + w - inclTab, x + w - 3, x};
+               yp = new int[]{y, y + h - 3, y + h, y + h, y + h - 1, y + h - 3, y, y};
+               break;
+            case TOP:
+            default:
+               xp = new int[]{x, x, x + 3, x + w - inclTab - 6, x + w - inclTab - 2, x + w - inclTab, x + w - inclTab, x};
+               yp = new int[]{y + h, y + 3, y, y, y + 1, y + 3, y + h, y + h};
+               break;
+         }
+         // ;
+         shape = new Polygon(xp, yp, xp.length);
+         if (isSelected) {
+            g2D.setColor(selectColor);
+         } else {
+            if (tabPane.isEnabled() && tabPane.isEnabledAt(tabIndex)) {
+               g2D.setColor(deSelectColor);
+            }
+         }
+         g2D.fill(shape);
+      }
+
+      @Override
+      protected void paintText(Graphics g, int tabPlacement, Font font, FontMetrics metrics, int tabIndex, String title, Rectangle textRect, boolean isSelected) {
+         super.paintText(g, tabPlacement, font, metrics, tabIndex, title, textRect, isSelected);
+         g.setFont(font);
+         View v = getTextViewForTab(tabIndex);
+         if (v != null) {
+            // html
+            v.paint(g, textRect);
+         }
+      }
+      @Override
+      protected int calculateTabWidth(int tabPlacement, int tabIndex, FontMetrics metrics) {
+         return 20 + inclTab + super.calculateTabWidth(tabPlacement, tabIndex, metrics);
+      }
+   }
    private JFrame frmInventory;
    private JTextField AddBarcodeTextField;
    private JLabel InventoryCount = new JLabel("Nothing Scanned");
    private String LogFile = "Main-Log.txt";
    /*
         Allows Sub-Admin to use code
-        Lines 197,227,230,410-411,420-421,960,966,977,980,991,997,1187,1226
+        Lines 316,346,349,529,530,539,540,1079,1085,1096,1099,1110,1116,1307,1346
     */
    private boolean AdminAccess = false;
    /*
         Allows Full Admin to be logged in and out
-        Lines 340,342,648,679,687,717,725,1187,1266
+        Lines 459,461,767,798,806,836,844,1307,1386
     */
    private boolean AdminFullAccess = false;
    /*
         Turns On/off AdminAccess
-        Lines 226,229,412,422
+        Lines 345,348,531,541
     */
    private boolean KeepAdminAccessOn = false;
    /*
          Turns On/Off Table Login
-         Lines 446,452,1187
+         Lines 565,571,1307
     */
    private boolean TableLogin = false;
 
@@ -1033,6 +1152,7 @@ public class Program {
       UserPanel.add(UserLabel);
       // Info Panel
       JTabbedPane InfoPanel = new JTabbedPane();
+      InfoPanel.setUI(new TabDesign());
       window.getContentPane().add(InfoPanel,BorderLayout.CENTER);
       // Info Panel - JPanels
       JPanel AboutInfo = new JPanel();
