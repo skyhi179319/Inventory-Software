@@ -9,6 +9,8 @@ import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.time.LocalDate;
 import javax.swing.*;
+import javax.swing.border.Border;
+import javax.swing.border.LineBorder;
 import javax.swing.plaf.ComponentUI;
 import javax.swing.plaf.basic.BasicTabbedPaneUI;
 import javax.swing.table.DefaultTableModel;
@@ -17,7 +19,6 @@ import javax.swing.text.View;
 
 public class Program {
    public static class TabDesign extends BasicTabbedPaneUI {
-
       private Color selectColor;
       private Color deSelectColor;
       private int inclTab = 4;
@@ -26,13 +27,13 @@ public class Program {
       public static ComponentUI createUI(JComponent c) {
          return new TabDesign();
       }
-      // installing the defualts
+      // installing the defaults
       @Override
       protected void installDefaults() {
          super.installDefaults();
          // default Colors
          selectColor = new Color(Colors.gold.getRGB());
-         deSelectColor = new Color(Colors.info.getRGB());
+         deSelectColor = new Color(Colors.LightYellow.getRGB());
          tabAreaInsets.right = FolderWidth;
       }
       // drawing the tabs
@@ -83,7 +84,7 @@ public class Program {
       @Override
       protected void paintTabBackground(Graphics g, int tabPlacement, int tabIndex, int x, int y, int w, int h, boolean isSelected) {
          Graphics2D g2D = (Graphics2D) g;
-         g2D.setBackground(Color.white);
+         GradientPaint gradientShadow = null;
          int xp[] = null;
          int yp[] = null;
          switch (tabPlacement) {
@@ -109,9 +110,12 @@ public class Program {
          shape = new Polygon(xp, yp, xp.length);
          if (isSelected) {
             g2D.setColor(selectColor);
+
          } else {
             if (tabPane.isEnabled() && tabPane.isEnabledAt(tabIndex)) {
                g2D.setColor(deSelectColor);
+               gradientShadow = new GradientPaint(0, 0, deSelectColor, 0, y + h / 2, Colors.info);
+               g2D.setPaint(gradientShadow);
             }
          }
          g2D.fill(shape);
@@ -1193,10 +1197,6 @@ public class Program {
       InfoPanel.setForegroundAt(1,Colors.lightblue);
       InfoPanel.setForegroundAt(2,Colors.lightblue);
       InfoPanel.setForegroundAt(3,Colors.lightblue);
-      InfoPanel.setBackgroundAt(0,Colors.info);
-      InfoPanel.setBackgroundAt(1,Colors.info);
-      InfoPanel.setBackgroundAt(2,Colors.info);
-      InfoPanel.setBackgroundAt(3,Colors.info);
    }
    public Program(){
       prepareGUI();
