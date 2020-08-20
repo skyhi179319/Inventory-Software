@@ -84,7 +84,8 @@ public class Program {
       @Override
       protected void paintTabBackground(Graphics g, int tabPlacement, int tabIndex, int x, int y, int w, int h, boolean isSelected) {
          Graphics2D g2D = (Graphics2D) g;
-         GradientPaint gradientShadow = null;
+         GradientPaint DeSelectedgradientShadow = null;
+         GradientPaint SelectedgradientShadow = null;
          int xp[] = null;
          int yp[] = null;
          switch (tabPlacement) {
@@ -109,13 +110,12 @@ public class Program {
          // ;
          shape = new Polygon(xp, yp, xp.length);
          if (isSelected) {
-            g2D.setColor(selectColor);
-
+            SelectedgradientShadow = new GradientPaint(0, y + h / 2, selectColor, 0, y + h / 3, Colors.info);
+            g2D.setPaint(SelectedgradientShadow);
          } else {
             if (tabPane.isEnabled() && tabPane.isEnabledAt(tabIndex)) {
-               g2D.setColor(deSelectColor);
-               gradientShadow = new GradientPaint(0, 0, deSelectColor, 0, y + h / 2, Colors.info);
-               g2D.setPaint(gradientShadow);
+               DeSelectedgradientShadow = new GradientPaint(0, y + h / 2, deSelectColor, 0, y + h / 3, Colors.info);
+               g2D.setPaint(DeSelectedgradientShadow);
             }
          }
          g2D.fill(shape);
@@ -1305,12 +1305,12 @@ public class Program {
          @Override
          public void mouseClicked(MouseEvent e) {
             if(AdminAccess || AdminFullAccess == false && TableLogin == false){
+               java.net.URL imgURL = Program.class.getResource("\\Assets\\img\\icon.jpg");
+               ImageIcon Icon = new ImageIcon(imgURL);
                JFrame prompt = new JFrame();
                prompt.setTitle("Pre-Verify");
                prompt.setBounds(100, 100, 300, 100);
                prompt.setVisible(true);
-               java.net.URL imgURL = Program.class.getResource("\\Assets\\img\\icon.jpg");
-               ImageIcon Icon = new ImageIcon(imgURL);
                prompt.setIconImage(Icon.getImage());
                JPanel ButtonArea = new JPanel();
                prompt.getContentPane().add(ButtonArea, BorderLayout.CENTER);
