@@ -9,8 +9,6 @@ import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.time.LocalDate;
 import javax.swing.*;
-import javax.swing.border.Border;
-import javax.swing.border.LineBorder;
 import javax.swing.plaf.ComponentUI;
 import javax.swing.plaf.basic.BasicTabbedPaneUI;
 import javax.swing.table.DefaultTableModel;
@@ -142,22 +140,22 @@ public class Program {
    private String LogFile = "Main-Log.txt";
    /*
         Allows Sub-Admin to use code
-        Lines 320,350,353,533,534,543,544,1083,1089,1100,1103,1114,1120,1307,1346
+        Lines 318,348,351,531,532,541,542,1081,1087,1098,1101,1112,118,1305,1344
     */
    private boolean AdminAccess = false;
    /*
         Allows Full Admin to be logged in and out
-        Lines 463,465,771,802,810,840,848,1307,1386
+        Lines 461,463,769,800,808,838,846,1305,1384
     */
    private boolean AdminFullAccess = false;
    /*
         Turns On/off AdminAccess
-        Lines 349,352,535,545
+        Lines 347,350,533,543
     */
    private boolean KeepAdminAccessOn = false;
    /*
          Turns On/Off Table Login
-         Lines 569,575,1307
+         Lines 567,573,1305
     */
    private boolean TableLogin = false;
 
