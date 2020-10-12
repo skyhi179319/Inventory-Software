@@ -564,12 +564,14 @@ public class Program {
                   ButtonOn.addMouseListener(new MouseAdapter() {
                      @Override
                      public void mouseClicked(MouseEvent e) {
+                        Action.setText("Table Login On");
                         TableLogin = true;
                      }
                   });
                   ButtonOff.addMouseListener(new MouseAdapter() {
                      @Override
                      public void mouseClicked(MouseEvent e) {
+                        Action.setText("Table Login Off");
                         TableLogin = false;
                      }
                   });
@@ -1302,10 +1304,10 @@ public class Program {
       TableButton.addMouseListener(new MouseAdapter() {
          @Override
          public void mouseClicked(MouseEvent e) {
+        	JFrame prompt = new JFrame();
             if(AdminAccess || AdminFullAccess == false && TableLogin == false){
                java.net.URL imgURL = Program.class.getResource("\\Assets\\img\\icon.jpg");
                ImageIcon Icon = new ImageIcon(imgURL);
-               JFrame prompt = new JFrame();
                prompt.setTitle("Pre-Verify");
                prompt.setBounds(100, 100, 300, 100);
                prompt.setVisible(true);
@@ -1427,9 +1429,13 @@ public class Program {
                ButtonArea.add(password);
                ButtonArea.add(skip);
             }
-            else{
+            if(AdminAccess || AdminFullAccess == false && TableLogin == true){
                TableWindow();
                Log("Attempted To Opened Table Window");
+            }
+            if(AdminFullAccess == true) {
+            	TableWindow();
+            	prompt.dispose();
             }
          }
       });
