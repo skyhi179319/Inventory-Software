@@ -140,12 +140,12 @@ public class Program {
    private String LogFile = "Main-Log.txt";
    /*
         Allows Sub-Admin to use code
-        Lines 318,348,351,531,532,541,542,1081,1087,1098,1101,1112,118,1305,1344
+        Lines 318,347,348,351,531,532,541,542,1083,1089,1100,1103,1114,1120,1308,1346,1432
     */
    private boolean AdminAccess = false;
    /*
         Allows Full Admin to be logged in and out
-        Lines 461,463,769,800,808,838,846,1305,1384
+        Lines 461,463,771,802,810,840,848,1308,1386,1432,1436
     */
    private boolean AdminFullAccess = false;
    /*
@@ -155,7 +155,7 @@ public class Program {
    private boolean KeepAdminAccessOn = false;
    /*
          Turns On/Off Table Login
-         Lines 567,573,1305
+         Lines 568,575,1308,1432
     */
    private boolean TableLogin = false;
 
