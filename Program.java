@@ -1,4 +1,5 @@
 import Assets.colors.Colors;
+import Assets.Update;
 import java.awt.event.*;
 import java.io.*;
 import java.lang.*;
@@ -140,22 +141,22 @@ public class Program {
    private String LogFile = "Main-Log.txt";
    /*
         Allows Sub-Admin to use code
-        Lines 318,347,348,351,531,532,541,542,1083,1089,1100,1103,1114,1120,1308,1346,1432
+        Lines 319,349,352,532,533,542,543,1084,1090,1101,1104,1115,1121,1310,1348,1434
     */
    private boolean AdminAccess = false;
    /*
         Allows Full Admin to be logged in and out
-        Lines 461,463,771,802,810,840,848,1308,1386,1432,1436
+        Lines 462,464,772,803,811,841,849,1310,1388,1434,1438
     */
    private boolean AdminFullAccess = false;
    /*
         Turns On/off AdminAccess
-        Lines 347,350,533,543
+        Lines 348,351,534,544
     */
    private boolean KeepAdminAccessOn = false;
    /*
          Turns On/Off Table Login
-         Lines 568,575,1308,1432
+         Lines 569,576,1310,1434
     */
    private boolean TableLogin = false;
 
@@ -1228,6 +1229,7 @@ public class Program {
             CompleteLog(LogFile);
          }
       });
+      Update.AutoStart();
    }
    private void InfoContainer(){
       JPanel AddPanel = new JPanel();
