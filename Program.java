@@ -805,6 +805,58 @@ public class Program {
          }
       });
       ButtonArea.add(Logout);
+      JButton InfoButton = new JButton("Info");
+      InfoButton.setForeground(Colors.lightblue);
+      InfoButton.addMouseListener(new MouseAdapter() {
+    	  @Override
+    	  public void mouseClicked(MouseEvent e) {
+    		  JFrame self = new JFrame();
+              self.setTitle("Info");
+              self.setBounds(150, 150, 664, 150);
+              self.setVisible(true);
+              java.net.URL imgURL = Program.class.getResource("\\Assets\\img\\icon.jpg");
+              ImageIcon Icon = new ImageIcon(imgURL);
+              self.setIconImage(Icon.getImage());
+              JPanel InfoButtonsPanel = new JPanel();
+              JPanel InfoPanel = new JPanel();
+              self.getContentPane().add(InfoButtonsPanel, BorderLayout.CENTER);
+              self.getContentPane().add(InfoPanel, BorderLayout.SOUTH);
+              String version = Update.UpdateInfoArray.get(0);
+              String update1 = Update.UpdateInfoArray.get(1);
+              String update2 = Update.UpdateInfoArray.get(2);
+              String update3 = Update.UpdateInfoArray.get(3);
+              JLabel InfoLabel = new JLabel("");
+              InfoLabel.setForeground(Colors.lightblue);
+              InfoPanel.add(InfoLabel);
+              // Buttons
+              JButton VersionButton = new JButton("Version");
+              VersionButton.setForeground(Colors.lightblue);
+              VersionButton.addMouseListener(new MouseAdapter() {
+            	  @Override
+                  public void mouseClicked(MouseEvent e) {
+                     InfoLabel.setText(version);
+                  }
+              });
+              InfoButtonsPanel.add(VersionButton);
+              JButton UpdateInfoButton = new JButton("Updates");
+              UpdateInfoButton.setForeground(Colors.lightblue);
+              UpdateInfoButton.addMouseListener(new MouseAdapter() {
+            	  @Override
+                  public void mouseClicked(MouseEvent e) {
+            		 String info = update1;
+            		 if(!update2.equals("")) {
+            			 info.concat(" " + update2);
+            		 }
+            		 if(!update3.equals("")) {
+            			 info.concat(" " + update3);
+            		 }
+                     InfoLabel.setText(info);
+                  }
+              });
+              InfoButtonsPanel.add(UpdateInfoButton);
+    	  }
+      });
+      ButtonArea.add(InfoButton);
    }
    private void VerifyUserGUI(){
       // if statements allows admin to be kept logged in
