@@ -821,10 +821,6 @@ public class Program {
               JPanel InfoPanel = new JPanel();
               self.getContentPane().add(InfoButtonsPanel, BorderLayout.CENTER);
               self.getContentPane().add(InfoPanel, BorderLayout.SOUTH);
-              String version = Update.UpdateInfoArray.get(0);
-              String update1 = Update.UpdateInfoArray.get(1);
-              String update2 = Update.UpdateInfoArray.get(2);
-              String update3 = Update.UpdateInfoArray.get(3);
               JLabel InfoLabel = new JLabel("");
               InfoLabel.setForeground(Colors.lightblue);
               InfoPanel.add(InfoLabel);
@@ -834,7 +830,7 @@ public class Program {
               VersionButton.addMouseListener(new MouseAdapter() {
             	  @Override
                   public void mouseClicked(MouseEvent e) {
-                     InfoLabel.setText(version);
+                     Update.Commands.DoCommand("version", InfoLabel);
                   }
               });
               InfoButtonsPanel.add(VersionButton);
@@ -843,14 +839,7 @@ public class Program {
               UpdateInfoButton.addMouseListener(new MouseAdapter() {
             	  @Override
                   public void mouseClicked(MouseEvent e) {
-            		 String info = update1;
-            		 if(!update2.equals("")) {
-            			 info.concat(" " + update2);
-            		 }
-            		 if(!update3.equals("")) {
-            			 info.concat(" " + update3);
-            		 }
-                     InfoLabel.setText(info);
+            		 Update.Commands.DoCommand("Info Concat", InfoLabel);
                   }
               });
               InfoButtonsPanel.add(UpdateInfoButton);
