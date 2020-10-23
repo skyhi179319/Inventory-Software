@@ -34,7 +34,7 @@ public class Update {
 	public static void AutoStart(){
 		String version = "** 3.0 **";
 		String update_1 = "** Added New Update Feature **";
-		String update_2 = "";
+		String update_2 = "** Added Commands To Feature **";
 		String update_3 = "";
 		UpdateInfo(version,update_1,update_2,update_3);
 	}
@@ -50,10 +50,10 @@ public class Update {
 			if(Command.equals("Info Concat") || Command.equals("info concat")) {
 				String info = update1;
 	       		if(!update2.equals("")) {
-	       			info.concat(" " + update2);
+	       			info = update1 + " " + update2;
 	       		}
 	       		if(!update3.equals("")) {
-	       			info.concat(" " + update3);
+	       			info = update1 + " " + update2 + " " + update3;
 	       		}
                 label.setText(info);
 			}
