@@ -1,8 +1,8 @@
 package Assets;
 
-import java.io.*;
-import java.lang.*;
 import java.util.ArrayList;
+
+import javax.swing.JLabel;
 
 public class Update {
 	public static  ArrayList<String> UpdateInfoArray = new ArrayList<String>();
@@ -37,5 +37,26 @@ public class Update {
 		String update_2 = "";
 		String update_3 = "";
 		UpdateInfo(version,update_1,update_2,update_3);
+	}
+	public static class Commands{
+		public static String version = UpdateInfoArray.get(0);
+		public static String update1 = UpdateInfoArray.get(1);
+		public static String update2 = UpdateInfoArray.get(2);
+		public static String update3 = UpdateInfoArray.get(3);
+		public static void DoCommand(String Command,JLabel label) {
+			if(Command.equals("version") || Command.equals("Version")) {
+				label.setText(version);
+			}
+			if(Command.equals("Info Concat") || Command.equals("info concat")) {
+				String info = update1;
+	       		if(!update2.equals("")) {
+	       			info.concat(" " + update2);
+	       		}
+	       		if(!update3.equals("")) {
+	       			info.concat(" " + update3);
+	       		}
+                label.setText(info);
+			}
+		}
 	}
 }
