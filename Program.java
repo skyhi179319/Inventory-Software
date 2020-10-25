@@ -1,5 +1,6 @@
 import Assets.colors.Colors;
 import Assets.Update;
+import Assets.Console;
 import java.awt.event.*;
 import java.io.*;
 import java.lang.*;
@@ -846,6 +847,42 @@ public class Program {
     	  }
       });
       ButtonArea.add(InfoButton);
+      JButton ConsoleWindowButton = new JButton("Console");
+      ConsoleWindowButton.setForeground(Colors.lightblue);
+      ConsoleWindowButton.addMouseListener(new MouseAdapter() {
+    	  @Override
+    	  public void mouseClicked(MouseEvent e) {
+    		  JFrame ConsoleWindow = new JFrame();
+    		  ConsoleWindow.setTitle("Console");
+    		  ConsoleWindow.setBounds(300, 200, 664, 400);
+    		  ConsoleWindow.setVisible(true);
+              java.net.URL imgURL = Program.class.getResource("\\Assets\\img\\icon.jpg");
+              ImageIcon Icon = new ImageIcon(imgURL);
+              ConsoleWindow.setIconImage(Icon.getImage());
+              JTextArea ConsoleTextArea = new JTextArea("",15,30);
+              JPanel CommandPanel = new JPanel();
+              ConsoleWindow.getContentPane().add(CommandPanel, BorderLayout.NORTH);
+              JTextField Command = new JTextField();
+              Command.setColumns(10);
+              Command.setForeground(Colors.lightblue);
+              Command.addKeyListener(new KeyAdapter() {
+                  @Override
+                  public void keyPressed(KeyEvent e) {
+                     if(e.getKeyCode() == KeyEvent.VK_ENTER) {
+                       Console.Commands.Run(Command, ConsoleTextArea, MainInventory);
+                     }
+                  }
+              });
+              CommandPanel.add(Command);
+              JPanel ConsolePanel = new JPanel();
+              ConsoleWindow.getContentPane().add(ConsolePanel, BorderLayout.CENTER);
+              ConsoleTextArea.setEditable(false);
+              JScrollPane ConsolePane = new JScrollPane(ConsoleTextArea);
+              ConsolePane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+              ConsolePanel.add(ConsolePane);
+    	  }
+      });
+      ButtonArea.add(ConsoleWindowButton);
    }
    private void VerifyUserGUI(){
       // if statements allows admin to be kept logged in

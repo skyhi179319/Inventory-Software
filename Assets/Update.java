@@ -1,7 +1,6 @@
 package Assets;
 
 import java.util.ArrayList;
-
 import javax.swing.JLabel;
 
 public class Update {
@@ -58,5 +57,8 @@ public class Update {
                 label.setText(info);
 			}
 		}
+		public static class Actions{
+			// Clear Console
+		}
 	}
-}
+} 
