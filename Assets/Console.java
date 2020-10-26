@@ -90,7 +90,7 @@ public class Console{
 			else {
 				try 
 		        { 
-		            int key = Integer.parseInt(CommandText);
+		            int key = Integer.parseInt(Command.getText());
 		            int value = 1;
 		            AddMainInventory(MainInventory,key,value);
 		        }  
