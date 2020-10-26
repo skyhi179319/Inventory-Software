@@ -127,7 +127,6 @@ public class Program {
          g.setFont(font);
          View v = getTextViewForTab(tabIndex);
          if (v != null) {
-            // html
             v.paint(g, textRect);
          }
       }
@@ -144,22 +143,22 @@ public class Program {
         Allows Sub-Admin to use code
         Lines 319,349,352,532,533,542,543,1084,1090,1101,1104,1115,1121,1310,1348,1434
     */
-   private boolean AdminAccess = false;
+   		// AdminAccess
    /*
         Allows Full Admin to be logged in and out
         Lines 462,464,772,803,811,841,849,1310,1388,1434,1438
     */
-   private boolean AdminFullAccess = false;
+   		//AdminFullAccess
    /*
         Turns On/off AdminAccess
         Lines 348,351,534,544
     */
-   private boolean KeepAdminAccessOn = false;
+   		// KeepAdminAccessOn
    /*
          Turns On/Off Table Login
          Lines 569,576,1310,1434
-    */
-   private boolean TableLogin = false;
+   */
+   		// TableLogin
 
    TreeMap<Integer,Integer> MainInventory = new TreeMap<Integer,Integer>();
    TreeMap<LocalTime,String> LogInfo = new TreeMap<LocalTime,String>();
@@ -317,7 +316,7 @@ public class Program {
             BufferedReader reader = new BufferedReader(new FileReader(file));
             int Verified_Code = Integer.valueOf(reader.readLine());
             if(codeToString == Verified_Code){
-               AdminAccess = true;
+               Console.AdminAccess = true;
                Log("Admin Logged In");
             }
             else{
@@ -346,11 +345,11 @@ public class Program {
          label.setText("Wrong Code. Please Re-enter The Code");
          Panel.add(label);
       }
-      if(function.equals("Verified") && KeepAdminAccessOn == false){
-         AdminAccess = false;
+      if(function.equals("Verified") && Console.KeepAdminAccessOn == false){
+    	  Console.AdminAccess = false;
       }
-      if(function.equals("Verified") && KeepAdminAccessOn == true){
-         AdminAccess = true;
+      if(function.equals("Verified") && Console.KeepAdminAccessOn == true){
+    	  Console.AdminAccess = true;
       }
    }
    private void VerifyCodeGUI(){
@@ -460,9 +459,9 @@ public class Program {
             BufferedReader Password = new BufferedReader(new FileReader(PasswordFile));
             String CheckUsername = Username.readLine();
             String CheckPassword = Password.readLine();
-            if(username.equals(CheckUsername) && password.equals(CheckPassword) && AdminFullAccess == false){
+            if(username.equals(CheckUsername) && password.equals(CheckPassword) && Console.AdminFullAccess == false){
                Log("Admin Logged In And Has Access");
-               AdminFullAccess = true;
+               Console.AdminFullAccess = true;
             }
             else{
                VerifyUser("Retry","","");
@@ -530,9 +529,9 @@ public class Program {
             on.addMouseListener(new MouseAdapter() {
                @Override
                public void mouseClicked(MouseEvent e) {
-                  if(AdminAccess == false){
-                     AdminAccess = true;
-                     KeepAdminAccessOn = true;
+                  if(Console.AdminAccess == false){
+                	 Console.AdminAccess = true;
+                	 Console.KeepAdminAccessOn = true;
                      Action.setText("Admin Access On");
                   }
                }
@@ -540,9 +539,9 @@ public class Program {
             off.addMouseListener(new MouseAdapter() {
                @Override
                public void mouseClicked(MouseEvent e) {
-                  if(AdminAccess == true){
-                     AdminAccess = false;
-                     KeepAdminAccessOn = false;
+                  if(Console.AdminAccess == true){
+                	 Console.AdminAccess = false;
+                	 Console.KeepAdminAccessOn = false;
                      Action.setText("Admin Access Off");
                   }
                }
@@ -567,14 +566,14 @@ public class Program {
                      @Override
                      public void mouseClicked(MouseEvent e) {
                         Action.setText("Table Login On");
-                        TableLogin = true;
+                        Console.TableLogin = true;
                      }
                   });
                   ButtonOff.addMouseListener(new MouseAdapter() {
                      @Override
                      public void mouseClicked(MouseEvent e) {
                         Action.setText("Table Login Off");
-                        TableLogin = false;
+                        Console.TableLogin = false;
                      }
                   });
                   TableButtons.add(ButtonOn);
@@ -770,7 +769,7 @@ public class Program {
                                  System.out.println("An error occurred.");
                                  f.printStackTrace();
                               }
-                              AdminFullAccess = false;
+                              Console.AdminFullAccess = false;
                               newLogin.dispose();
                               AdminArea.dispose();
                               Log("Admin Has Changed Login Credentials");
@@ -801,7 +800,7 @@ public class Program {
          @Override
          public void mouseClicked(MouseEvent e) {
             // Logs out user fully
-            AdminFullAccess = false;
+        	Console.AdminFullAccess = false;
             AdminArea.dispose();
          }
       });
@@ -886,7 +885,7 @@ public class Program {
    }
    private void VerifyUserGUI(){
       // if statements allows admin to be kept logged in
-      if(AdminFullAccess == false){
+      if(Console.AdminFullAccess == false){
          JFrame LoginGUIFrame = new JFrame();
          LoginGUIFrame.setTitle("Login");
          LoginGUIFrame.setBounds(150, 150, 664, 150);
@@ -916,7 +915,7 @@ public class Program {
             @Override
             public void mouseClicked(MouseEvent e) {
                VerifyUser("Verify",Username.getText(),Password.getText());
-               if(AdminFullAccess == true){
+               if(Console.AdminFullAccess == true){
                   AdminPortalArea();
                }
                LoginGUIFrame.dispose();
@@ -924,7 +923,7 @@ public class Program {
          });
          Form.add(Login);
       }
-      if(AdminFullAccess == true){
+      if(Console.AdminFullAccess == true){
          AdminPortalArea();
       }
    }
@@ -1159,13 +1158,13 @@ public class Program {
          @Override
          public void mouseClicked(MouseEvent e) {
             // Verifying Code or Allows Function to work
-            if(AdminAccess == true){
+            if(Console.AdminAccess == true){
                if(j.getSelectedRow() != -1) {
                   // remove selected row from the model
                   model.removeRow(j.getSelectedRow());
                }
             }
-            if(AdminAccess == false){
+            if(Console.AdminAccess == false){
                VerifyCodeGUI();
             }
             VerifyCode("Verified","");
@@ -1176,10 +1175,10 @@ public class Program {
          @Override
          public void mouseClicked(MouseEvent e) {
             if(e.getClickCount() == 2){
-               if(AdminAccess == true){
+               if(Console.AdminAccess == true){
                   model.removeRow(j.getSelectedRow());
                }
-               if(AdminAccess == false){
+               if(Console.AdminAccess == false){
                   VerifyCodeGUI();
                }
             }
@@ -1190,13 +1189,13 @@ public class Program {
          @Override
          public void keyPressed(KeyEvent e) {
             if(e.getKeyCode() == KeyEvent.VK_DELETE){
-               if(AdminAccess == true){
+               if(Console.AdminAccess == true){
                   int[] row = j.getSelectedRows();
                   for (int i = row.length - 1; i >= 0; i--) {
                      model.removeRow(row[i]);
                   }
                }
-               if(AdminAccess == false){
+               if(Console.AdminAccess == false){
                   VerifyCodeGUI();
                }
             }
@@ -1385,7 +1384,7 @@ public class Program {
          @Override
          public void mouseClicked(MouseEvent e) {
         	JFrame prompt = new JFrame();
-            if(AdminAccess || AdminFullAccess == false && TableLogin == false){
+            if(Console.AdminAccess || Console.AdminFullAccess == false && Console.TableLogin == false){
                java.net.URL imgURL = Program.class.getResource("\\Assets\\img\\icon.jpg");
                ImageIcon Icon = new ImageIcon(imgURL);
                prompt.setTitle("Pre-Verify");
@@ -1423,7 +1422,7 @@ public class Program {
                         @Override
                         public void mouseClicked(MouseEvent e) {
                            VerifyCode("Verify",Code.getText());
-                           if(AdminAccess == true){
+                           if(Console.AdminAccess == true){
                               prompt.dispose();
                               verify.dispose();
                               TableWindow();
@@ -1463,7 +1462,7 @@ public class Program {
                         @Override
                         public void mouseClicked(MouseEvent e) {
                            VerifyUser("Verify",UsernameText.getText(),PasswordText.getText());
-                           if(AdminFullAccess == true){
+                           if(Console.AdminFullAccess == true){
                               prompt.dispose();
                               verify.dispose();
                               TableWindow();
@@ -1509,11 +1508,11 @@ public class Program {
                ButtonArea.add(password);
                ButtonArea.add(skip);
             }
-            if(AdminAccess || AdminFullAccess == false && TableLogin == true){
+            if(Console.AdminAccess || Console.AdminFullAccess == false && Console.TableLogin == true){
                TableWindow();
                Log("Attempted To Opened Table Window");
             }
-            if(AdminFullAccess == true) {
+            if(Console.AdminFullAccess == true) {
             	TableWindow();
             	prompt.dispose();
             }
