@@ -858,6 +858,13 @@ public class Program {
               java.net.URL imgURL = Program.class.getResource("\\Assets\\img\\icon.jpg");
               ImageIcon Icon = new ImageIcon(imgURL);
               ConsoleWindow.setIconImage(Icon.getImage());
+              JPanel CommandChoicePanel = new JPanel();
+              ConsoleWindow.getContentPane().add(CommandChoicePanel, BorderLayout.SOUTH);
+              Choice ExtraCommands = new Choice();
+              ExtraCommands.add("Command");
+              ExtraCommands.add("Search Inventory");
+              ExtraCommands.select(0);
+              CommandChoicePanel.add(ExtraCommands);
               JTextArea ConsoleTextArea = new JTextArea("",15,30);
               JPanel CommandPanel = new JPanel();
               ConsoleWindow.getContentPane().add(CommandPanel, BorderLayout.NORTH);
@@ -868,7 +875,7 @@ public class Program {
                   @Override
                   public void keyPressed(KeyEvent e) {
                      if(e.getKeyCode() == KeyEvent.VK_ENTER) {
-                       Console.Commands.Run(Command, ConsoleTextArea, MainInventory);
+                       Console.Commands.Run(Command, ConsoleTextArea,ExtraCommands,MainInventory);
                      }
                   }
               });
