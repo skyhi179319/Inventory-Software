@@ -1,6 +1,8 @@
 import Assets.colors.Colors;
 import Assets.Update;
 import Assets.Console;
+import Assets.Console.Commands;
+
 import java.awt.event.*;
 import java.io.*;
 import java.lang.*;
@@ -139,6 +141,7 @@ public class Program {
    private JTextField AddBarcodeTextField;
    private JLabel InventoryCount = new JLabel("Nothing Scanned");
    private String LogFile = "Main-Log.txt";
+   private DefaultTableModel model = new DefaultTableModel();
    /*
         Allows Sub-Admin to use code
         Lines 319,349,352,532,533,542,543,1084,1090,1101,1104,1115,1121,1310,1348,1434
@@ -851,6 +854,7 @@ public class Program {
       ConsoleWindowButton.addMouseListener(new MouseAdapter() {
     	  @Override
     	  public void mouseClicked(MouseEvent e) {
+    		  Console.Start();
     		  JFrame ConsoleWindow = new JFrame();
     		  ConsoleWindow.setTitle("Console");
     		  ConsoleWindow.setBounds(300, 200, 664, 400);
@@ -862,22 +866,54 @@ public class Program {
               ConsoleWindow.getContentPane().add(CommandChoicePanel, BorderLayout.SOUTH);
               Choice ExtraCommands = new Choice();
               ExtraCommands.add("Command");
+              ExtraCommands.add("Table");
               ExtraCommands.add("Search Inventory");
+              ExtraCommands.add("Delete Inventory");
+              ExtraCommands.add("Export Inventory"); 
               ExtraCommands.select(0);
+              ExtraCommands.setForeground(Console.Choice.Foreground);
+              ExtraCommands.setBackground(Console.Choice.Background);
               CommandChoicePanel.add(ExtraCommands);
-              JTextArea ConsoleTextArea = new JTextArea("",15,30);
+              JTextArea ConsoleTextArea = new JTextArea("",Console.TextArea.Rows,Console.TextArea.Columns);
+              ConsoleTextArea.setForeground(Console.TextArea.Foreground);
+              ConsoleTextArea.setBackground(Console.TextArea.Background);
+              ConsoleTextArea.setBorder(Console.TextArea.Border);
               JPanel CommandPanel = new JPanel();
               ConsoleWindow.getContentPane().add(CommandPanel, BorderLayout.NORTH);
               JTextField Command = new JTextField();
-              Command.setColumns(10);
-              Command.setForeground(Colors.lightblue);
+              Command.setColumns(Console.TextField.Columns);
+              Command.setForeground(Console.TextField.Foreground);
+              Command.setBackground(Console.TextField.Background);
+              Command.setBorder(Console.TextField.Border);
               Command.addKeyListener(new KeyAdapter() {
                   @Override
                   public void keyPressed(KeyEvent e) {
                      if(e.getKeyCode() == KeyEvent.VK_ENTER) {
-                       Console.Commands.Run(Command, ConsoleTextArea,ExtraCommands,MainInventory);
+                       Console.Run.Run(Command,ExtraCommands,ConsoleTextArea,MainInventory,model);
                      }
                   }
+              });
+              Command.addKeyListener(new KeyAdapter() {
+            	  @Override
+                  public void keyPressed(KeyEvent e) {
+                     if(e.getKeyCode() == KeyEvent.VK_UP) {
+                       Console.Move.MoveUp(Command);
+                     }
+                  }
+              });
+              Command.addKeyListener(new KeyAdapter() {
+            	  @Override
+                  public void keyPressed(KeyEvent e) {
+                     if(e.getKeyCode() == KeyEvent.VK_DOWN) {
+                       Console.Move.MoveDown(Command);
+                     }
+                  }
+              });
+              ExtraCommands.addItemListener(new ItemListener() {
+  				@Override
+  				public void itemStateChanged(ItemEvent e) {
+  					Console.Commands.Actions.Focus(Command);
+  				}
               });
               CommandPanel.add(Command);
               JPanel ConsolePanel = new JPanel();
@@ -985,7 +1021,7 @@ public class Program {
       TablePanel.setSize(300,100);
       window.getContentPane().add(TablePanel, FlowLayout.CENTER);
       // Initializing the JTable
-      DefaultTableModel model = new DefaultTableModel();
+      
       j = new JTable(model){
          public boolean editCellAt(int row, int column, java.util.EventObject e) {
             return false;
