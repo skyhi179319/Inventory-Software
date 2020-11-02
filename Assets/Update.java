@@ -34,7 +34,7 @@ public class Update {
 		String version = "** 3.0 **";
 		String update_1 = "** Added New Update Feature **";
 		String update_2 = "** Added Commands To Feature **";
-		String update_3 = "";
+		String update_3 = "** Added And Edited UI **";
 		UpdateInfo(version,update_1,update_2,update_3);
 	}
 	public static class Commands{
