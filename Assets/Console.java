@@ -107,8 +107,14 @@ public class Console{
 			}
 			private static int Position;
 			public static void MoveUp(JTextField Command) {
+				int CurrentPos = Position;
+				int PredictedPos = CurrentPos + 1; 
 				if(ConsoleCommand.size() == 1) {
 					Command.setText(ConsoleCommand.get(0));
+				}
+				else if(PredictedPos > ConsoleCommand.size()) {
+					Position = 0;
+					Command.setText(ConsoleCommand.get(Position));
 				}
 				else {
 					int pos = Position + 1;
