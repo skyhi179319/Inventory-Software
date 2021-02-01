@@ -34,7 +34,7 @@ public class Console{
 		ConsoleArray.clear();
 		ConsoleCommand.clear();
 		Console.setText("");
-		Start();		
+		Start();
 	}
 	public static class UI{
 		public static class JTextAreaUI{
