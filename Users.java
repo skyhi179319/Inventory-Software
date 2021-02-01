@@ -1,4 +1,4 @@
-import Assets.colors.Colors;
+import Assets.UI;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -45,7 +45,7 @@ public class Users {
         frmUsers.setBounds(100, 100, 664, 329);
         frmUsers.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frmUsers.setVisible(true);
-        java.net.URL imgURL = Users.class.getResource("\\Assets\\img\\icon.jpg");
+        java.net.URL imgURL = Users.class.getResource(UI.Files.Icon);
         ImageIcon Icon = new ImageIcon(imgURL);
         frmUsers.setIconImage(Icon.getImage());
     }
@@ -53,15 +53,15 @@ public class Users {
         JPanel UserFormPanel = new JPanel();
         frmUsers.getContentPane().add(UserFormPanel, BorderLayout.NORTH);
         Label NameLabel = new Label("Name");
-        NameLabel.setForeground(Colors.lightblue);
+        NameLabel.setForeground(UI.UsersUI.Label.Foreground);
         UserFormPanel.add(NameLabel);
         NameTextField = new JTextField();
-        NameTextField.setColumns(10);
-        NameTextField.setForeground(Colors.lightblue);
+        NameTextField.setColumns(UI.UsersUI.TextField.Columns);
+        NameTextField.setForeground(UI.UsersUI.TextField.Foreground);
         UserFormPanel.add(NameTextField);
 
         Button SwitchButton = new Button("Switch");
-        SwitchButton.setForeground(Colors.lightblue);
+        SwitchButton.setForeground(UI.UsersUI.Button.Foreground);
         SwitchButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {

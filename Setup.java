@@ -1,4 +1,5 @@
 import Assets.colors.Colors;
+import Assets.UI;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -65,7 +66,7 @@ public class Setup {
         frmSetup.setBounds(100, 100, 664, 329);
         frmSetup.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frmSetup.setVisible(true);
-		java.net.URL imgURL = Setup.class.getResource("\\Assets\\img\\icon.jpg");
+		java.net.URL imgURL = Setup.class.getResource(UI.Files.Icon);
 		ImageIcon Icon = new ImageIcon(imgURL);
 		frmSetup.setIconImage(Icon.getImage());
     }
@@ -73,14 +74,14 @@ public class Setup {
     	JPanel FormPanel = new JPanel();
 		frmSetup.getContentPane().add(FormPanel, BorderLayout.NORTH);
 		Label NameLabel = new Label("Name");
-		NameLabel.setForeground(Colors.lightblue);
+		NameLabel.setForeground(UI.SetupUI.Label.Foreground);
 		FormPanel.add(NameLabel);
 		NameTextField = new JTextField();
-		NameTextField.setColumns(10);
-		NameTextField.setForeground(Colors.lightblue);
+		NameTextField.setColumns(UI.SetupUI.TextField.Columns);
+		NameTextField.setForeground(UI.SetupUI.TextField.Foreground);
 		FormPanel.add(NameTextField);
 		Button AddButton = new Button("Add");
-		AddButton.setForeground(Colors.lightblue);
+		AddButton.setForeground(UI.SetupUI.Button.Foreground);
 		AddButton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
