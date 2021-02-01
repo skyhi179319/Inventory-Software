@@ -1,7 +1,8 @@
-import Assets.colors.Colors;
 import Assets.Update;
+import Assets.colors.Colors;
 import Assets.Console;
 import Assets.UI;
+import Assets.ButtonUI.size;
 import java.awt.event.*;
 import java.io.*;
 import java.awt.*;
@@ -249,9 +250,9 @@ public class Program {
       JTextField Code = new JTextField();
       Code.setColumns(CustomUI.TextField.Columns);
       Code.setForeground(CustomUI.TextField.Foreground);
+      Code.setBorder(CustomUI.TextField.Border);
       Form.add(Code);
-      JButton Verify = new JButton("Verify");
-      Verify.setForeground(CustomUI.Button.Foreground);
+      JButton Verify =  size.newUINumber(26,"Verify",CustomUI.Button.Foreground,Colors.Palettes.Blue.Darkblue);
       Verify.addMouseListener(new MouseAdapter() {
          @Override
          public void mouseClicked(MouseEvent e) {
@@ -264,7 +265,7 @@ public class Program {
    private void VerifyUser(String function, String username, String password){
 	  UI.Program.VerifyUser CustomUI = new UI.Program.VerifyUser(); 
       if(function.equals("New") && username == "" && password == ""){
-         JFrame NewAdmin = new JFrame();
+         JFrame NewAdmin = new JFrame();  
          NewAdmin.setTitle("New Admin");
          NewAdmin.setBounds(150, 150, 664, 150);
          NewAdmin.setVisible(true);
@@ -278,11 +279,13 @@ public class Program {
          JTextField UsernameText = new JTextField();
          UsernameText.setForeground(CustomUI.TextField.Foreground);
          UsernameText.setColumns(CustomUI.TextField.Columns);
+         UsernameText.setBorder(CustomUI.TextField.Border);
          JLabel PasswordLabel = new JLabel("Password:");
          PasswordLabel.setForeground(CustomUI.Label.Foreground);
          JTextField PasswordText = new JTextField();
          PasswordText.setForeground(CustomUI.TextField.Foreground);
          PasswordText.setColumns(CustomUI.TextField.Columns);
+         PasswordText.setBorder(CustomUI.TextField.Border);
          Panel.add(UsernameLabel);
          Panel.add(UsernameText);
          Panel.add(PasswordLabel);
@@ -389,8 +392,7 @@ public class Program {
       JLabel Action = new JLabel();
       Action.setForeground(AdminPortal.Label.Foreground);
       ActionInfo.add(Action);
-      JButton AdminAccessSwitch = new JButton("Admin Access");
-      AdminAccessSwitch.setForeground(AdminPortal.Button.Foreground);
+      JButton AdminAccessSwitch = size.newUINumber(26, 25,"Admin Access", AdminPortal.Button.Foreground, Colors.Palettes.Blue.Darkblue);
       AdminAccessSwitch.addMouseListener(new MouseAdapter() {
          @Override
          public void mouseClicked(MouseEvent e) {
@@ -403,12 +405,10 @@ public class Program {
             OnOff.setIconImage(Icon.getImage());
             JPanel AccessButtons = new JPanel();
             OnOff.getContentPane().add(AccessButtons, BorderLayout.CENTER);
-            JButton on = new JButton("On");
-            on.setForeground(AdminPortal.AccessPoint.Button.Foreground);
-            JButton off = new JButton("Off");
-            off.setForeground(AdminPortal.AccessPoint.Button.Foreground);
-            JButton TableLoginButton = new JButton("Table Login");
-            TableLoginButton.setForeground(AdminPortal.AccessPoint.Button.Foreground);
+            JButton on = size.newUINumber(43,0,"On",AdminPortal.AccessPoint.Button.Foreground , Colors.Palettes.Blue.Darkblue);
+            JButton off = size.newUINumber(43,0,"Off",AdminPortal.AccessPoint.Button.Foreground , Colors.Palettes.Blue.Darkblue);
+            JButton TableLoginButton = size.newUINumber(30,25,"Table Login",AdminPortal.AccessPoint.Button.Foreground,
+            		Colors.Palettes.Blue.Darkblue);
             on.addMouseListener(new MouseAdapter() {
                @Override
                public void mouseClicked(MouseEvent e) {
@@ -441,10 +441,8 @@ public class Program {
                   TableOnOff.setIconImage(Icon.getImage());
                   JPanel TableButtons = new JPanel();
                   TableOnOff.getContentPane().add(TableButtons, BorderLayout.CENTER);
-                  JButton ButtonOn = new JButton("On");
-                  ButtonOn.setForeground(AdminPortal.AccessPoint.Button.Foreground);
-                  JButton ButtonOff = new JButton("Off");
-                  ButtonOff.setForeground(AdminPortal.AccessPoint.Button.Foreground);
+                  JButton ButtonOn = size.newUINumber(43,0,"On",AdminPortal.AccessPoint.Button.Foreground , Colors.Palettes.Blue.Darkblue);
+                  JButton ButtonOff = size.newUINumber(43,0,"Off",AdminPortal.AccessPoint.Button.Foreground , Colors.Palettes.Blue.Darkblue);
                   ButtonOn.addMouseListener(new MouseAdapter() {
                      @Override
                      public void mouseClicked(MouseEvent e) {
@@ -461,16 +459,17 @@ public class Program {
                   });
                   TableButtons.add(ButtonOn);
                   TableButtons.add(ButtonOff);
+                  TableButtons.updateUI();
                }
             });
             AccessButtons.add(on);
             AccessButtons.add(off);
             AccessButtons.add(TableLoginButton);
+            AccessButtons.updateUI();
          }
       });
       ButtonArea.add(AdminAccessSwitch);
-      JButton ChangeCode = new JButton("Change Code");
-      ChangeCode.setForeground(AdminPortal.Button.Foreground);
+      JButton ChangeCode = size.newUINumber(28,24,"Change Code", AdminPortal.Button.Foreground, Colors.Palettes.Blue.Darkblue);
       ChangeCode.addMouseListener(new MouseAdapter() {
          @Override
          public void mouseClicked(MouseEvent e) {
@@ -500,10 +499,8 @@ public class Program {
                f.printStackTrace();
             }
             CurrentCodeArea.add(CurrentCode);
-            JButton SelfCode = new JButton("Enter Code");
-            JButton RandomCode = new JButton("Random Code");
-            SelfCode.setForeground(AdminPortal.ChangeCode.Button.Foreground);
-            RandomCode.setForeground(AdminPortal.ChangeCode.Button.Foreground);
+            JButton SelfCode = size.newUINumber(32,24, "Enter Code", AdminPortal.ChangeCode.Button.Foreground, Colors.Palettes.Blue.Darkblue);
+            JButton RandomCode = size.newUINumber(27,26, "Random Code", AdminPortal.ChangeCode.Button.Foreground, Colors.Palettes.Blue.Darkblue);
             SelfCode.addMouseListener(new MouseAdapter() {
                @Override
                public void mouseClicked(MouseEvent e) {
@@ -520,8 +517,7 @@ public class Program {
                   TextField code = new TextField();
                   code.setColumns(AdminPortal.ChangeCode.TextField.Columns);
                   code.setForeground(AdminPortal.ChangeCode.TextField.Foreground);
-                  JButton Submit = new JButton("Submit");
-                  Submit.setForeground(AdminPortal.ChangeCode.Button.Foreground);
+                  JButton Submit = size.newUINumber(36,0,"Submit", AdminPortal.ChangeCode.Button.Foreground, Colors.Palettes.Blue.Darkblue);
                   Submit.addMouseListener(new MouseAdapter() {
                      @Override
                      public void mouseClicked(MouseEvent e) {
@@ -543,6 +539,7 @@ public class Program {
                   });
                   panel.add(code);
                   panel.add(Submit);
+                  panel.updateUI();
                }
             });
             RandomCode.addMouseListener(new MouseAdapter() {
@@ -565,11 +562,11 @@ public class Program {
             });
             CodeButtonsArea.add(SelfCode);
             CodeButtonsArea.add(RandomCode);
+            CodeButtonsArea.updateUI();
          }
       });
       ButtonArea.add(ChangeCode);
-      JButton ChangeLoginButton = new JButton("Change Login");
-      ChangeLoginButton.setForeground(AdminPortal.ChangeLogin.Button.Foreground);
+      JButton ChangeLoginButton = size.newUINumber(27,25, "Change Login", AdminPortal.Button.Foreground, Colors.Palettes.Blue.Darkblue);
       ChangeLoginButton.addMouseListener(new MouseAdapter() {
          @Override
          public void mouseClicked(MouseEvent e) {
@@ -586,14 +583,15 @@ public class Program {
             JLabel PasswordText = new JLabel("Password:");
             JTextField Username = new JTextField();
             JTextField Password = new JTextField();
-            JButton TryChange = new JButton("Change");
+            JButton TryChange = size.newUINumber(36,0,"Change", AdminPortal.ChangeLogin.Button.Foreground, Colors.Palettes.Blue.Darkblue);
             UsernameText.setForeground(AdminPortal.ChangeLogin.Label.Foreground);
             PasswordText.setForeground(AdminPortal.ChangeLogin.Label.Foreground);
             Username.setColumns(AdminPortal.ChangeLogin.TextField.Columns);
             Username.setForeground(AdminPortal.ChangeLogin.TextField.Foreground);
             Password.setColumns(AdminPortal.ChangeLogin.TextField.Columns);
             Password.setForeground(AdminPortal.ChangeLogin.TextField.Foreground);
-            TryChange.setForeground(AdminPortal.ChangeLogin.Button.Foreground);
+            Username.setBorder(AdminPortal.ChangeLogin.TextField.Border);
+            Password.setBorder(AdminPortal.ChangeLogin.TextField.Border);
             TryChange.addMouseListener(new MouseAdapter() {
                @Override
                public void mouseClicked(MouseEvent e) {
@@ -623,14 +621,15 @@ public class Program {
                         JLabel NewPasswordText = new JLabel("Password:");
                         JTextField NewUsername = new JTextField();
                         JTextField NewPassword = new JTextField();
-                        JButton Change = new JButton("Login");
-                        Change.setForeground(AdminPortal.ChangeLogin.Button.Foreground);
+                        JButton Change = size.newUINumber(40,0,"Login", AdminPortal.ChangeLogin.Button.Foreground, Colors.Palettes.Blue.Darkblue);
                         NewUsernameText.setForeground(AdminPortal.ChangeLogin.Label.Foreground);
                         NewPasswordText.setForeground(AdminPortal.ChangeLogin.Label.Foreground);
                         NewUsername.setColumns(AdminPortal.ChangeLogin.TextField.Columns);
                         NewUsername.setForeground(AdminPortal.ChangeLogin.TextField.Foreground);
                         NewPassword.setColumns(AdminPortal.ChangeLogin.TextField.Columns);
                         NewPassword.setForeground(AdminPortal.ChangeLogin.TextField.Foreground);
+                        NewUsername.setBorder(AdminPortal.ChangeLogin.TextField.Border);
+                        NewPassword.setBorder(AdminPortal.ChangeLogin.TextField.Border);
                         NewForm.add(NewUsernameText);
                         NewForm.add(NewUsername);
                         NewForm.add(NewPasswordText);
@@ -659,6 +658,7 @@ public class Program {
                            }
                         });
                         NewForm.add(Change);
+                        NewForm.updateUI();
                      }
                      UsernameReader.close();
                      PasswordReader.close();
@@ -674,11 +674,11 @@ public class Program {
             CurrentForm.add(PasswordText);
             CurrentForm.add(Password);
             CurrentForm.add(TryChange);
+            CurrentForm.updateUI();
          }
       });
       ButtonArea.add(ChangeLoginButton);
-      JButton Logout = new JButton("Logout");
-      Logout.setForeground(AdminPortal.Button.Foreground);
+      JButton Logout = size.newUINumber(37,0, "Logout", AdminPortal.Button.Foreground, Colors.Palettes.Blue.Darkblue);
       Logout.addMouseListener(new MouseAdapter() {
          @Override
          public void mouseClicked(MouseEvent e) {
@@ -688,8 +688,7 @@ public class Program {
          }
       });
       ButtonArea.add(Logout);
-      JButton InfoButton = new JButton("Info");
-      InfoButton.setForeground(AdminPortal.Button.Foreground);
+      JButton InfoButton = size.newUINumber(42,0,"Info", AdminPortal.Button.Foreground, Colors.Palettes.Blue.Darkblue);
       InfoButton.addMouseListener(new MouseAdapter() {
     	  @Override
     	  public void mouseClicked(MouseEvent e) {
@@ -708,8 +707,7 @@ public class Program {
               InfoLabel.setForeground(AdminPortal.Info.Label.Foreground);
               InfoPanel.add(InfoLabel);
               // Buttons
-              JButton VersionButton = new JButton("Version");
-              VersionButton.setForeground(AdminPortal.Info.Button.Foreground);
+              JButton VersionButton = size.newUINumber(36,0,"Version", AdminPortal.Info.Button.Foreground, Colors.Palettes.Blue.Darkblue);
               VersionButton.addMouseListener(new MouseAdapter() {
             	  @Override
                   public void mouseClicked(MouseEvent e) {
@@ -717,8 +715,7 @@ public class Program {
                   }
               });
               InfoButtonsPanel.add(VersionButton);
-              JButton UpdateInfoButton = new JButton("Updates");
-              UpdateInfoButton.setForeground(AdminPortal.Info.Button.Foreground);
+              JButton UpdateInfoButton = size.newUINumber(36,0,"Updates", AdminPortal.Info.Button.Foreground, Colors.Palettes.Blue.Darkblue);
               UpdateInfoButton.addMouseListener(new MouseAdapter() {
             	  @Override
                   public void mouseClicked(MouseEvent e) {
@@ -726,11 +723,11 @@ public class Program {
                   }
               });
               InfoButtonsPanel.add(UpdateInfoButton);
+              InfoButtonsPanel.updateUI();
     	  }
       });
       ButtonArea.add(InfoButton);
-      JButton ConsoleWindowButton = new JButton("Console");
-      ConsoleWindowButton.setForeground(AdminPortal.Button.Foreground);
+      JButton ConsoleWindowButton = size.newUINumber(36,0,"Console", AdminPortal.Button.Foreground, Colors.Palettes.Blue.Darkblue);
       ConsoleWindowButton.addMouseListener(new MouseAdapter() {
     	  @Override
     	  public void mouseClicked(MouseEvent e) {
@@ -807,6 +804,7 @@ public class Program {
     	  }
       });
       ButtonArea.add(ConsoleWindowButton);
+      ButtonArea.updateUI();
    }
    private void VerifyUserGUI(){
 	  UI.Program.VerifyUserGUI CustomUI = new UI.Program.VerifyUserGUI();
@@ -825,14 +823,15 @@ public class Program {
          JLabel PasswordLabel = new JLabel("Password:");
          JTextField Username = new JTextField();
          JTextField Password = new JTextField();
-         JButton Login = new JButton("Login");
+         JButton Login = size.newUINumber(27, "Login",CustomUI.Button.Foreground,Colors.Palettes.Blue.Darkblue);;
          UsernameLabel.setForeground(CustomUI.Label.Foreground);
          PasswordLabel.setForeground(CustomUI.Label.Foreground);
          Username.setColumns(CustomUI.TextField.Columns);
          Username.setForeground(CustomUI.TextField.Foreground);
          Password.setColumns(CustomUI.TextField.Columns);
          Password.setForeground(CustomUI.TextField.Foreground);
-         Login.setForeground(CustomUI.Button.Foreground);
+         Username.setBorder(CustomUI.TextField.Border);
+         Password.setBorder(CustomUI.TextField.Border);
          Form.add(UsernameLabel);
          Form.add(Username);
          Form.add(PasswordLabel);
@@ -855,6 +854,68 @@ public class Program {
    }
    // Internal Applications
    // Applications
+   private void Warn(JFrame JFrame) {
+	   JFrame.hide();
+	   frmInventory.hide();
+	   UI.Modals.WarningModal Modal = new UI.Modals.WarningModal();
+       java.net.URL imgURL = Program.class.getResource(Modal.Frame.Icon.toString());
+       java.net.URL WURL = Program.class.getResource(Modal.ImagePanel.Icon.toString());
+       ImageIcon Icon = new ImageIcon(imgURL);
+       JDialog Warning = new JDialog();
+       Warning.setTitle("Warning");
+       Warning.setBounds(150,150,Modal.Frame.FrameWidth,Modal.Frame.FrameHeight);
+       Warning.setIconImage(Icon.getImage());
+       Warning.setVisible(true);
+       JPanel WarningMessage = new JPanel();
+       JPanel WarningButtons = new JPanel();
+       Warning.getContentPane().add(WarningMessage, BorderLayout.CENTER);
+       Warning.getContentPane().add(WarningButtons, BorderLayout.SOUTH);
+       WarningMessage.setLayout(null);
+       JPanel IconPanel = new JPanel();
+       IconPanel.setBounds(Modal.ImagePanel.X, Modal.ImagePanel.Y, Modal.ImagePanel.PanelWidth, Modal.ImagePanel.PanelHeight);
+       JPanel MessagePanel = new JPanel();
+       JLabel Image = new JLabel(new ImageIcon(WURL));
+       Image.setBounds(Modal.ImagePanel.X, Modal.ImagePanel.Y, 10, 10);
+       IconPanel.add(Image);
+       MessagePanel.setBounds(Modal.MessagePanel.X, Modal.MessagePanel.Y, Modal.MessagePanel.PanelWidth, Modal.MessagePanel.PanelHeight);
+       JLabel message = new JLabel(Modal.MessagePanel.Message);
+       WarningMessage.add(IconPanel);
+       MessagePanel.add(message);
+       WarningMessage.add(MessagePanel);
+       JButton yes = Modal.Buttons.YesBtn;
+       JButton no = Modal.Buttons.NoBtn;
+       message.setForeground(Modal.MessagePanel.MessageForeground);
+       yes.addMouseListener(new MouseAdapter() {
+          @Override
+          public void mouseClicked(MouseEvent e) {
+        	 Warning.dispose();
+             Warning.addWindowListener(new WindowAdapter() {
+                @Override
+                public void windowClosed(WindowEvent e) {
+                  frmInventory.show();
+                   JFrame.show();
+                }
+             }); 
+          }
+       });
+       WarningButtons.add(yes);
+       no.addMouseListener(new MouseAdapter() {
+          @Override
+          public void mouseClicked(MouseEvent e) {
+        	 Warning.addWindowListener(new WindowAdapter() {
+                @Override
+                public void windowClosed(WindowEvent e) {
+                   
+                }
+             });
+        	 Warning.dispose();
+        	 JFrame.dispose();
+        	 frmInventory.show();
+          }
+       });
+       WarningButtons.add(no);
+       WarningMessage.updateUI();
+   }
    private void TableWindow(){
 	  UI.Program.TableWindow CustomUI = new UI.Program.TableWindow();
       // Frame
@@ -878,6 +939,7 @@ public class Program {
          }
       });
       if(MainInventory.isEmpty()){
+    	 Warn(window);
          java.net.URL ErrorImgURL = Program.class.getResource(UI.Files.Warning);
          ImageIcon ErrorIcon = new ImageIcon(ErrorImgURL);
          window.setIconImage(ErrorIcon.getImage());
@@ -928,16 +990,16 @@ public class Program {
       TablePanel.add(sp);
       Log("Built Table");
       // Toolbar
+      String UISpaces = "    ";
       JToolBar ToolBar = new JToolBar();
       ToolBar.setSize(new Dimension(CustomUI.Toolbar.Width, CustomUI.Toolbar.Height));
       ToolBar.setOrientation(SwingConstants.VERTICAL);
       ToolBar.setBackground(SystemColor.menu);
       ToolBar.setFloatable(CustomUI.Toolbar.Floatable);
       window.getContentPane().add(ToolBar, BorderLayout.WEST);
-      JButton Refresh = new JButton("Refresh");
-      Refresh.setForeground(CustomUI.Toolbar.ToolBarButton.Foreground);
-      int Width = CustomUI.Toolbar.ToolBarButton.Width;
-      int Height = CustomUI.Toolbar.ToolBarButton.Height;
+      JButton Refresh = size.newUINumber(23,"Refresh",CustomUI.Toolbar.TBButton.Foreground,Colors.Palettes.Blue.Darkblue);
+      int Width = CustomUI.Toolbar.TBButton.Width;
+      int Height = CustomUI.Toolbar.TBButton.Height;
       Refresh.setSize(new Dimension(Width,Height));
       Refresh.addMouseListener(new MouseAdapter() {
          @Override
@@ -955,8 +1017,8 @@ public class Program {
          }
       });
       ToolBar.add(Refresh);
-      JButton Count = new JButton("Count");
-      Count.setForeground(CustomUI.Toolbar.ToolBarButton.Foreground);
+      ToolBar.addSeparator(new Dimension(CustomUI.Toolbar.Separtor.Width,CustomUI.Toolbar.Separtor.Height));
+      JButton Count = size.newUINumber(25, "Count",CustomUI.Toolbar.TBButton.Foreground,Colors.Palettes.Blue.Darkblue);
       Count.setSize(new Dimension(Width, Height));
       Count.addMouseListener(new MouseAdapter() {
          @Override
@@ -998,7 +1060,7 @@ public class Program {
             if(Sum == 0){
                java.net.URL ErrorImgURL = Program.class.getResource(UI.Files.Warning);
                ImageIcon ErrorIcon = new ImageIcon(ErrorImgURL);
-               dialog.setIconImage(ErrorIcon.getImage());
+               dialog.setIconImage(ErrorIcon.getImage());     
             }
             // User Info
             JPanel DialogUserInfoPanel = new JPanel();
@@ -1011,11 +1073,11 @@ public class Program {
          }
       });
       ToolBar.add(Count);
-      JLabel SearchOptions = new JLabel("Search");
+      JLabel SearchOptions = new JLabel(UISpaces + "Search" + UISpaces);
       SearchOptions.setForeground(CustomUI.Toolbar.ToolBarLabel.Foreground);
       ToolBar.add(SearchOptions);
-      JButton SearchBarcode = new JButton("Barcode");
-      SearchBarcode.setForeground(CustomUI.Toolbar.ToolBarButton.Foreground);
+      ToolBar.addSeparator(new Dimension(CustomUI.Toolbar.Separtor.Width,CustomUI.Toolbar.Separtor.Height));
+      JButton SearchBarcode = size.newUINumber(22,"Barcode",CustomUI.Toolbar.TBButton.Foreground,Colors.Palettes.Blue.Darkblue);
       SearchBarcode.setSize(new Dimension(Width, Height));
       SearchBarcode.addMouseListener(new MouseAdapter() {
          @Override
@@ -1048,6 +1110,7 @@ public class Program {
             JTextField BarcodeSearch = new JTextField();
             BarcodeSearch.setColumns(CustomUI.Toolbar.SearchBarcode.TextField.Columns);
             BarcodeSearch.setForeground(CustomUI.Toolbar.SearchBarcode.TextField.Foreground);
+            BarcodeSearch.setBorder(CustomUI.Toolbar.SearchBarcode.TextField.Border);
             JPanel BarcodeResult = new JPanel();
             Search.getContentPane().add(BarcodeResult,BorderLayout.CENTER);
             JLabel BarcodeLabel = new JLabel();
@@ -1072,14 +1135,14 @@ public class Program {
          }
       });
       ToolBar.add(SearchBarcode);
-      JLabel AdminLabel = new JLabel("Admin");
+      JLabel AdminLabel = new JLabel(" " + UISpaces + "Admin" + UISpaces + " ");
       AdminLabel.setForeground(CustomUI.Toolbar.ToolBarLabel.Foreground);
-      JLabel AdminDeleteLabel = new JLabel("Delete");
+      JLabel AdminDeleteLabel = new JLabel(" " + UISpaces + "Delete" + UISpaces + " ");
       AdminDeleteLabel.setForeground(CustomUI.Toolbar.ToolBarLabel.Foreground);
       ToolBar.add(AdminLabel);
       ToolBar.add(AdminDeleteLabel);
-      JButton DeleteButton = new JButton("Row");
-      DeleteButton.setForeground(CustomUI.Toolbar.ToolBarButton.Foreground);
+      ToolBar.addSeparator(new Dimension(CustomUI.Toolbar.Separtor.Width,CustomUI.Toolbar.Separtor.Height));
+      JButton DeleteButton = size.newUINumber(27,"Row",CustomUI.Toolbar.TBButton.Foreground,Colors.Palettes.Blue.Darkblue);
       DeleteButton.addMouseListener(new MouseAdapter() {
          @Override
          public void mouseClicked(MouseEvent e) {
@@ -1161,7 +1224,7 @@ public class Program {
       UserPanel.add(UserLabel);
       // Info Panel
       JTabbedPane InfoPanel = new JTabbedPane();
-      InfoPanel.setUI(new UI.Program.HelpWindow.DefualtTabs.TabDesign());
+      InfoPanel.setUI(new UI.Program.HelpWindow.DefaultTabs.TabDesign());
       window.getContentPane().add(InfoPanel,BorderLayout.CENTER);
       // Info Panel - JPanels
       JPanel AboutInfo = new JPanel();
@@ -1203,6 +1266,71 @@ public class Program {
       InfoPanel.setForegroundAt(2,CustomUI.Label.Foreground);
       InfoPanel.setForegroundAt(3,CustomUI.Label.Foreground);
    }
+   private void Exit() {
+	   frmInventory.hide();
+	   UI.Modals.ExitModal Modal = new UI.Modals.ExitModal();
+       java.net.URL imgURL = Program.class.getResource(Modal.Frame.Icon.toString());
+       java.net.URL QURL = Program.class.getResource(Modal.ImagePanel.Icon.toString());
+       ImageIcon Icon = new ImageIcon(imgURL);
+       JDialog closing = new JDialog();
+       closing.setTitle("Closing");
+       closing.setBounds(150,150,Modal.Frame.FrameWidth,Modal.Frame.FrameHeight);
+       closing.setIconImage(Icon.getImage());
+       closing.setVisible(true);
+       JPanel closingMessage = new JPanel();
+       JPanel closingButtons = new JPanel();
+       closing.getContentPane().add(closingMessage, BorderLayout.CENTER);
+       closing.getContentPane().add(closingButtons, BorderLayout.SOUTH);
+       closingMessage.setLayout(null);
+       JPanel IconPanel = new JPanel();
+       IconPanel.setBounds(Modal.ImagePanel.X, Modal.ImagePanel.Y, Modal.ImagePanel.PanelWidth, Modal.ImagePanel.PanelHeight);
+       JPanel MessagePanel = new JPanel();
+       JLabel Image = new JLabel(new ImageIcon(QURL));
+       Image.setBounds(Modal.ImagePanel.X, Modal.ImagePanel.Y, 10, 10);
+       IconPanel.add(Image);
+       MessagePanel.setBounds(Modal.MessagePanel.X, Modal.MessagePanel.Y, Modal.MessagePanel.PanelWidth, Modal.MessagePanel.PanelHeight);
+       JLabel message = new JLabel(Modal.MessagePanel.Message);
+       closingMessage.add(IconPanel);
+       MessagePanel.add(message);
+       closingMessage.add(MessagePanel);
+       JButton yes = Modal.Buttons.YesBtn;
+       JButton no = Modal.Buttons.NoBtn;
+       message.setForeground(Modal.MessagePanel.MessageForeground);
+       yes.addMouseListener(new MouseAdapter() {
+          @Override
+          public void mouseClicked(MouseEvent e) {
+             Log("Attempted To Close Program");
+             close(frmInventory);
+             frmInventory.addWindowListener(new WindowAdapter() {
+                @Override
+                public void windowClosed(WindowEvent e) {
+                   Log("Closing Program");
+                   CompleteLog(LogFile);
+                   System.exit(0);
+                }
+             });
+             //frmInventory.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+             closing.dispose();
+             frmInventory.dispose();
+          }
+       });
+       closingButtons.add(yes);
+       no.addMouseListener(new MouseAdapter() {
+          @Override
+          public void mouseClicked(MouseEvent e) {
+             closing.dispose();
+             closing.addWindowListener(new WindowAdapter() {
+                @Override
+                public void windowClosed(WindowEvent e) {
+                   System.out.println("Window Closed Properly");
+                   frmInventory.show();
+                }
+             });
+          }
+       });
+       closingButtons.add(no);
+       closingMessage.updateUI();
+   }
    public Program(){
       prepareGUI();
    }
@@ -1218,7 +1346,7 @@ public class Program {
       frmInventory = new JFrame();
       frmInventory.setTitle("Inventory");
       frmInventory.setBounds(100, 100, 664, 329);
-      frmInventory.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+      frmInventory.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
       frmInventory.setVisible(true);
       java.net.URL imgURL = Program.class.getResource(UI.Files.Icon);
       ImageIcon Icon = new ImageIcon(imgURL);
@@ -1229,8 +1357,7 @@ public class Program {
       frmInventory.addWindowListener(new WindowAdapter() {
          @Override
          public void windowClosing(WindowEvent e) {
-            Log("Closing Program");
-            CompleteLog(LogFile);
+            Exit();
          }
       });
       Update.AutoStart();
@@ -1252,7 +1379,14 @@ public class Program {
          public void keyPressed(KeyEvent e) {
             if(e.getKeyCode() == KeyEvent.VK_ENTER) {
                int barcode = Integer.valueOf(AddBarcodeTextField.getText());
-               AddToInventory(barcode,1);
+               if (MainInventory.containsKey(barcode)) {
+            	   AddToInventory(barcode,1);
+            	   AddBarcodeTextField.setBorder(CustomUI.TextField.Effects.setOldLineBorder());
+                }
+                else {
+                    AddToInventory(barcode,1);
+                    AddBarcodeTextField.setBorder(CustomUI.TextField.Effects.setNewLineBorder());
+                }
                PrintInventory();
                AddBarcodeTextField.setText("");
                Log("Added Barcode - Cache - " + barcode);
@@ -1263,15 +1397,15 @@ public class Program {
    }
    private void Toolbar(){
 	  UI.Program.Toolbar CustomUI = new UI.Program.Toolbar();
+	  UI.Modals.ConfirmModal Modal = new UI.Modals.ConfirmModal();
       JToolBar ButtonToolBar = new JToolBar();
       ButtonToolBar.setSize(new Dimension(210, 0));
       ButtonToolBar.setOrientation(SwingConstants.VERTICAL);
       ButtonToolBar.setBackground(SystemColor.menu);
       ButtonToolBar.setFloatable(CustomUI.Floatable);
       frmInventory.getContentPane().add(ButtonToolBar, BorderLayout.WEST);
-      JButton Barcode100 = new JButton("100");
+      JButton Barcode100 = size.newUINumber(27, "100",CustomUI.Button.Foreground,Colors.Palettes.Blue.Darkblue);
       Barcode100.setSize(new Dimension(CustomUI.Button.Width, CustomUI.Button.Height));
-      Barcode100.setForeground(CustomUI.Button.Foreground);
       Barcode100.addMouseListener(new MouseAdapter() {
          @Override
          public void mouseClicked(MouseEvent e) {
@@ -1281,23 +1415,68 @@ public class Program {
          }
       });
       ButtonToolBar.add(Barcode100);
-      JButton ClearResults = new JButton("Clear");
-      ClearResults.setForeground(CustomUI.Button.Foreground);
+      ButtonToolBar.addSeparator(new Dimension(CustomUI.Separator.Width,CustomUI.Separator.Height));
+      JButton ClearResults = size.newUINumber(26,"Clear",CustomUI.Button.Foreground,Colors.Palettes.Blue.Darkblue);
       ClearResults.setSize(new Dimension(CustomUI.Button.Width,CustomUI.Button.Height));
       ClearResults.addMouseListener(new MouseAdapter() {
          @Override
          public void mouseClicked(MouseEvent e) {
-            MainInventory.clear();
-            InventoryCount.setText("Nothing Scanned");
-            InventoryCount.setForeground(CustomUI.Label.Foreground);
-            AddBarcodeTextField.grabFocus();
-            Log("Cleared All Barcodes");
+        	 frmInventory.hide();
+	         java.net.URL imgURL = Program.class.getResource(Modal.Frame.Icon.toString());
+	         java.net.URL QURL = Program.class.getResource(Modal.ImagePanel.Icon.toString());
+	         ImageIcon Icon = new ImageIcon(imgURL);
+	         JDialog Confirm = new JDialog();
+	         Confirm.setTitle("Confirm");
+	         Confirm.setBounds(150,150,Modal.Frame.FrameWidth,Modal.Frame.FrameHeight);
+	         Confirm.setIconImage(Icon.getImage());
+	         Confirm.setVisible(true);
+	         JPanel ConfirmMessage = new JPanel();
+	         JPanel ConfirmButtons = new JPanel();
+	         Confirm.getContentPane().add(ConfirmMessage, BorderLayout.CENTER);
+	         Confirm.getContentPane().add(ConfirmButtons, BorderLayout.SOUTH);
+	         ConfirmMessage.setLayout(null);
+	         JPanel IconPanel = new JPanel();
+	         IconPanel.setBounds(Modal.ImagePanel.X, Modal.ImagePanel.Y, Modal.ImagePanel.PanelWidth, Modal.ImagePanel.PanelHeight);
+	         JPanel MessagePanel = new JPanel();
+	         JLabel Image = new JLabel(new ImageIcon(QURL));
+	         Image.setBounds(Modal.ImagePanel.X, Modal.ImagePanel.Y, 10, 10);
+	         IconPanel.add(Image);
+	         MessagePanel.setBounds(Modal.MessagePanel.X, Modal.MessagePanel.Y, Modal.MessagePanel.PanelWidth, Modal.MessagePanel.PanelHeight);
+	         JLabel message = new JLabel(Modal.MessagePanel.Message);
+	         ConfirmMessage.add(IconPanel);
+	         MessagePanel.add(message);
+	         ConfirmMessage.add(MessagePanel);
+	         String UISpaces = "               ";
+	         JButton yes = Modal.Buttons.YesBtn;
+	         JButton no = Modal.Buttons.NoBtn;
+	         message.setForeground(Modal.MessagePanel.MessageForeground);
+	         yes.addMouseListener(new MouseAdapter() {
+	            @Override
+	            public void mouseClicked(MouseEvent e) {
+			        MainInventory.clear();
+			        InventoryCount.setText("Nothing Scanned");
+			        InventoryCount.setForeground(CustomUI.Label.Foreground);
+			        AddBarcodeTextField.grabFocus();
+			        Log("Cleared All Barcodes");
+	               	Confirm.dispose();
+	               	frmInventory.show();
+	            }
+	         });
+	         ConfirmButtons.add(yes);
+	         no.addMouseListener(new MouseAdapter() {
+	            @Override
+	            public void mouseClicked(MouseEvent e) {
+	               Confirm.dispose();
+	               frmInventory.show();
+	            }
+	         });
+	         ConfirmButtons.add(no);
+	         ConfirmMessage.updateUI();
          }
       });
       ButtonToolBar.add(ClearResults);
-
-      JButton ExportInventory = new JButton("Export");
-      ExportInventory.setForeground(CustomUI.Button.Foreground);
+      ButtonToolBar.addSeparator(new Dimension(CustomUI.Separator.Width,CustomUI.Separator.Height));
+      JButton ExportInventory = size.newUINumber(25,"Export",CustomUI.Button.Foreground,Colors.Palettes.Blue.Darkblue);
       ExportInventory.addMouseListener(new MouseAdapter() {
          @Override
          public void mouseClicked(MouseEvent e) {
@@ -1306,8 +1485,8 @@ public class Program {
          }
       });
       ButtonToolBar.add(ExportInventory);
-      JButton TableButton = new JButton("Table");
-      TableButton.setForeground(CustomUI.Button.Foreground);
+      ButtonToolBar.addSeparator(new Dimension(CustomUI.Separator.Width,CustomUI.Separator.Height));
+      JButton TableButton = size.newUINumber(26, "Table",CustomUI.Button.Foreground,Colors.Palettes.Blue.Darkblue);
       TableButton.addMouseListener(new MouseAdapter() {
          @Override
          public void mouseClicked(MouseEvent e) {
@@ -1321,12 +1500,9 @@ public class Program {
                prompt.setIconImage(Icon.getImage());
                JPanel ButtonArea = new JPanel();
                prompt.getContentPane().add(ButtonArea, BorderLayout.CENTER);
-               JButton code = new JButton("Code");
-               JButton password = new JButton("Password");
-               JButton skip = new JButton("Skip");
-               code.setForeground(CustomUI.Verifty.Button.Foreground);
-               password.setForeground(CustomUI.Verifty.Button.Foreground);
-               skip.setForeground(CustomUI.Verifty.Button.Foreground);
+               JButton code = size.newUINumber(27,"Code",CustomUI.Verifty.Button.Foreground,Colors.Palettes.Blue.Darkblue);
+               JButton password = size.newUINumber(19,"Password",CustomUI.Verifty.Button.Foreground,Colors.Palettes.Blue.Darkblue);
+               JButton skip = size.newUINumber(27,"Skip",CustomUI.Verifty.Button.Foreground,Colors.Palettes.Blue.Darkblue);
                code.addMouseListener(new MouseAdapter() {
                   @Override
                   public void mouseClicked(MouseEvent e) {
@@ -1342,10 +1518,10 @@ public class Program {
                      JTextField Code = new JTextField();
                      Code.setColumns(CustomUI.Verifty.TextField.Columns);
                      Code.setForeground(CustomUI.Verifty.TextField.Foreground);
+                     Code.setBorder(CustomUI.Verifty.TextField.Border);
                      LoginArea.add(CodeLabel);
                      LoginArea.add(Code);
-                     JButton LoginButton = new JButton("Login");
-                     LoginButton.setForeground(CustomUI.Verifty.Button.Foreground);
+                     JButton LoginButton = size.newUINumber(26,"Login",CustomUI.Verifty.Button.Foreground,Colors.Palettes.Blue.Darkblue);
                      LoginButton.addMouseListener(new MouseAdapter() {
                         @Override
                         public void mouseClicked(MouseEvent e) {
@@ -1375,6 +1551,7 @@ public class Program {
                      JTextField UsernameText = new JTextField();
                      UsernameText.setColumns(CustomUI.Verifty.TextField.Columns);
                      UsernameText.setForeground(CustomUI.Verifty.TextField.Foreground);
+                     UsernameText.setBorder(CustomUI.Verifty.TextField.Border);
                      LoginArea.add(UsernameLabel);
                      LoginArea.add(UsernameText);
                      JLabel PasswordLabel = new JLabel("Password:");
@@ -1382,10 +1559,10 @@ public class Program {
                      JTextField PasswordText = new JTextField();
                      PasswordText.setColumns(CustomUI.Verifty.TextField.Columns);
                      PasswordText.setForeground(CustomUI.Verifty.TextField.Foreground);
+                     PasswordText.setBorder(CustomUI.Verifty.TextField.Border);
                      LoginArea.add(PasswordLabel);
                      LoginArea.add(PasswordText);
-                     JButton LoginButton = new JButton("Login");
-                     LoginButton.setForeground(CustomUI.Verifty.Button.Foreground);
+                     JButton LoginButton = size.newUINumber(26,"Login",CustomUI.Verifty.Button.Foreground,Colors.Palettes.Blue.Darkblue);
                      LoginButton.addMouseListener(new MouseAdapter() {
                         @Override
                         public void mouseClicked(MouseEvent e) {
@@ -1403,33 +1580,55 @@ public class Program {
                skip.addMouseListener(new MouseAdapter() {
                   @Override
                   public void mouseClicked(MouseEvent e) {
-                     JFrame Confirm = new JFrame();
-                     Confirm.setTitle("Confirm");
-                     Confirm.setBounds(100, 100, 450, 100);
-                     Confirm.setVisible(true);
-                     Confirm.setIconImage(Icon.getImage());
-                     JPanel ConfirmPanel = new JPanel();
-                     Confirm.getContentPane().add(ConfirmPanel, BorderLayout.CENTER);
-                     JButton ConfirmYes = new JButton("Yes");
-                     ConfirmYes.setForeground(CustomUI.Verifty.Button.Foreground);
-                     JButton ConfirmNo = new JButton("No");
-                     ConfirmNo.setForeground(CustomUI.Verifty.Button.Foreground);
-                     ConfirmYes.addMouseListener(new MouseAdapter() {
-                        @Override
-                        public void mouseClicked(MouseEvent e) {
-                           prompt.dispose();
-                           Confirm.dispose();
-                           TableWindow();
-                        }
-                     });
-                     ConfirmNo.addMouseListener(new MouseAdapter() {
-                        @Override
-                        public void mouseClicked(MouseEvent e) {
-                           Confirm.dispose();
-                        }
-                     });
-                     ConfirmPanel.add(ConfirmYes);
-                     ConfirmPanel.add(ConfirmNo);
+                	 frmInventory.hide();
+         	         java.net.URL imgURL = Program.class.getResource(Modal.Frame.Icon.toString());
+         	         java.net.URL QURL = Program.class.getResource(Modal.ImagePanel.Icon.toString());
+         	         ImageIcon Icon = new ImageIcon(imgURL);
+         	         JDialog Confirm = new JDialog();
+         	         Confirm.setTitle("Confirm");
+         	         Confirm.setBounds(150,150,Modal.Frame.FrameWidth,Modal.Frame.FrameHeight);
+         	         Confirm.setIconImage(Icon.getImage());
+         	         Confirm.setVisible(true);
+         	         JPanel ConfirmMessage = new JPanel();
+         	         JPanel ConfirmButtons = new JPanel();
+         	         Confirm.getContentPane().add(ConfirmMessage, BorderLayout.CENTER);
+         	         Confirm.getContentPane().add(ConfirmButtons, BorderLayout.SOUTH);
+         	         ConfirmMessage.setLayout(null);
+         	         JPanel IconPanel = new JPanel();
+         	         IconPanel.setBounds(Modal.ImagePanel.X, Modal.ImagePanel.Y, Modal.ImagePanel.PanelWidth, Modal.ImagePanel.PanelHeight);
+         	         JPanel MessagePanel = new JPanel();
+         	         JLabel Image = new JLabel(new ImageIcon(QURL));
+         	         Image.setBounds(Modal.ImagePanel.X, Modal.ImagePanel.Y, 10, 10);
+         	         IconPanel.add(Image);
+         	         MessagePanel.setBounds(Modal.MessagePanel.X, Modal.MessagePanel.Y, Modal.MessagePanel.PanelWidth, Modal.MessagePanel.PanelHeight);
+         	         JLabel message = new JLabel(Modal.MessagePanel.Message);
+         	         ConfirmMessage.add(IconPanel);
+         	         MessagePanel.add(message);
+         	         ConfirmMessage.add(MessagePanel);
+         	         String UISpaces = "               ";
+         	         JButton yes = Modal.Buttons.YesBtn;
+         	         JButton no = Modal.Buttons.NoBtn;
+         	         message.setForeground(Modal.MessagePanel.MessageForeground);
+         	         yes.addMouseListener(new MouseAdapter() {
+         	            @Override
+         	            public void mouseClicked(MouseEvent e) {
+         	               	Confirm.dispose();
+         	               	prompt.dispose();
+         	               	frmInventory.show();
+         	               	TableWindow();
+         	            }
+         	         });
+         	         ConfirmButtons.add(yes);
+         	         no.addMouseListener(new MouseAdapter() {
+         	            @Override
+         	            public void mouseClicked(MouseEvent e) {
+         	            	prompt.dispose(); 
+         	            	Confirm.dispose();
+         	            	frmInventory.show();
+         	            }
+         	         });
+         	         ConfirmButtons.add(no);
+         	         ConfirmMessage.updateUI();
                   }
                });
                ButtonArea.add(code);
@@ -1447,8 +1646,8 @@ public class Program {
          }
       });
       ButtonToolBar.add(TableButton);
-      JButton HelpButton = new JButton("Help");
-      HelpButton.setForeground(CustomUI.Button.Foreground);
+      ButtonToolBar.addSeparator(new Dimension(CustomUI.Separator.Width,CustomUI.Separator.Height));
+      JButton HelpButton = size.newUINumber(27, "Help",CustomUI.Button.Foreground,Colors.Palettes.Blue.Darkblue);
       HelpButton.addMouseListener(new MouseAdapter() {
          @Override
          public void mouseClicked(MouseEvent e) {
@@ -1457,8 +1656,8 @@ public class Program {
          }
       });
       ButtonToolBar.add(HelpButton);
-      JButton VerifyButton = new JButton("Verify");
-      VerifyButton.setForeground(CustomUI.Button.Foreground);
+      ButtonToolBar.addSeparator(new Dimension(CustomUI.Separator.Width,CustomUI.Separator.Height));
+      JButton VerifyButton = size.newUINumber(25, "Verify",CustomUI.Button.Foreground,Colors.Palettes.Blue.Darkblue);
       VerifyButton.addMouseListener(new MouseAdapter() {
          @Override
          public void mouseClicked(MouseEvent e) {
@@ -1466,8 +1665,8 @@ public class Program {
          }
       });
       ButtonToolBar.add(VerifyButton);
-      JButton AdminButton = new JButton("Admin");
-      AdminButton.setForeground(CustomUI.Button.Foreground);
+      ButtonToolBar.addSeparator(new Dimension(CustomUI.Separator.Width,CustomUI.Separator.Height));
+      JButton AdminButton = size.newUINumber(25, "Admin",CustomUI.Button.Foreground,Colors.Palettes.Blue.Darkblue);
       AdminButton.addMouseListener(new MouseAdapter() {
          @Override
          public void mouseClicked(MouseEvent e) {
@@ -1475,58 +1674,12 @@ public class Program {
          }
       });
       ButtonToolBar.add(AdminButton);
-      JButton Exit = new JButton("Exit");
-      Exit.setForeground(CustomUI.Button.Foreground);
+      ButtonToolBar.addSeparator(new Dimension(CustomUI.Separator.Width,CustomUI.Separator.Height));
+      JButton Exit = size.newUINumber(27, "Exit",CustomUI.Button.Foreground,Colors.Palettes.Blue.Darkblue);
       Exit.addMouseListener(new MouseAdapter() {
          @Override
          public void mouseClicked(MouseEvent e) {
-            java.net.URL imgURL = Program.class.getResource(UI.Files.Icon);
-            ImageIcon Icon = new ImageIcon(imgURL);
-            JDialog closing = new JDialog();
-            closing.setTitle("Closing");
-            closing.setBounds(150,150,300,250);
-            closing.setIconImage(Icon.getImage());
-            closing.setVisible(true);
-            JPanel closingMessage = new JPanel();
-            JPanel closingButtons = new JPanel();
-            closing.getContentPane().add(closingMessage, BorderLayout.NORTH);
-            closing.getContentPane().add(closingButtons, BorderLayout.CENTER);
-            JLabel message = new JLabel("Closing");
-            JButton yes = new JButton("Yes");
-            yes.setForeground(CustomUI.Closing.Button.Foreground);
-            JButton no = new JButton("No");
-            no.setForeground(CustomUI.Closing.Button.Foreground);
-            message.setForeground(CustomUI.Closing.Label.Foreground);
-            closingMessage.add(message);
-            yes.addMouseListener(new MouseAdapter() {
-               @Override
-               public void mouseClicked(MouseEvent e) {
-                  Log("Attempted To Close Program");
-                  close(frmInventory);
-                  frmInventory.addWindowListener(new WindowAdapter() {
-                     @Override
-                     public void windowClosed(WindowEvent e) {
-                        Log("Closing Program");
-                        CompleteLog(LogFile);
-                     }
-                  });
-                  closing.dispose();
-               }
-            });
-            closingButtons.add(yes);
-            no.addMouseListener(new MouseAdapter() {
-               @Override
-               public void mouseClicked(MouseEvent e) {
-                  closing.dispose();
-                  closing.addWindowListener(new WindowAdapter() {
-                     @Override
-                     public void windowClosed(WindowEvent e) {
-                        System.out.println("Window Closed Properly");
-                     }
-                  });
-               }
-            });
-            closingButtons.add(no);
+        	Exit();
          }
       });
       ButtonToolBar.add(Exit);

@@ -20,9 +20,11 @@ public class Users {
                 FileWriter Create = new FileWriter(Name_Setup);
                 Create.write(Name);
                 Create.close();
+                NameTextField.setBorder(UI.UsersUI.TextField.Effects.setNewBorder());
             }
             else {
                 System.out.println("Failed to create file!");
+                NameTextField.setBorder(UI.UsersUI.TextField.Effects.setOldLineBorder());
             }
         }
         catch (IOException e) {
@@ -58,6 +60,7 @@ public class Users {
         NameTextField = new JTextField();
         NameTextField.setColumns(UI.UsersUI.TextField.Columns);
         NameTextField.setForeground(UI.UsersUI.TextField.Foreground);
+        NameTextField.setBorder(UI.UsersUI.TextField.Border);
         UserFormPanel.add(NameTextField);
 
         Button SwitchButton = new Button("Switch");

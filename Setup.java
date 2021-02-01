@@ -1,4 +1,3 @@
-import Assets.colors.Colors;
 import Assets.UI;
 import java.io.File;
 import java.io.FileWriter;
@@ -26,8 +25,10 @@ public class Setup {
     	if(!Users.exists()) {
     		if (Users.mkdir()) {
                 System.out.println("Directory is created!");
+                NameTextField.setBorder(UI.SetupUI.TextField.Effects.setNewLineBorder());
             } else {
                 System.out.println("Failed to create directory!");
+                NameTextField.setBorder(UI.SetupUI.TextField.Effects.setOldLineBorder());
             }
     	}
     	try {
@@ -79,6 +80,7 @@ public class Setup {
 		NameTextField = new JTextField();
 		NameTextField.setColumns(UI.SetupUI.TextField.Columns);
 		NameTextField.setForeground(UI.SetupUI.TextField.Foreground);
+		NameTextField.setBorder(UI.SetupUI.TextField.Border);
 		FormPanel.add(NameTextField);
 		Button AddButton = new Button("Add");
 		AddButton.setForeground(UI.SetupUI.Button.Foreground);
