@@ -13,6 +13,9 @@ import javax.swing.JTextField;
 import javax.swing.border.Border;
 import javax.swing.table.DefaultTableModel;
 import Assets.colors.Colors;
+import Assets.UI;
+import Assets.UI.Program;
+import Assets.UI.Themes;
 
 public class Console{
 	public static ArrayList<String> ConsoleArray = new ArrayList<String>();
@@ -74,7 +77,7 @@ public class Console{
 				ExtraCommands.select(Pos);
 				ConsoleCommands.Write(text);
 			}
-			public static void SwitchToDefualt(Choice ExtraCommands) {
+			public static void SwitchToDefault(Choice ExtraCommands) {
 				SwitchExtraCommand(ExtraCommands, 0,"Switched To Command - Command");
 			}
 			public static void Focus(JTextField Command) {
@@ -235,32 +238,38 @@ public class Console{
 				Inventory.Clear(MainInventory);
 				Actions.AddToCommands("Clear Inventory");
 				Actions.ResetField(Command);
+				Command.setBorder(Program.AdminPortal.ConsoleArea.TextField.BorderOne);
 			}
 			else if(CommandText.equals("Export Inventory Now")) {
 				Inventory.Export(MainInventory, "InventoryExport.txt");
 				Actions.AddToCommands("Now");
 				Actions.ResetField(Command);
+				Command.setBorder(Program.AdminPortal.ConsoleArea.TextField.BorderOne);
 			}
 			// BOOLEAN COMMANDS
 			else if(CommandText.equals("Command Admin Access")) {
 				Actions.OnOff(AdminAccess,"Admin Access");
 				Actions.AddToCommands("Admin Access");
 				Actions.ResetField(Command);
+				Command.setBorder(Program.AdminPortal.ConsoleArea.TextField.BorderOne);
 			}
 			else if(CommandText.equals("Command Admin Full Access")) {
 				Actions.OnOff(AdminFullAccess,"Admin Full Access");
 				Actions.AddToCommands("Admin Full Access");
 				Actions.ResetField(Command);
+				Command.setBorder(Program.AdminPortal.ConsoleArea.TextField.BorderOne);
 			}
 			else if(CommandText.equals("Command Table Login")) {
 				Actions.OnOff(TableLogin,"Table Login");
 				Actions.AddToCommands("Table Login");
 				Actions.ResetField(Command);
+				Command.setBorder(Program.AdminPortal.ConsoleArea.TextField.BorderOne);
 			}
 			else if(CommandText.equals("Command Version")) {
 				ConsoleCommands.Write(Update.Commands.version);
 				Actions.AddToCommands("Version");
 				Actions.ResetField(Command);
+				Command.setBorder(Program.AdminPortal.ConsoleArea.TextField.BorderOne);
 			}
 			else if(CommandText.equals("Command Update Info")) {
 				String info = Update.Commands.update1;
@@ -273,77 +282,92 @@ public class Console{
 				ConsoleCommands.Write(info);
 				Actions.AddToCommands("Update Info");
 				Actions.ResetField(Command);
+				Command.setBorder(Program.AdminPortal.ConsoleArea.TextField.BorderOne);
 			}
 			// TABLE COMMMANDS
 			else if(CommandText.equals("Table Refresh")) {
 				Table.Refresh(model,MainInventory);
 				Actions.AddToCommands("Refresh");
 				Actions.ResetField(Command);
+				Command.setBorder(Program.AdminPortal.ConsoleArea.TextField.BorderOne);
 			}
 			else if(CommandText.equals("Table Count")) {
 				Table.Count(model);
 				Actions.AddToCommands("Count");
 				Actions.ResetField(Command);
+				Command.setBorder(Program.AdminPortal.ConsoleArea.TextField.BorderOne);
 			}
 			else if(CommandText.equals("Table Update")) {
 				Table.Update(model, MainInventory);
 				Actions.AddToCommands("Update");
 				Actions.ResetField(Command);
+				Command.setBorder(Program.AdminPortal.ConsoleArea.TextField.BorderOne);
 			}
 			// CONSOLE COMMANDS
 			else if(CommandText.equals("Command Clear")) {
 				ConsoleCommands.ClearConsole(Console);
 				Actions.AddToCommands("Clear");
 				Actions.ResetField(Command);
+				Command.setBorder(Program.AdminPortal.ConsoleArea.TextField.BorderOne);
 			}
 			else if(CommandText.equals("Command Restart")) {
 				Actions.ResetField(Command);
 				Restart(Console);
+				// Switch To Default Color
+				Command.setBorder(Program.AdminPortal.ConsoleArea.TextField.BorderOne);
 			}
 			// CONSOLE COMMANDS - COMMAND
 			else if(CommandText.equals("Command Switch Table")) {
 				Actions.SwitchExtraCommand(ExtraCommands, 1,"Switch To Table - Command");
 				Actions.AddToCommands("Switch Table");
 				Actions.ResetField(Command);
+				Command.setBorder(Program.AdminPortal.ConsoleArea.TextField.BorderOne);
 			}
 			else if(CommandText.equals("Command Switch Search Inventory")) {
 				Actions.SwitchExtraCommand(ExtraCommands, 2, "Switch To Search Inventory - Command");
 				Actions.AddToCommands("Switch Search Inventory");
 				Actions.ResetField(Command);
+				Command.setBorder(Program.AdminPortal.ConsoleArea.TextField.BorderOne);
 			}
 			else if(CommandText.equals("Command Switch Delete Inventory")) {
 				Actions.SwitchExtraCommand(ExtraCommands, 3, "Switch To Delete Inventory - Command");
 				Actions.AddToCommands("Switch Delete Inventory");
 				Actions.ResetField(Command);
+				Command.setBorder(Program.AdminPortal.ConsoleArea.TextField.BorderOne);
 			}
 			else if(CommandText.equals("Command Switch Export Inventory")) {
 				Actions.SwitchExtraCommand(ExtraCommands, 4, "Switch To Export Inventory - Command");
 				Actions.AddToCommands("Switch Export Inventory");
 				Actions.ResetField(Command);
+				Command.setBorder(Program.AdminPortal.ConsoleArea.TextField.BorderOne);
 			}
 			// CONSOLE COMMANDS - TABLE
 			else if(CommandText.equals("Table Switch Command")) {
-				Actions.SwitchToDefualt(ExtraCommands);
+				Actions.SwitchToDefault(ExtraCommands);
 				Actions.AddToCommands("Switch Command");
 				Actions.ResetField(Command);
+				Command.setBorder(Program.AdminPortal.ConsoleArea.TextField.BorderOne);
 			}
 			// CONSOLE COMMANDS - SEARCH INVENTORY
 			else if(CommandText.equals("Search Inventory Switch Command")) {
-				Actions.SwitchToDefualt(ExtraCommands);
+				Actions.SwitchToDefault(ExtraCommands);
 				Actions.AddToCommands("Switch Command");
 				Actions.ResetField(Command);
+				Command.setBorder(Program.AdminPortal.ConsoleArea.TextField.BorderOne);
 			}
 			// CONSOLE COMMANDS - DELETE INVENTORY
 			else if(CommandText.equals("Delete Inventory Switch Command")) {
-				Actions.SwitchToDefualt(ExtraCommands);
+				Actions.SwitchToDefault(ExtraCommands);
 				Actions.AddToCommands("Switch Command");
 				Actions.ResetField(Command);
+				Command.setBorder(Program.AdminPortal.ConsoleArea.TextField.BorderOne);
 			}
 			// CONSOLE COMMANDS - EXPORT INVENTORY
 			else if(CommandText.equals("Export Inventory Switch Command")) {
-				Actions.SwitchToDefualt(ExtraCommands);
+				Actions.SwitchToDefault(ExtraCommands);
 				Actions.AddToCommands("Switch Command");
 				Actions.ResetField(Command);
+				Command.setBorder(Program.AdminPortal.ConsoleArea.TextField.BorderOne);
 			}			
 			// BARCODE AND ERROR COMMANDS
 			else {
@@ -365,11 +389,13 @@ public class Console{
 		            	Inventory.Add(MainInventory,key,value);
 		            	Actions.ResetField(Command);
 		            }
+		           Command.setBorder(Program.AdminPortal.ConsoleArea.TextField.BorderOne);
 		        }  
 		        catch (NumberFormatException e)  
 		        { 
 		        	ConsoleCommands.Write("Error: Unvalid Command");
 		        	Actions.ResetField(Command);
+		        	Command.setBorder(Program.AdminPortal.ConsoleArea.TextField.BorderTwo);
 		        } 
 			}
 			ConsoleCommands.UpdateConsole(Console);
